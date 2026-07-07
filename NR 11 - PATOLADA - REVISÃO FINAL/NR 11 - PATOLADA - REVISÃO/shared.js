@@ -1,0 +1,2471 @@
+/* ============================================================
+   NR-11 EMPILHADEIRA PATOLADA — Shared logic (split refactor)
+   ============================================================ */
+function openImageModal(src) {
+    const modal = document.getElementById('imgModal');
+    const img = document.getElementById('modalImg');
+    if (!modal || !img) return;
+    img.src = src;
+    modal.classList.add('active');
+}
+function closeImageModal(e) {
+    const modal = document.getElementById('imgModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+}
+
+
+/* ════════════════════════════════════════
+   NAVIGATION CORE
+   ════════════════════════════════════════ */
+
+// ===== Persistence helpers =====
+function getPageKey() {
+    try {
+        if (window.MODULE_NAV && window.MODULE_NAV.id) return window.MODULE_NAV.id;
+        const p = window.location.pathname.split('/').pop() || 'index.html';
+        return p.replace(/\.html$/i, '') || 'index';
+    } catch (e) { return 'index'; }
+}
+
+function cleanSlideNavUrl() {
+    try {
+        const url = new URL(window.location.href);
+        if (!url.searchParams.has('last') && !url.searchParams.has('restoreslide')) return;
+        url.searchParams.delete('last');
+        url.searchParams.delete('restoreslide');
+        const next = url.pathname + (url.search ? url.search : '') + url.hash;
+        window.history.replaceState(null, '', next);
+    } catch (e) { }
+}
+
+const _slideScrollBtns = {};
+
+window.scrollSlideDown = function (slideId) {
+    const area = document.querySelector('#' + slideId + ' .content-area');
+    if (!area) return;
+    area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
+};
+
+window.scrollSumarioDown = function () {
+    scrollSlideDown('s-sumario');
+};
+
+function updateSlideScrollBtn(slideId) {
+    const cfg = _slideScrollBtns[slideId];
+    if (!cfg) return;
+    const needsScroll = cfg.area.scrollHeight > cfg.area.clientHeight + 8;
+    const atBottom = cfg.area.scrollTop + cfg.area.clientHeight >= cfg.area.scrollHeight - 8;
+    cfg.btn.classList.toggle('is-hidden', !needsScroll || atBottom);
+}
+
+function initSlideScrollBtn(slideId, btnId) {
+    const btn = document.getElementById(btnId);
+    const area = document.querySelector('#' + slideId + ' .content-area');
+    if (!btn || !area) return;
+    _slideScrollBtns[slideId] = { btn, area };
+    area.addEventListener('scroll', function () { updateSlideScrollBtn(slideId); }, { passive: true });
+    window.addEventListener('resize', function () { updateSlideScrollBtn(slideId); });
+    updateSlideScrollBtn(slideId);
+}
+
+initSlideScrollBtn('s-sumario', 'sumario-scroll-down');
+initSlideScrollBtn('s2', 's2-scroll-down');
+initSlideScrollBtn('s7', 's7-scroll-down');
+initSlideScrollBtn('s10', 's10-scroll-down');
+initSlideScrollBtn('s9', 's9-scroll-down');
+
+function initS2Accordion() {
+    const items = document.querySelectorAll('#s2 .s2-acc-item');
+    if (!items.length) return;
+
+    const mq = window.matchMedia('(max-width: 768px)');
+
+    items.forEach(function (item) {
+        const trigger = item.querySelector('.s2-acc-trigger');
+        if (!trigger) return;
+        trigger.addEventListener('click', function () {
+            if (!mq.matches) return;
+            const isOpen = item.classList.contains('is-open');
+            items.forEach(function (el) {
+                el.classList.remove('is-open');
+                const t = el.querySelector('.s2-acc-trigger');
+                if (t) t.setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) {
+                item.classList.add('is-open');
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+            if (typeof updateSlideScrollBtn === 'function') updateSlideScrollBtn('s2');
+        });
+    });
+
+    mq.addEventListener('change', function () {
+        if (!mq.matches) {
+            items.forEach(function (el) {
+                el.classList.remove('is-open');
+                const t = el.querySelector('.s2-acc-trigger');
+                if (t) t.setAttribute('aria-expanded', 'false');
+            });
+        }
+        if (typeof updateSlideScrollBtn === 'function') updateSlideScrollBtn('s2');
+    });
+}
+
+initS2Accordion();
+
+function _loadReqState() {
+    // No persistence: always start with empty requirements
+    return [];
+}
+function _saveReqState(arr) {
+    // No persistence: do nothing
+}
+
+
+// === GLOBAL SLIDE INDEXING ===
+const NR11_MODULE_OFFSETS = {
+    'index': 0,
+    'modulo-1': 3,
+    'modulo-2': 10,
+    'modulo-3': 16,
+    'modulo-4': 22,
+    'modulo-5': 27,
+    'modulo-6': 36
+};
+const NR11_TOTAL_SLIDES = 45;
+function nr11GlobalSlide() {
+    if (typeof currentSlide === 'undefined') return 1;
+    const offset = NR11_MODULE_OFFSETS[(window.MODULE_NAV && window.MODULE_NAV.id) || 'index'] || 0;
+    return offset + currentSlide + 1;
+}
+const QUIZ_AUDIO_HELPER_PAGES = [10, 16, 19, 22, 27, 36, 44];
+const QUIZ_AUDIO_HELPER_PANELS = {
+    sq1: 'q1-question-panel',
+    sq2: 'sq2-question-panel',
+    's-conducao': 'conducao-question-panel',
+    's-quiz3': 'q3-question-panel',
+    's-quiz4': 'q4-question-panel',
+    's-quiz5': 'q5-question-panel',
+    's-quiz6': 'q6-question-panel'
+};
+window.updateQuizAudioHelper = function updateQuizAudioHelper() {
+    const bar = document.getElementById('a11y-bar');
+    const audioHelper = bar && bar.querySelector('.audio-helper');
+    if (!audioHelper) return;
+
+    let show = false;
+    if (QUIZ_AUDIO_HELPER_PAGES.includes(nr11GlobalSlide())) {
+        const activeSlide = document.querySelector('.slide.active');
+        const panelId = activeSlide && QUIZ_AUDIO_HELPER_PANELS[activeSlide.id];
+        if (panelId) {
+            const panel = document.getElementById(panelId);
+            show = !!(panel && window.getComputedStyle(panel).display !== 'none');
+        }
+    }
+
+    audioHelper.classList.toggle('is-active', show);
+    if (bar) bar.classList.toggle('quiz-audio-helper', show);
+};
+
+/* ════════════════════════════════════════
+   RELOAD GUARD: refresh sempre volta pro index
+   ════════════════════════════════════════ */
+// O script que forçava a limpeza do localStorage ao recarregar a página foi removido
+// a pedido do usuário para preservar a página (o progresso) quando o usuário sair.
+
+/* ════════════════════════════════════════
+   GLOBAL HISTORY SYSTEM
+   ════════════════════════════════════════ */
+function trackHistory(slideIndex) {
+    // Removed persistence
+}
+
+function popHistory() {
+    return null;
+}
+
+/* ════════════════════════════════════════
+   MODULE NAVIGATION (multi-page refactor)
+   ════════════════════════════════════════ */
+window.MODULE_NAV = window.MODULE_NAV || { id: 'index', prev: null, next: null, label: 'Capa' };
+
+function moduleNext(force) {
+    try { playBeep && playBeep('click'); } catch (e) { }
+    const total = document.querySelectorAll('.slide').length;
+    if (currentSlide === total - 1) {
+        if (!window.MODULE_NAV.next) return;
+        if (!force && !isSlideCompleted(currentSlide)) {
+            alert('Você precisa concluir o quiz deste módulo para avançar.');
+            return;
+        }
+        // removed persistence
+        window.location.href = window.MODULE_NAV.next;
+        return;
+    }
+    goTo(currentSlide + 1, !!force);
+}
+window.moduleNext = moduleNext;
+
+function modulePrev(force) {
+    try { playBeep && playBeep('click'); } catch (e) { }
+    if (currentSlide === 0) {
+        if (!window.MODULE_NAV.prev) return;
+        // Persistence removed for previous navigation
+        window.location.href = window.MODULE_NAV.prev + '?last=1';
+        return;
+    }
+    goTo(currentSlide - 1, true);
+}
+window.modulePrev = modulePrev;
+
+const TOTAL = document.querySelectorAll('.slide').length;
+let currentSlide = 0;
+
+function startCourse() {
+    const clickAudio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+    clickAudio.volume = 0.4;
+    clickAudio.play().catch(e => console.log('Audio error:', e));
+    goTo(1, true);
+}
+
+function buildDots() {
+    const dots = document.getElementById('nav-dots');
+    if (!dots) return;
+    dots.innerHTML = '';
+    for (let i = 0; i < TOTAL; i++) {
+        const d = document.createElement('div');
+        d.className = 'ndot' + (i === currentSlide ? ' cur' : '');
+        d.onclick = () => goTo(i, true);
+        dots.appendChild(d);
+    }
+}
+
+window.demoMode = (function () {
+    try { return sessionStorage.getItem('nr11-demoMode') === '1'; } catch (e) { return false; }
+})();
+
+function applyDemoModeUI() {
+    const btn = document.getElementById('btn-demo');
+    const ind = document.getElementById('demo-indicator');
+    if (btn) {
+        btn.classList.toggle('is-demo-on', !!window.demoMode);
+        btn.classList.toggle('is-demo-off', !window.demoMode);
+    }
+    if (window.demoMode) {
+        if (btn) {
+            btn.style.color = 'var(--black)';
+            btn.style.background = 'var(--gold)';
+            btn.style.borderColor = 'var(--gold)';
+            btn.style.boxShadow = '0 0 15px rgba(241,196,15,0.5)';
+        }
+        if (ind) {
+            ind.style.opacity = '1';
+            ind.style.transform = 'translateY(0)';
+        }
+    } else {
+        if (btn) {
+            btn.style.color = '#f0f0f0';
+            btn.style.background = '#5a5a5a';
+            btn.style.borderColor = '#888888';
+            btn.style.boxShadow = '0 2px 10px rgba(0,0,0,0.35)';
+        }
+        if (ind) {
+            ind.style.opacity = '0';
+            ind.style.transform = 'translateY(-20px)';
+        }
+    }
+    updateNextButton();
+}
+
+function toggleDemoMode() {
+    window.demoMode = !window.demoMode;
+    try { sessionStorage.setItem('nr11-demoMode', window.demoMode ? '1' : '0'); } catch (e) { }
+    applyDemoModeUI();
+}
+
+window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        toggleDemoMode();
+    }
+});
+
+function isSlideCompleted(idx) {
+    if (window.demoMode) return true;
+    const slide = document.querySelectorAll('.slide')[idx];
+    const resultPanel = slide.querySelector('[id$="-result-panel"]');
+    if (resultPanel && resultPanel.style.display === 'none') return false;
+    if (resultPanel && resultPanel.style.display === 'block') {
+        const status = resultPanel.querySelector('.r-status');
+        if (status && status.classList.contains('ref')) return false;
+    }
+    const reqs = slide.querySelectorAll('.req-item');
+    for (let i = 0; i < reqs.length; i++) {
+        if (!reqs[i].classList.contains('req-done')) return false;
+    }
+    return true;
+}
+
+function updateNextButton() {
+    const btnFwd = document.getElementById('btn-fwd');
+    if (!btnFwd) return;
+    if (currentSlide === TOTAL - 1) {
+        btnFwd.disabled = true;
+        btnFwd.style.display = 'none';
+    } else {
+        btnFwd.disabled = !isSlideCompleted(currentSlide);
+        btnFwd.style.display = 'flex';
+    }
+}
+
+/* ── Slide video lazy load (Vimeo iframes + video preload) ── */
+var SLIDE_VIDEO_BLANK = 'about:blank';
+var _videoWrapInited = new WeakSet();
+
+function getVimeoIdFromSrc(src) {
+    var m = (src || '').match(/vimeo\.com\/video\/(\d+)/);
+    return m ? m[1] : null;
+}
+
+function isLoadedVimeoIframe(iframe) {
+    var src = iframe.getAttribute('src') || '';
+    return src.indexOf('vimeo') !== -1 && src !== SLIDE_VIDEO_BLANK;
+}
+
+function ensureVideoPoster(wrap, vimeoSrc) {
+    if (!wrap || wrap.querySelector('.video-poster')) return;
+    var id = getVimeoIdFromSrc(vimeoSrc);
+    if (!id) return;
+    var poster = document.createElement('img');
+    poster.className = 'video-poster';
+    poster.alt = '';
+    poster.src = 'https://vumbnail.com/' + id + '.jpg';
+    poster.decoding = 'async';
+    var iframe = wrap.querySelector('iframe');
+    if (iframe) wrap.insertBefore(poster, iframe);
+    else wrap.appendChild(poster);
+}
+
+function setVideoPosterVisible(wrap, visible) {
+    var poster = wrap && wrap.querySelector('.video-poster');
+    if (poster) poster.style.display = visible ? 'block' : 'none';
+}
+
+function prepareVimeoIframe(iframe) {
+    if (!iframe || iframe.dataset.vimeoPrepared) return;
+    var src = iframe.getAttribute('src');
+    if (!src || src === SLIDE_VIDEO_BLANK || src.indexOf('vimeo') === -1) return;
+    iframe.dataset.vimeoSrc = src;
+    iframe.removeAttribute('src');
+    iframe.dataset.vimeoPrepared = '1';
+    var wrap = iframe.closest('.video-wrap');
+    if (wrap) ensureVideoPoster(wrap, src);
+}
+
+function pauseVimeoIframe(iframe) {
+    try {
+        if (typeof Vimeo !== 'undefined' && isLoadedVimeoIframe(iframe)) {
+            new Vimeo.Player(iframe).pause().catch(function () { });
+        }
+    } catch (e) { }
+}
+
+function unloadVimeoIframe(iframe) {
+    pauseVimeoIframe(iframe);
+    if (!iframe.dataset.vimeoSrc) return;
+    iframe.setAttribute('src', SLIDE_VIDEO_BLANK);
+    setVideoPosterVisible(iframe.closest('.video-wrap'), true);
+}
+
+function loadVimeoIframe(iframe) {
+    var src = iframe.dataset.vimeoSrc;
+    if (!src) return;
+    var current = iframe.getAttribute('src') || '';
+    if (current === src) {
+        initVideoWrapPlayer(iframe.closest('.video-wrap'));
+        return;
+    }
+    if (!current || current === SLIDE_VIDEO_BLANK) {
+        iframe.addEventListener('load', function () {
+            setVideoPosterVisible(iframe.closest('.video-wrap'), false);
+            initVideoWrapPlayer(iframe.closest('.video-wrap'));
+        }, { once: true });
+        iframe.setAttribute('src', src);
+    }
+}
+
+function initVideoWrapPlayer(wrap) {
+    if (!wrap || _videoWrapInited.has(wrap)) return;
+    var iframe = wrap.querySelector('iframe');
+    if (!iframe || !isLoadedVimeoIframe(iframe)) return;
+    if (typeof Vimeo === 'undefined') return;
+
+    _videoWrapInited.add(wrap);
+    wrap.classList.add('req-item');
+    wrap.style.cursor = 'default';
+
+    var warn = wrap.querySelector('.video-warn');
+    if (!warn) {
+        warn = document.createElement('div');
+        warn.className = 'video-warn';
+        warn.textContent = 'Assista até o final';
+        wrap.appendChild(warn);
+    }
+
+    var player = new Vimeo.Player(iframe);
+    var maxWatched = 0;
+
+    var enforceTime = function (data) {
+        if (data.seconds > maxWatched + 1) {
+            player.setCurrentTime(maxWatched);
+        }
+    };
+
+    player.on('timeupdate', function (data) {
+        if (data.seconds > maxWatched + 1) {
+            player.setCurrentTime(maxWatched);
+            return;
+        }
+        if (data.seconds > maxWatched && (data.seconds - maxWatched) < 1.5) {
+            maxWatched = data.seconds;
+        }
+    });
+
+    player.on('seeking', enforceTime);
+    player.on('seeked', enforceTime);
+
+    player.on('play', function () {
+        warn.style.opacity = '0';
+        warn.style.pointerEvents = 'none';
+        player.getCurrentTime().then(function (seconds) {
+            if (seconds > maxWatched + 1) player.setCurrentTime(maxWatched);
+        });
+    });
+
+    player.on('pause', function () {
+        if (!wrap.classList.contains('req-done')) {
+            warn.style.opacity = '1';
+            warn.style.pointerEvents = 'auto';
+        }
+    });
+
+    player.on('ended', function () {
+        wrap.classList.add('req-done');
+        warn.style.display = 'none';
+        updateNextButton();
+        try {
+            player.pause().then(function () {
+                return player.setCurrentTime(0);
+            }).catch(function () { });
+        } catch (e) { }
+    });
+}
+
+function syncSlideVideos(activeIdx) {
+    var slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+    slides.forEach(function (slide, i) {
+        slide.querySelectorAll('iframe').forEach(prepareVimeoIframe);
+        var shouldLoad = Math.abs(i - activeIdx) <= 1;
+        slide.querySelectorAll('iframe[data-vimeo-prepared]').forEach(function (iframe) {
+            if (shouldLoad) loadVimeoIframe(iframe);
+            else unloadVimeoIframe(iframe);
+        });
+        slide.querySelectorAll('video').forEach(function (v) {
+            v.setAttribute('preload', 'metadata');
+            if (i !== activeIdx) {
+                try { v.pause(); } catch (e) { }
+            }
+        });
+    });
+}
+
+function goTo(idx, force = false, skipHistory = false) {
+    try {
+        const clickAudio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+        clickAudio.volume = 0.4;
+        clickAudio.play().catch(e => console.log('Audio error:', e));
+    } catch (e) { }
+
+    if (idx < 0 || idx >= TOTAL) return;
+    if (idx > currentSlide && !force && !isSlideCompleted(currentSlide)) {
+        alert('Por favor, interaja com todos os itens e responda o quiz para avançar.');
+        return;
+    }
+    const slides = document.querySelectorAll('.slide');
+    const oldSlide = slides[currentSlide];
+    oldSlide.classList.remove('active');
+    oldSlide.classList.add('exit-left');
+    // Pause q6 background music when leaving quiz 6 slide
+    try {
+        const q6Music = oldSlide.querySelector('#q6-bg-music');
+        if (q6Music) { q6Music.pause(); q6Music.currentTime = 0; }
+    } catch (e) { }
+    setTimeout(() => { oldSlide.classList.remove('exit-left'); }, 600);
+
+    currentSlide = idx;
+    if (!skipHistory) trackHistory(currentSlide);
+    cleanSlideNavUrl();
+    const newSlide = slides[currentSlide];
+    newSlide.classList.add('active');
+    newSlide.classList.remove('exit-left');
+
+    const nav = document.getElementById('nav');
+    if (nav) nav.style.display = 'flex';
+
+    if (newSlide.id === 's-conclusion') {
+        startConclusionEpic();
+    }
+    if (_slideScrollBtns[newSlide.id] && typeof updateSlideScrollBtn === 'function') {
+        setTimeout(function () { updateSlideScrollBtn(newSlide.id); }, 50);
+    }
+    const pbar = document.getElementById('pbar');
+    if (pbar) pbar.style.width = (nr11GlobalSlide() / NR11_TOTAL_SLIDES * 100) + '%';
+    const counter = document.getElementById('slide-counter');
+    if (counter) counter.textContent = nr11GlobalSlide() + ' / ' + NR11_TOTAL_SLIDES;
+    const btnBack = document.getElementById('btn-back');
+    if (btnBack) {
+        btnBack.disabled = (currentSlide === 0 && !window.MODULE_NAV.prev);
+        btnBack.style.visibility = (currentSlide === 0 && !window.MODULE_NAV.prev) ? 'hidden' : 'visible';
+    }
+    const btnFwd = document.getElementById('btn-fwd');
+    if (btnFwd) {
+        btnFwd.disabled = currentSlide === TOTAL - 1;
+        btnFwd.style.visibility = 'visible';
+        btnFwd.style.display = (currentSlide === TOTAL - 1) ? 'none' : 'flex';
+    }
+    updateNextButton();
+    buildDots();
+    try { syncSlideVideos(currentSlide); } catch (e) { }
+    try { window.updateQuizAudioHelper(); } catch (e) { }
+    // Slide index not persisted
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') moduleNext(true);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') modulePrev(true);
+});
+
+
+function startConclusionEpic() {
+    createCinematicParticles();
+    createPremiumConfetti();
+    playConclusionCinematicAudio();
+}
+
+function createCinematicParticles() {
+    const container = document.getElementById('c-particles');
+    if (!container) return;
+    container.innerHTML = '';
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle-green';
+        p.style.width = p.style.height = (Math.random() * 4 + 2) + 'px';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.top = (Math.random() * 100 + 50) + 'vh';
+        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        p.style.animationDelay = (Math.random() * 2) + 's';
+        container.appendChild(p);
+    }
+}
+
+function createPremiumConfetti() {
+    const container = document.getElementById('c-confetti');
+    if (!container) return;
+    container.innerHTML = '';
+    const colors = ['#2ecc71', '#27ae60', '#f1c40f', '#f39c12', '#ffffff'];
+    for (let i = 0; i < 60; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        c.style.animationDelay = (Math.random() * 1.5) + 's';
+        c.style.opacity = Math.random() * 0.5 + 0.5;
+        container.appendChild(c);
+    }
+}
+
+function playConclusionCinematicAudio() {
+    try {
+        // Usando caminho relativo para evitar bloqueios do navegador e ajustando volume
+        const efeitofinal = new Audio('https://res.cloudinary.com/dzqns0zpe/video/upload/v1779288012/efeitofinal_kzr836.mp3');
+        efeitofinal.volume = 0.5; // Volume ajustado para um nível médio/baixo
+        efeitofinal.play().catch(e => console.log('Audio error:', e));
+    } catch (e) { console.log('Audio disabled', e); }
+}
+
+function finishTraining() {
+    console.log('--- TREINAMENTO FINALIZADO VIA SCORM/LMS ---');
+    alert('Treinamento concluído e registrado com sucesso!');
+    // Aqui iria a chamada para o LMS, ex: window.close(), SCORM.quit(), etc.
+}
+
+/* ════════════════════════════════════════
+   ════════════════════════════════════════ */
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+let currentOsc = null;
+let currentGain = null;
+let quizCorrectAudio = null;
+let quizWrongAudio = null;
+
+function playCorrectAnswerSound() {
+    try {
+        if (!quizCorrectAudio) {
+            quizCorrectAudio = new Audio('assets/efeitos sonoros/correct-answer.mp3');
+            quizCorrectAudio.volume = 0.15;
+        }
+        quizCorrectAudio.currentTime = 0;
+        quizCorrectAudio.play().catch(() => { });
+    } catch (e) { }
+}
+
+function playWrongAnswerSound() {
+    try {
+        if (!quizWrongAudio) {
+            quizWrongAudio = new Audio('assets/efeitos sonoros/OBJMisc-wrong_answer-Elevenlabs.mp3');
+            quizWrongAudio.volume = 0.15;
+        }
+        quizWrongAudio.currentTime = 0;
+        quizWrongAudio.play().catch(() => { });
+    } catch (e) { }
+}
+
+function playBeep(type) {
+    if (type === 'ok') {
+        playCorrectAnswerSound();
+        return;
+    }
+    if (type === 'nok') {
+        playWrongAnswerSound();
+        return;
+    }
+
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    // Evitar sobreposição cancelando o áudio anterior imediatamente
+    if (currentOsc) {
+        try { currentOsc.stop(); currentOsc.disconnect(); } catch (e) { }
+    }
+    if (currentGain) {
+        try { currentGain.disconnect(); } catch (e) { }
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    currentOsc = osc;
+    currentGain = gain;
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'click') {
+        // Som de clique tecnológico super rápido e sutil
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.05);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        osc.start(now); osc.stop(now + 0.08);
+    } else if (type === 'end') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(554.37, now + 0.1);
+        osc.frequency.setValueAtTime(659.25, now + 0.2);
+        osc.frequency.setValueAtTime(880, now + 0.3);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.6);
+        osc.start(now); osc.stop(now + 0.6);
+    } else if (type === 'hover') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(620, now);
+        osc.frequency.exponentialRampToValueAtTime(540, now + 0.1);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now); osc.stop(now + 0.15);
+    } else if (type === 'flip') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(680, now + 0.12);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now); osc.stop(now + 0.2);
+    } else {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.2);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        osc.start(now); osc.stop(now + 0.3);
+    }
+}
+
+
+// Global playTechClick - usa mesmo som do flip card  
+window.playTechClick = function () {
+    try { playBeep('flip'); } catch (e) { }
+};
+
+// Mobile/Browser audio unlock: resume AudioContext on first user interaction
+(function unlockAudioOnFirstInteraction() {
+    function unlock() {
+        try {
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => { });
+            // create a tiny silent buffer to unlock audio on iOS
+            const silent = new Audio();
+            silent.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
+            silent.volume = 0;
+            silent.play().catch(() => { });
+        } catch (e) { }
+        window.removeEventListener('touchstart', unlock);
+        window.removeEventListener('click', unlock);
+    }
+    window.addEventListener('touchstart', unlock, { once: true, passive: true });
+    window.addEventListener('click', unlock, { once: true, passive: true });
+})();
+
+function initFlipCardInteractions() {
+    const cards = document.querySelectorAll('#s7 .flip-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => playBeep('flip'));
+    });
+}
+
+initFlipCardInteractions();
+
+/* ── Reset de estado visual das respostas (quizzes/atividades) ── */
+var ANSWER_STATE_CLASSES = ['selected', 'active', 'correct', 'wrong', 'checked', 'selected-true', 'selected-false', 'selected-visual'];
+
+function clearAnswerState(el) {
+    if (!el) return;
+    ANSWER_STATE_CLASSES.forEach(function (cls) { el.classList.remove(cls); });
+}
+
+function clearAnswerGroup(container, selector) {
+    if (!container) return;
+    container.querySelectorAll(selector).forEach(clearAnswerState);
+}
+
+function resetTfButtons(btnTrue, btnFalse) {
+    [btnTrue, btnFalse].forEach(clearAnswerState);
+    if (btnTrue) {
+        btnTrue.className = 'tf-btn true';
+        btnTrue.style.animation = '';
+    }
+    if (btnFalse) {
+        btnFalse.className = 'tf-btn false';
+        btnFalse.style.animation = '';
+    }
+}
+
+/* ════════════════════════════════════════
+   QUIZ ENGINE (generic)
+   ════════════════════════════════════════ */
+function createQuizEngine(prefix, questions, numDots) {
+    let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
+
+    const _stateKey = () => 'nr11_' + getPageKey() + '_' + prefix + '_state';
+    function _saveState() {
+        // removed persistence
+    }
+    function _loadState() {
+        return null;
+    }
+
+    function start() {
+        const introPanel = document.getElementById(prefix + '-intro-panel');
+        const qPanel = document.getElementById(prefix + '-question-panel');
+        if (introPanel) introPanel.style.display = 'none';
+        if (qPanel) {
+            qPanel.style.display = 'block';
+            qPanel.style.opacity = '0';
+            setTimeout(() => qPanel.style.opacity = '1', 50);
+        }
+        playBeep('click');
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function renderDots() {
+        const dotsContainer = document.querySelector('#' + prefix + '-question-panel .q-dots');
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < numDots; i++) {
+                const d = document.createElement('div');
+                d.id = prefix + 'dot' + i;
+                d.className = 'qdot2' + (i < idx ? ' done' : '') + (i === idx ? ' cur' : '');
+                dotsContainer.appendChild(d);
+            }
+        }
+    }
+
+    function render() {
+        const qPanel = document.getElementById(prefix + '-question-panel');
+        if (qPanel) qPanel.classList.remove('q-result-anim');
+
+        // sempre resetar estado visual a cada nova pergunta
+        answered = false;
+        selectedOptIdx = -1;
+
+        const q = questions[idx];
+        const c = document.getElementById(prefix + '-counter');
+        if (c) c.textContent = `Pergunta ${idx + 1} de ${questions.length}`;
+        const txt = document.getElementById(prefix + '-text');
+        if (txt) txt.innerHTML = q.q;
+        const opts = document.getElementById(prefix + '-options');
+        if (opts) {
+            opts.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const el = document.createElement('div');
+                el.className = 'q-opt';
+                el.innerHTML = `<div class="opt-l">${letters[i]}</div><span>${opt}</span>`;
+                el.onclick = () => selectAnswer(i, el);
+                opts.appendChild(el);
+            });
+        }
+        const fb = document.getElementById(prefix + '-feedback');
+        if (fb) { fb.className = 'q-feedback'; fb.textContent = ''; }
+        const vCont = document.getElementById(prefix + '-verify-container');
+        if (vCont) { vCont.style.display = 'none'; vCont.style.opacity = '0'; vCont.style.visibility = 'hidden'; }
+        const btn = document.getElementById('btn-next-' + prefix);
+        if (btn) btn.className = 'btn-next-q';
+        renderDots();
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function selectAnswer(i, el) {
+        if (answered) return;
+        selectedOptIdx = i;
+        const allOpts = document.querySelectorAll('#' + prefix + '-options .q-opt');
+        allOpts.forEach(clearAnswerState);
+        el.classList.add('selected');
+        playBeep('click');
+
+        const vCont = document.getElementById(prefix + '-verify-container');
+        if (vCont) {
+            vCont.style.display = 'block';
+            setTimeout(() => {
+                vCont.style.opacity = '1';
+                vCont.style.visibility = 'visible';
+            }, 50);
+        }
+    }
+
+    function verify() {
+        if (answered || selectedOptIdx === -1) return;
+        answered = true;
+
+        const vCont = document.getElementById(prefix + '-verify-container');
+        if (vCont) { vCont.style.display = 'none'; vCont.style.opacity = '0'; vCont.style.visibility = 'hidden'; }
+
+        const q = questions[idx];
+        const allOpts = document.querySelectorAll('#' + prefix + '-options .q-opt');
+        allOpts.forEach(function (o) {
+            clearAnswerState(o);
+            o.style.pointerEvents = 'none';
+        });
+        const fb = document.getElementById(prefix + '-feedback');
+
+        if (selectedOptIdx === q.correct) {
+            // removed persistence
+            allOpts[selectedOptIdx].classList.add('correct');
+            if (fb) { fb.textContent = q.feedback_ok; fb.className = 'q-feedback ok'; }
+            score++; playBeep('ok');
+        } else {
+            allOpts[selectedOptIdx].classList.add('wrong');
+            if (allOpts[q.correct]) allOpts[q.correct].classList.add('correct');
+            if (fb) { fb.textContent = q.feedback_nok; fb.className = 'q-feedback nok'; }
+            playBeep('nok');
+        }
+        const btn = document.getElementById('btn-next-' + prefix);
+        if (btn) btn.className = 'btn-next-q show';
+
+        // persist quiz state after verification
+        try { _saveState(); } catch (e) { }
+    }
+
+    function next() {
+        idx++;
+        if (idx < questions.length) { render(); _saveState(); }
+        else { showResult(); }
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function showResult() {
+        playBeep('end');
+        const qPanel = document.getElementById(prefix + '-question-panel');
+        if (qPanel) qPanel.style.display = 'none';
+        const rPanel = document.getElementById(prefix + '-result-panel');
+        if (rPanel) {
+            rPanel.style.display = 'block';
+            rPanel.classList.remove('q-result-anim');
+            void rPanel.offsetWidth;
+            rPanel.classList.add('q-result-anim');
+        }
+        const pct = score / questions.length;
+        const approved = prefix === 'q5' ? pct >= 0.70 : pct >= 0.60;
+        const pctEl = document.getElementById(prefix + '-pct');
+        if (pctEl) { pctEl.textContent = Math.round(pct * 100) + '%'; pctEl.className = 'result-pct ' + (approved ? 'green' : 'red-c'); }
+        const starsEl = document.getElementById(prefix + '-stars');
+        if (starsEl) {
+            starsEl.textContent = pct === 1 ? '⭐⭐⭐' : pct >= 0.60 ? '⭐⭐' : '⭐';
+            starsEl.classList.remove('stars-anim');
+            void starsEl.offsetWidth;
+            starsEl.classList.add('stars-anim');
+        }
+        const status = document.getElementById(prefix + '-status');
+        if (status) {
+            status.textContent = approved ? '✅ Aprovado!' : (prefix === 'q5' ? '❌ Reprovado!' : '❌ Tente Novamente');
+            status.className = 'r-status ' + (approved ? 'ap' : 'ref');
+        }
+        const sub = document.getElementById(prefix + '-sub');
+        if (sub) {
+            if (prefix === 'q5') {
+                sub.textContent = `Você acertou ${score} de ${questions.length} questões. ` + (approved ? 'Você concluiu a simulação operacional com sucesso.' : 'Revise os procedimentos operacionais e tente novamente.');
+            } else {
+                sub.textContent = `Você acertou ${score} de ${questions.length} questões.` + (approved ? ' Parabéns!' : ' Revise o módulo e tente novamente.');
+            }
+        }
+        // removed persistence
+        updateNextButton();
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function reset() {
+        idx = 0; score = 0; answered = false; selectedOptIdx = -1;
+        const introPanel = document.getElementById(prefix + '-intro-panel');
+        const qPanel = document.getElementById(prefix + '-question-panel');
+        const rPanel = document.getElementById(prefix + '-result-panel');
+
+        if (introPanel) introPanel.style.display = 'block';
+        if (qPanel) qPanel.style.display = 'none';
+        if (rPanel) rPanel.style.display = 'none';
+
+        const fb = document.getElementById(prefix + '-feedback');
+        if (fb) { fb.className = 'q-feedback'; fb.textContent = ''; }
+
+        const vCont = document.getElementById(prefix + '-verify-container');
+        if (vCont) { vCont.style.display = 'none'; vCont.style.opacity = '0'; vCont.style.visibility = 'hidden'; }
+
+        const btn = document.getElementById('btn-next-' + prefix);
+        if (btn) btn.className = 'btn-next-q';
+
+        // removed persistence
+
+        render();
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    return { render, next, reset, selectAnswer, start, verify };
+}
+
+/* ════════════════════════════════════════
+   QUIZ DATA — MÓDULO 1
+   ════════════════════════════════════════ */
+const q1_questions = [
+    {
+        q: 'O que a NR-11 regulamenta?',
+        opts: ['Segurança elétrica industrial', 'Ergonomia no trabalho', 'Transporte, movimentação e armazenagem de materiais', 'Saúde ocupacional geral'],
+        correct: 2, feedback_ok: '✅ Correto! A NR-11 trata de transporte, movimentação e armazenagem de materiais.', feedback_nok: '❌ Incorreto. A NR-11 regulamenta transporte, movimentação e armazenagem de materiais.'
+    },
+    {
+        q: 'Qual documento o operador de empilhadeira patolada deve portar durante a operação?',
+        opts: ['Apenas o crachá da empresa', 'Cartão de identificação de operador autorizado', 'CNH — Carteira Nacional de Habilitação', 'Diploma de conclusão de curso'],
+        correct: 1, feedback_ok: '✅ Exato! O cartão de operador autorizado é obrigatório durante a operação.', feedback_nok: '❌ Incorreto. O operador deve portar o cartão de identificação de operador autorizado.'
+    },
+    {
+        q: 'Com que frequência deve ser renovada a autorização do operador de empilhadeira?',
+        opts: ['A cada 2 anos', 'A cada 5 anos', 'Apenas uma vez na carreira', 'Anualmente — a cada 12 meses'],
+        correct: 3, feedback_ok: '✅ Correto! A autorização deve ser renovada anualmente, a cada 12 meses.', feedback_nok: '❌ Incorreto. A autorização deve ser renovada anualmente (a cada 12 meses).'
+    },
+    {
+        q: 'Qual requisito é obrigatório antes de operar a empilhadeira patolada?',
+        opts: ['Possuir autorização e treinamento', 'Apenas conhecer o equipamento', 'Trabalhar no estoque', 'Ter experiência informal'],
+        correct: 0, feedback_ok: '✅ Exato! O treinamento completo e a autorização são requisitos inegociáveis.', feedback_nok: '❌ Incorreto. É obrigatório possuir autorização formal e treinamento específico.'
+    },
+    {
+        q: 'A reciclagem periódica do treinamento tem como objetivo:',
+        opts: ['Substituir o exame médico', 'Aumentar velocidade da operação', 'Atualizar conhecimentos de segurança', 'Liberar operadores sem avaliação'],
+        correct: 2, feedback_ok: '✅ Correto! O foco principal da reciclagem é manter a segurança sempre atualizada.', feedback_nok: '❌ Incorreto. A reciclagem serve para atualizar os conhecimentos de segurança.'
+    }
+];
+const quiz1 = createQuizEngine('q1', q1_questions, 5);
+function startQuiz1Intro() { quiz1.start(); }
+function verifyAnswer1() { quiz1.verify(); }
+function nextQuestion1() { quiz1.next(); }
+function resetQuiz1() { quiz1.reset(); }
+
+const q3_questions = [
+    {
+        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(241, 196, 15, 0.15);border:1px solid rgba(241, 196, 15, 0.3);color:var(--gold);box-shadow:0 0 10px rgba(241, 196, 15, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🟡 Atenção</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">A bateria atingiu 20% durante a operação.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">O que o operador deve fazer?</div>',
+        opts: ['Solicitar troca segura da bateria', 'Continuar operando até descarregar completamente', 'Aumentar velocidade para finalizar mais rápido', 'Ignorar o nível de carga'],
+        correct: 0, feedback_ok: '✅ Procedimento correto! A troca da bateria deve ocorrer ao atingir aproximadamente 20% de carga.', feedback_nok: '❌ Incorreto. O procedimento padrão indica que a bateria deve ser trocada ao atingir 20%.'
+    },
+    {
+        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(231, 76, 60, 0.15);border:1px solid rgba(231, 76, 60, 0.3);color:var(--red);box-shadow:0 0 10px rgba(231, 76, 60, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🔴 Crítico</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">A troca da bateria será realizada.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">Qual procedimento é obrigatório?</div>',
+        opts: ['Remover rapidamente sem desligar', 'Realizar sozinho para agilizar', 'Utilizar EPIs e apoio adequado', 'Desconectar apenas após remover'],
+        correct: 2, feedback_ok: '✅ Procedimento correto! O uso de EPIs e o apoio adequado são fundamentais na troca da bateria.', feedback_nok: '❌ Incorreto. É obrigatório desligar, desconectar cabos e usar EPIs adequados.'
+    },
+    {
+        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(46, 204, 113, 0.15);border:1px solid rgba(46, 204, 113, 0.3);color:var(--green);box-shadow:0 0 10px rgba(46, 204, 113, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🟢 Seguro</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">O operador está transportando um palete.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">Qual altura correta da carga?</div>',
+        opts: ['Encostada no chão', 'Acima da linha de visão', 'O mais alto possível', '15–20 cm do solo'],
+        correct: 3, feedback_ok: '✅ Procedimento correto! O deslocamento deve ser sempre feito entre 15 e 20 cm do solo.', feedback_nok: '❌ Incorreto. Para evitar acidentes, a carga deve transitar entre 15 e 20 cm do solo.'
+    },
+    {
+        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(241, 196, 15, 0.15);border:1px solid rgba(241, 196, 15, 0.3);color:var(--gold);box-shadow:0 0 10px rgba(241, 196, 15, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🟡 Atenção</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">O operador se aproxima de um cruzamento.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">O que deve ser feito?</div>',
+        opts: ['Acelerar para passar rápido', 'Usar buzina e reduzir velocidade', 'Levantar a carga', 'Ignorar pedestres'],
+        correct: 1, feedback_ok: '✅ Procedimento correto! Reduzir velocidade e emitir alerta sonoro são essenciais.', feedback_nok: '❌ Incorreto. É obrigatório reduzir a velocidade e usar a buzina em cruzamentos.'
+    },
+    {
+        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(231, 76, 60, 0.15);border:1px solid rgba(231, 76, 60, 0.3);color:var(--red);box-shadow:0 0 10px rgba(231, 76, 60, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🔴 Crítico</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">Outro funcionário pede carona no equipamento.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">Qual a atitude correta?</div>',
+        opts: ['Negar e seguir normas de segurança', 'Transportar em baixa velocidade', 'Permitir se for rápido', 'Permitir apenas sem carga'],
+        correct: 0, feedback_ok: '✅ Procedimento correto! A empilhadeira não é veículo de passageiros.', feedback_nok: '❌ Incorreto. O equipamento é exclusivo para transporte de cargas. Dar carona é proibido.'
+    }
+];
+const quiz3 = createQuizEngine('q3', q3_questions, 5);
+function startQuiz3Intro() { quiz3.start(); }
+function verifyAnswer3() { quiz3.verify(); }
+function nextQuestion3() { quiz3.next(); }
+function resetQuiz3() { quiz3.reset(); }
+
+/* ════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════ */
+const urlParams = new URLSearchParams(window.location.search);
+let restoreSlide = urlParams.get('restoreslide');
+let isLast = urlParams.get('last');
+
+if (restoreSlide !== null) {
+    currentSlide = parseInt(restoreSlide);
+    trackHistory(currentSlide);
+} else if (isLast === '1') {
+    currentSlide = TOTAL - 1;
+    trackHistory(currentSlide);
+} else {
+    currentSlide = 0;
+    trackHistory(currentSlide);
+}
+cleanSlideNavUrl();
+
+document.querySelectorAll('.slide').forEach((s, i) => {
+    if (i === currentSlide) s.classList.add('active');
+    else s.classList.remove('active');
+});
+const pbarInit = document.getElementById('pbar');
+if (pbarInit) pbarInit.style.width = (nr11GlobalSlide() / NR11_TOTAL_SLIDES * 100) + '%';
+
+const counterInit = document.getElementById('slide-counter');
+if (counterInit) {
+    counterInit.textContent = nr11GlobalSlide() + ' / ' + NR11_TOTAL_SLIDES;
+    counterInit.style.visibility = 'visible';
+}
+const btnBackInit = document.getElementById('btn-back');
+if (btnBackInit) {
+    btnBackInit.disabled = (currentSlide === 0 && !window.MODULE_NAV.prev);
+    btnBackInit.style.visibility = (currentSlide === 0 && !window.MODULE_NAV.prev) ? 'hidden' : 'visible';
+}
+const btnFwdInit = document.getElementById('btn-fwd');
+if (btnFwdInit) {
+    btnFwdInit.style.visibility = 'visible';
+}
+
+buildDots();
+if (document.getElementById('q1-question-panel')) quiz1.render();
+if (document.getElementById('q3-question-panel')) quiz3.render();
+updateNextButton();
+try { syncSlideVideos(currentSlide); } catch (e) { }
+try { window.updateQuizAudioHelper(); } catch (e) { }
+
+// removed persistence
+
+document.addEventListener('DOMContentLoaded', () => {
+    const interactives = document.querySelectorAll('.risk-card, .vplay, .c-badge');
+    const savedReqs = _loadReqState();
+    interactives.forEach((el, i) => {
+        el.classList.add('req-item');
+        el.title = 'Clique para confirmar leitura';
+        // tag with stable index for persistence
+        el.dataset.reqIndex = i;
+        // restore
+        if (savedReqs && savedReqs.indexOf(i) !== -1) {
+            el.classList.add('req-done');
+        }
+        el.addEventListener('click', function () {
+            if (this.classList.contains('req-done')) return;
+            this.classList.add('req-done');
+            // persist
+            try {
+                const idx = parseInt(this.dataset.reqIndex);
+                const arr = _loadReqState();
+                if (arr.indexOf(idx) === -1) arr.push(idx);
+                _saveReqState(arr);
+            } catch (e) { }
+            updateNextButton();
+        });
+    });
+
+    try { syncSlideVideos(currentSlide); } catch (e) { }
+
+    updateNextButton();
+});
+// ==========================================
+// LÓGICA DO VERDADEIRO OU FALSO (MÓDULO 2)
+// ==========================================
+const styleHUD = document.createElement('style');
+styleHUD.textContent = `
+        .hud-glow-correct {
+          box-shadow: 0 0 30px rgba(46, 204, 113, 0.4) !important;
+          transform: scale(1.01);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          border-radius: 12px;
+        }
+        .hud-glow-error {
+          box-shadow: 0 0 30px rgba(231, 76, 60, 0.4) !important;
+          transform: scale(1.01);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          border-radius: 12px;
+        }
+        .tf-btn {
+          transition: transform 0.1s ease, box-shadow 0.3s ease, background 0.3s ease !important;
+        }
+        .tf-btn:active {
+          transform: scale(0.95) !important;
+        }
+        .btn-tf-verify {
+          background: var(--gold);
+          color: var(--black);
+          border: none;
+          padding: 12px 30px;
+          border-radius: 8px;
+          font-family: var(--font-h);
+          font-weight: 700;
+          font-size: 16px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+        }
+        .btn-tf-verify:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(241, 196, 15, 0.5);
+        }
+        .btn-tf-verify:active {
+          transform: translateY(0);
+        }
+        .tf-btn.selected-visual {
+          transform: scale(0.98);
+          border-color: var(--gold) !important;
+          box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+        }
+        .hud-anim-enter {
+          animation: hudFadeIn 0.4s ease forwards;
+        }
+        @keyframes hudFadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `;
+document.head.appendChild(styleHUD);
+
+function playHUDBeep(type) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!window.hudAudioCtx) window.hudAudioCtx = new AudioContext();
+        const ctx = window.hudAudioCtx;
+        if (ctx.state === 'suspended') ctx.resume();
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        const now = ctx.currentTime;
+
+        if (type === 'click') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(900, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+            gain.gain.setValueAtTime(0.04, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+            osc.start(now);
+            osc.stop(now + 0.05);
+        } else if (type === 'correct') {
+            playCorrectAnswerSound();
+            return;
+        } else if (type === 'incorrect') {
+            playWrongAnswerSound();
+            return;
+        } else if (type === 'transition') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(500, now);
+            osc.frequency.exponentialRampToValueAtTime(700, now + 0.15);
+            gain.gain.setValueAtTime(0.0, now);
+            gain.gain.linearRampToValueAtTime(0.03, now + 0.05);
+            gain.gain.linearRampToValueAtTime(0.0, now + 0.15);
+            osc.start(now);
+            osc.stop(now + 0.15);
+        } else if (type === 'conclusion') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.setValueAtTime(554, now + 0.15);
+            osc.frequency.setValueAtTime(659, now + 0.3);
+            osc.frequency.setValueAtTime(880, now + 0.45);
+            gain.gain.setValueAtTime(0.0, now);
+            gain.gain.linearRampToValueAtTime(0.08, now + 0.1);
+            gain.gain.linearRampToValueAtTime(0.04, now + 0.4);
+            gain.gain.linearRampToValueAtTime(0.0, now + 0.8);
+            osc.start(now);
+            osc.stop(now + 0.8);
+        }
+    } catch (e) { }
+}
+
+const q2Data = [
+    { q: "A inspeção visual do equipamento deve ser realizada antes da operação.", ans: true, exp: "A verificação ajuda a identificar falhas e prevenir acidentes." },
+    { q: "Os garfos podem permanecer elevados durante o deslocamento.", ans: false, exp: "O deslocamento deve ocorrer com os garfos baixos para maior estabilidade." },
+    { q: "O botão de buzina auxilia na prevenção de colisões.", ans: true, exp: "A buzina alerta pessoas próximas durante a movimentação." },
+    { q: "O timão possui sistema de frenagem automática nas posições extremas.", ans: true, exp: "O freio atua automaticamente para aumentar a segurança operacional." },
+    { q: "Curvas em alta velocidade aumentam o risco de tombamento.", ans: true, exp: "A velocidade excessiva compromete a estabilidade do equipamento." },
+    { q: "A empilhadeira patolada é utilizada apenas para movimentação vertical.", ans: false, exp: "O equipamento realiza movimentação horizontal e elevação de cargas." },
+    { q: "A carga instável pode causar queda de materiais.", ans: true, exp: "O posicionamento incorreto da carga aumenta os riscos operacionais." },
+    { q: "O operador pode utilizar o equipamento sem conhecer os comandos.", ans: false, exp: "O conhecimento dos comandos é essencial para uma operação segura." }
+];
+
+let currentQ2 = 0;
+let scoreQ2 = 0;
+let selectedQ2Ans = null;
+
+function loadQuestion2(idx) {
+    if (idx >= q2Data.length) {
+        playHUDBeep('conclusion');
+        // Finished
+        { const _p = document.getElementById('sq2-question-panel'); if (_p) _p.style.display = 'none'; }
+
+        const pct = Math.round((scoreQ2 / q2Data.length) * 100);
+        const approved = scoreQ2 >= 5;
+
+        const rPanel = document.getElementById('sq2-result-panel');
+        const pctEl = document.getElementById('sq2-pct');
+        const starsEl = document.getElementById('sq2-stars');
+        const statusEl = document.getElementById('sq2-status');
+        const subEl = document.getElementById('sq2-sub');
+
+        if (rPanel) {
+            rPanel.style.display = 'block';
+            rPanel.classList.remove('q-result-anim');
+            void rPanel.offsetWidth;
+            rPanel.classList.add('q-result-anim');
+        }
+
+        if (pctEl) {
+            pctEl.textContent = pct + '%';
+            pctEl.className = 'result-pct ' + (approved ? 'green' : 'try-c');
+        }
+
+        if (starsEl) {
+            starsEl.textContent = pct === 100 ? '⭐⭐⭐' : approved ? '⭐⭐' : '⭐';
+            starsEl.classList.remove('stars-anim');
+            void starsEl.offsetWidth;
+            starsEl.classList.add('stars-anim');
+        }
+
+        if (statusEl) {
+            statusEl.textContent = approved ? '✅ Aprovado!' : '🔄 Continue Tentando!';
+            statusEl.className = 'r-status ' + (approved ? 'ap' : 'try');
+        }
+
+        if (subEl) {
+            subEl.textContent = `Você acertou ${scoreQ2} de ${q2Data.length} questões.` + (approved ? " Parabéns!" : "");
+        }
+
+        const slide = document.getElementById('sq2');
+        if (approved && slide && slide.classList.contains('req-item')) {
+            slide.classList.add('req-done');
+        }
+        updateNextButton();
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+        return;
+    }
+
+    const data = q2Data[idx];
+    const counter = document.getElementById('sq2-counter');
+    if (counter) counter.textContent = 'Pergunta ' + (idx + 1) + ' de ' + q2Data.length;
+
+    const textElement = document.getElementById('sq2-text');
+    if (textElement) {
+        textElement.textContent = data.q;
+        textElement.classList.remove('hud-anim-enter');
+        void textElement.offsetWidth;
+        textElement.classList.add('hud-anim-enter');
+    }
+
+    // Remove glow
+    const fbPanel = document.getElementById('sq2-question-panel');
+    if (fbPanel) {
+        fbPanel.classList.remove('hud-glow-correct', 'hud-glow-error');
+    }
+
+    selectedQ2Ans = null;
+    const vContainer = document.getElementById('sq2-verify-container');
+    if (vContainer) {
+        vContainer.style.opacity = '0';
+        vContainer.style.visibility = 'hidden';
+        setTimeout(() => { vContainer.style.display = 'none'; }, 300);
+    }
+
+    // Reset buttons
+    const btnTrue = document.getElementById('btn-tf-true');
+    const btnFalse = document.getElementById('btn-tf-false');
+    resetTfButtons(btnTrue, btnFalse);
+    if (btnTrue) btnTrue.disabled = false;
+    if (btnFalse) btnFalse.disabled = false;
+
+    // Hide feedback
+    const fb = document.getElementById('sq2-feedback');
+    if (fb) {
+        fb.className = 'tf-feedback';
+        fb.style.display = 'none';
+    }
+    try { window.updateQuizAudioHelper(); } catch (e) { }
+}
+
+window.selectAnswer2 = function (isTrue) {
+    playHUDBeep('click');
+    selectedQ2Ans = isTrue;
+
+    const btnTrue = document.getElementById('btn-tf-true');
+    const btnFalse = document.getElementById('btn-tf-false');
+    resetTfButtons(btnTrue, btnFalse);
+
+    if (isTrue) {
+        if (btnTrue) btnTrue.classList.add('selected-visual');
+    } else {
+        if (btnFalse) btnFalse.classList.add('selected-visual');
+    }
+
+    const vContainer = document.getElementById('sq2-verify-container');
+    if (vContainer) {
+        vContainer.style.display = 'block';
+        setTimeout(() => {
+            vContainer.style.opacity = '1';
+            vContainer.style.visibility = 'visible';
+        }, 10);
+    }
+};
+
+window.verifyAnswer2 = function () {
+    if (selectedQ2Ans === null) return;
+
+    const data = q2Data[currentQ2];
+    const isCorrect = (data.ans === selectedQ2Ans);
+
+    if (isCorrect) scoreQ2++;
+
+    const vContainer = document.getElementById('sq2-verify-container');
+    if (vContainer) {
+        vContainer.style.opacity = '0';
+        vContainer.style.visibility = 'hidden';
+        setTimeout(() => { vContainer.style.display = 'none'; }, 300);
+    }
+
+    setTimeout(() => {
+        playHUDBeep(isCorrect ? 'correct' : 'incorrect');
+    }, 100);
+
+    const fbPanel = document.getElementById('sq2-question-panel');
+    if (fbPanel) {
+        fbPanel.classList.remove('hud-glow-correct', 'hud-glow-error');
+        fbPanel.classList.add(isCorrect ? 'hud-glow-correct' : 'hud-glow-error');
+    }
+
+    const btnTrue = document.getElementById('btn-tf-true');
+    const btnFalse = document.getElementById('btn-tf-false');
+    resetTfButtons(btnTrue, btnFalse);
+    if (btnTrue) btnTrue.disabled = true;
+    if (btnFalse) btnFalse.disabled = true;
+
+    const selectedBtn = selectedQ2Ans ? btnTrue : btnFalse;
+    if (selectedBtn) selectedBtn.classList.add(isCorrect ? 'selected-true' : 'selected-false');
+
+    const fb = document.getElementById('sq2-feedback');
+    const fbTitle = document.getElementById('sq2-fb-title');
+    const fbText = document.getElementById('sq2-fb-text');
+
+    if (fb && fbTitle && fbText) {
+        fb.style.display = 'block';
+        fb.className = 'tf-feedback show';
+        if (isCorrect) {
+            fb.classList.add('success');
+            fb.classList.remove('error');
+        } else {
+            fb.classList.add('error');
+            fb.classList.remove('success');
+        }
+        fbTitle.textContent = isCorrect ? 'Correto!' : 'Incorreto!';
+        fbText.textContent = data.exp;
+
+        // Force reflow for animation
+        void fb.offsetWidth;
+        fb.classList.add('visible');
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            setTimeout(function () {
+                fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }, 120);
+        }
+    }
+};
+
+window.nextQuestion2 = function () {
+    playHUDBeep('transition');
+    currentQ2++;
+    loadQuestion2(currentQ2);
+};
+
+window.resetQuiz2 = function () {
+    playHUDBeep('transition');
+    currentQ2 = 0;
+    scoreQ2 = 0;
+    selectedQ2Ans = null;
+
+    document.getElementById('sq2-result-panel').style.display = 'none';
+    document.getElementById('sq2-question-panel').style.display = 'block';
+
+    // removed persistence
+
+    loadQuestion2(currentQ2);
+};
+
+window.startQuiz2Intro = function () {
+    playHUDBeep('transition');
+    const introPanel = document.getElementById('sq2-intro-panel');
+    if (introPanel) introPanel.style.display = 'none';
+
+    const qPanel = document.getElementById('sq2-question-panel');
+    if (qPanel) {
+        qPanel.style.display = 'block';
+        qPanel.classList.remove('hud-anim-enter');
+        void qPanel.offsetWidth;
+        qPanel.classList.add('hud-anim-enter');
+    }
+
+    currentQ2 = 0;
+    scoreQ2 = 0;
+    loadQuestion2(currentQ2);
+    try { window.updateQuizAudioHelper(); } catch (e) { }
+};
+
+/* ════════════════════════════════════════
+   ENGINE: CONDUÇÃO SEGURA (1 A 1)
+   ════════════════════════════════════════ */
+const conducaoData = [
+    { text: "Usar celular durante operação", isAllowed: false, explanation: "O uso de celular reduz a atenção do operador e aumenta o risco de acidentes." },
+    { text: "Reduzir velocidade em curvas", isAllowed: true, explanation: "Reduzir a velocidade aumenta a estabilidade e evita tombamentos." },
+    { text: "Transportar pessoas no equipamento", isAllowed: false, explanation: "O equipamento não foi projetado para transportar passageiros." },
+    { text: "Utilizar buzina em cruzamentos", isAllowed: true, explanation: "A buzina ajuda a alertar pedestres e outros operadores." },
+    { text: "Circular com carga elevada", isAllowed: false, explanation: "Circular com a carga elevada reduz a estabilidade do equipamento." },
+    { text: "Olhar sempre na direção do movimento", isAllowed: true, explanation: "Manter atenção na direção do deslocamento evita colisões." }
+];
+let currentConducao = 0;
+let conducaoAnswered = false;
+
+function resetConducaoBtnClasses() {
+    resetTfButtons(
+        document.getElementById('btn-conducao-true'),
+        document.getElementById('btn-conducao-false')
+    );
+}
+
+function loadConducao(idx) {
+    if (idx >= conducaoData.length) return;
+    conducaoAnswered = false;
+
+    const counter = document.getElementById('conducao-counter');
+    if (counter) counter.textContent = 'Ação ' + (idx + 1) + ' de ' + conducaoData.length;
+
+    const textElement = document.getElementById('conducao-text');
+    if (textElement) textElement.textContent = conducaoData[idx].text;
+
+    resetConducaoBtnClasses();
+    const btnTrue = document.getElementById('btn-conducao-true');
+    const btnFalse = document.getElementById('btn-conducao-false');
+    if (btnTrue) btnTrue.disabled = false;
+    if (btnFalse) btnFalse.disabled = false;
+
+    const fb = document.getElementById('conducao-feedback');
+    if (fb) {
+        fb.className = 'tf-feedback';
+        fb.style.display = 'none';
+        fb.style.opacity = '';
+    }
+    const fbTitle = document.getElementById('conducao-fb-title');
+    const fbText = document.getElementById('conducao-fb-text');
+    if (fbTitle) fbTitle.textContent = '';
+    if (fbText) fbText.innerHTML = '';
+    try { window.updateQuizAudioHelper(); } catch (e) { }
+}
+
+// ============================================
+// CORREÇÃO DE ÁUDIO - MÓDULO 3 CONDUÇÃO
+// Utilizando o mesmo sistema sintetizado (playHUDBeep) do módulo 2
+// para garantir consistência e zero delay
+// ============================================
+
+window.answerConducao = function (isAllowBtn) {
+    if (conducaoAnswered) return;
+    conducaoAnswered = true;
+
+    playHUDBeep('click');
+
+    const data = conducaoData[currentConducao];
+    const isCorrect = (data.isAllowed === isAllowBtn);
+
+    const btnTrue = document.getElementById('btn-conducao-true');
+    const btnFalse = document.getElementById('btn-conducao-false');
+    resetConducaoBtnClasses();
+    if (btnTrue) { btnTrue.disabled = true; btnTrue.blur(); }
+    if (btnFalse) { btnFalse.disabled = true; btnFalse.blur(); }
+
+    const selectedBtn = isAllowBtn ? btnTrue : btnFalse;
+
+    const fb = document.getElementById('conducao-feedback');
+    const fbTitle = document.getElementById('conducao-fb-title');
+    const fbText = document.getElementById('conducao-fb-text');
+
+    if (isCorrect) {
+        if (selectedBtn) selectedBtn.classList.add('selected-true');
+
+        // Timeout para garantir que a animação CSS não trave o áudio sintetizado
+        setTimeout(() => { playHUDBeep('correct'); }, 50);
+
+        if (fb && fbTitle && fbText) {
+            fb.style.display = 'block';
+            fb.style.opacity = '1';
+            fb.className = 'tf-feedback show success visible';
+            fbTitle.textContent = 'Correto!';
+            fbText.innerHTML = data.explanation;
+        }
+
+        setTimeout(() => {
+            currentConducao++;
+            if (currentConducao < conducaoData.length) {
+                loadConducao(currentConducao);
+            } else {
+                const qPanel = document.getElementById('conducao-question-panel');
+                const rPanel = document.getElementById('conducao-result-panel');
+                if (qPanel) qPanel.style.display = 'none';
+                if (rPanel) rPanel.style.display = 'block';
+
+                const container = document.getElementById('conducao-container');
+                if (container) {
+                    container.classList.add('req-done');
+                    updateNextButton();
+                }
+                playHUDBeep('conclusion');
+            }
+            try { window.updateQuizAudioHelper(); } catch (e) { }
+        }, 3500);
+
+    } else {
+        if (selectedBtn) selectedBtn.classList.add('selected-false');
+
+        setTimeout(() => { playHUDBeep('incorrect'); }, 50);
+
+        if (fb && fbTitle && fbText) {
+            fb.style.display = 'block';
+            fb.style.opacity = '1';
+            fb.className = 'tf-feedback show error visible';
+            fbTitle.textContent = 'Incorreto';
+            fbText.innerHTML = data.explanation + '<br><br><strong>Tente novamente.</strong>';
+        }
+
+        if (selectedBtn) {
+            selectedBtn.style.animation = 'none';
+            void selectedBtn.offsetWidth;
+            selectedBtn.style.animation = 'shake 0.5s ease-in-out';
+        }
+
+        setTimeout(() => {
+            conducaoAnswered = false;
+            resetConducaoBtnClasses();
+            if (btnTrue) btnTrue.disabled = false;
+            if (btnFalse) btnFalse.disabled = false;
+            if (fb) fb.className = 'tf-feedback';
+        }, 2500);
+    }
+};
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', () => {
+    loadConducao(0);
+});
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', () => {
+    const introPanel = document.getElementById('sq2-intro-panel');
+    if (introPanel) introPanel.style.display = 'block';
+
+    const qPanel = document.getElementById('sq2-question-panel');
+    if (qPanel) qPanel.style.display = 'none';
+});
+
+window.checkMod4Item = function (el) {
+    if (el.classList.contains('req-done')) return;
+    if (window.soundClick) window.soundClick.play();
+    el.classList.add('req-done');
+    el.classList.add('active');
+
+    const reqs = el.closest('.m4-check-list').querySelectorAll('.req-item');
+    const done = el.closest('.m4-check-list').querySelectorAll('.req-done').length;
+    const fill = el.closest('.slide').querySelector('.m4-progress-fill');
+    const text = el.closest('.slide').querySelector('.m4-progress-top span:last-child');
+
+    if (fill) fill.style.width = ((done / reqs.length) * 100) + '%';
+    if (text) text.textContent = done + '/' + reqs.length + ' ITENS';
+
+    if (done === reqs.length) {
+        if (window.soundCorrect) setTimeout(() => window.soundCorrect.play(), 200);
+        const comp = el.closest('.slide').querySelector('.m4-completion');
+        if (comp) comp.style.display = 'block';
+
+        const contentArea = el.closest('.slide').querySelector('.content-area');
+        if (contentArea) {
+            contentArea.style.justifyContent = 'flex-start';
+        }
+    }
+    updateNextButton();
+}
+
+const q4_questions = [
+    {
+        q: '<div class="q4-sit-title">SITUAÇÃO 1</div><div class="q4-sit-desc">A carga começou a inclinar durante o deslocamento.</div>',
+        opts: ['PARAR E REPOSICIONAR', 'CONTINUAR A OPERAÇÃO'],
+        correct: 0, feedback_ok: '✅ Correto! Parar e reposicionar evita o tombamento imediato da carga.', feedback_nok: '❌ Incorreto. Continuar a operação com carga inclinada causará um acidente iminente.'
+    },
+    {
+        q: '<div class="q4-sit-title">SITUAÇÃO 2</div><div class="q4-sit-desc">O trajeto possui pessoas circulando próximas.</div>',
+        opts: ['MANTER VELOCIDADE', 'REDUZIR E SINALIZAR'],
+        correct: 1, feedback_ok: '✅ Correto! A prioridade é sempre do pedestre. Reduza a velocidade e use a buzina.', feedback_nok: '❌ Incorreto. Manter a velocidade com pedestres próximos é uma falha grave de segurança.'
+    },
+    {
+        q: '<div class="q4-sit-title">SITUAÇÃO 3</div><div class="q4-sit-desc">Sua visão frontal foi totalmente bloqueada pela carga alta.</div>',
+        opts: ['CONDUZIR DE RÉ', 'TENTAR OLHAR POR CIMA'],
+        correct: 0, feedback_ok: '✅ Correto! Se a visibilidade frontal estiver bloqueada, conduza o equipamento de marcha à ré.', feedback_nok: '❌ Incorreto. É impossível garantir a segurança operando às cegas ou tentando olhar por cima.'
+    },
+    {
+        q: '<div class="q4-sit-title">SITUAÇÃO 4</div><div class="q4-sit-desc">Você finalizou o turno e precisa estacionar o equipamento.</div>',
+        opts: ['BAIXAR OS GARFOS AO CHÃO', 'DEIXAR OS GARFOS ELEVADOS'],
+        correct: 0, feedback_ok: '✅ Correto! Os garfos devem estar sempre abaixados e apoiados no chão ao estacionar.', feedback_nok: '❌ Incorreto. Deixar garfos elevados cria um risco severo de tropeço e colisão para pedestres.'
+    },
+    {
+        q: '<div class="q4-sit-title">SITUAÇÃO 5</div><div class="q4-sit-desc">Durante o deslocamento, você precisa passar por uma rampa.</div>',
+        opts: ['SUBIR DE FRENTE, DESCER DE RÉ', 'SUBIR E DESCER DE FRENTE'],
+        correct: 0, feedback_ok: '✅ Correto! A carga deve estar sempre apontada para o lado mais alto da rampa para evitar tombamento.', feedback_nok: '❌ Incorreto. Descer de frente com carga em uma rampa fatalmente fará a carga escorregar ou a máquina tombar.'
+    }
+];
+const quiz4 = createQuizEngine('q4', q4_questions, 5);
+if (document.getElementById('q4-question-panel')) quiz4.render();
+function startQuiz4Intro() { quiz4.start(); }
+function verifyAnswer4() { quiz4.verify(); }
+function nextQuestion4() { quiz4.next(); }
+function resetQuiz4() { quiz4.reset(); }
+
+const q5_questions = [
+    {
+        q: '<img src="assets/imgur/YZ03elm.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Corredor Obstruído</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">O operador encontrou um corredor parcialmente bloqueado durante a movimentação da carga.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual deve ser o procedimento correto?</div>',
+        opts: ['Continuar normalmente', 'Sinalizar e liberar o corredor antes da operação', 'Passar rapidamente pelo bloqueio', 'Ignorar o obstáculo'],
+        correct: 1, feedback_ok: '✅ Correto! O corredor deve ser sinalizado e liberado antes de qualquer movimentação.', feedback_nok: '❌ Incorreto. É necessário sinalizar e liberar o corredor antes da operação.'
+    },
+    {
+        q: '<img src="assets/imgur/jxIK2Rh.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Carga Elevada</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">A carga está sendo transportada acima da altura recomendada.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual é o principal risco desta operação?</div>',
+        opts: ['Melhor visibilidade', 'Maior estabilidade', 'Maior velocidade', 'Comprometimento da visibilidade e risco de colisão'],
+        correct: 3, feedback_ok: '✅ Correto! Transportar cargas elevadas compromete a visibilidade e aumenta gravemente os riscos de colisão.', feedback_nok: '❌ Incorreto. O principal risco é o comprometimento da visibilidade e a colisão.'
+    },
+    {
+        q: '<img src="assets/imgur/EwLaKkj.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">EPI Ausente</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">O operador iniciou a movimentação sem todos os EPIs obrigatórios.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual procedimento está correto?</div>',
+        opts: ['Interromper a operação até regularizar os EPIs', 'Operar apenas em áreas vazias', 'Continuar se a operação for rápida', 'Solicitar ajuda apenas em caso de risco'],
+        correct: 0, feedback_ok: '✅ Correto! Nenhuma operação deve prosseguir sem os EPIs regularizados e em conformidade.', feedback_nok: '❌ Incorreto. O procedimento correto é interromper a operação até regularizar os EPIs.'
+    },
+    {
+        q: '<img src="assets/imgur/V9SVveG.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Emergência Operacional</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">Foi identificado um princípio de incêndio próximo à área de movimentação.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual deve ser a primeira ação?</div>',
+        opts: ['Continuar a operação', 'Improvisar sozinho o combate', 'Parar a operação e afastar as pessoas', 'Mover a carga rapidamente'],
+        correct: 2, feedback_ok: '✅ Correto! Parar a operação imediatamente e priorizar a vida afastando as pessoas é essencial.', feedback_nok: '❌ Incorreto. A primeira ação deve ser parar a operação e afastar as pessoas.'
+    },
+    {
+        q: '<img src="assets/imgur/mAXUjMF.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Distanciamento Seguro</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">Durante a movimentação, o operador reduziu excessivamente a distância da estrutura lateral.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual distância mínima deve ser mantida?</div>',
+        opts: ['20 cm', '50 cm', '30 cm', 'Não existe distância mínima'],
+        correct: 1, feedback_ok: '✅ Correto! Deve-se manter no mínimo 50 cm de distância segura das estruturas.', feedback_nok: '❌ Incorreto. A distância mínima que deve ser mantida é de 50 cm.'
+    }
+];
+const quiz5 = createQuizEngine('q5', q5_questions, 5);
+if (document.getElementById('q5-question-panel')) quiz5.render();
+function startQuiz5Intro() { quiz5.start(); }
+function verifyAnswer5() { quiz5.verify(); }
+function nextQuestion5() { quiz5.next(); }
+function resetQuiz5() { quiz5.reset(); }
+
+const q6_questions = [
+    {
+        q: '<div class="q-img-wrap"><img src="assets/imgur/CwVijDg.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Verificação do Trajeto ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O operador irá iniciar a movimentação sem verificar o corredor operacional.</p></div>',
+        correct: 1, feedback: 'O trajeto deve ser verificado antes da operação.'
+    },
+    {
+        q: '<div class="q-img-wrap"><img src="assets/imgur/olIIX5d.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Altura da Carga ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">A carga está posicionada corretamente para movimentação segura.</p></div>',
+        correct: 0, feedback: 'A altura da carga está dentro do padrão seguro.'
+    },
+    {
+        q: '<div class="q-img-wrap"><img src="assets/imgur/ywjw7Y8.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Distração Operacional ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O operador utiliza celular durante a movimentação da carga.</p></div>',
+        correct: 1, feedback: 'O foco operacional deve ser mantido durante toda a operação.'
+    },
+    {
+        q: '<div class="q-img-wrap"><img src="assets/imgur/YQuknH6.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Proteção Operacional ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O operador iniciou a operação utilizando os EPIs obrigatórios.</p></div>',
+        correct: 0, feedback: 'Os equipamentos de proteção estão corretos.'
+    },
+    {
+        q: '<div class="q-img-wrap"><img src="assets/imgur/DuAmERU.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Finalização Segura ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O equipamento foi estacionado corretamente ao final da operação.</p></div>',
+        correct: 0, feedback: 'A operação foi encerrada corretamente.'
+    }
+];
+
+
+
+function toggleQuiz6Music() {
+    const m = document.getElementById('q6-bg-music');
+    const btn = document.getElementById('q6-btn-music-toggle');
+    if (!m || !btn) return;
+    m.muted = !m.muted;
+    if (m.muted) {
+        btn.innerHTML = '🔇 MUSIC OFF';
+        btn.classList.add('is-muted');
+        btn.classList.remove('is-on');
+    } else {
+        btn.innerHTML = '🔊 MUSIC ON';
+        btn.classList.remove('is-muted');
+        btn.classList.add('is-on');
+    }
+}
+
+function playQuiz6Audio(type) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const now = ctx.currentTime;
+
+        if (type === 'start') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(50, now);
+            osc.frequency.exponentialRampToValueAtTime(10, now + 1);
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.3, now + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 1);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(now); osc.stop(now + 1);
+        } else if (type === 'click') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, now);
+            osc.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(now); osc.stop(now + 0.1);
+        } else if (type === 'correct') {
+            playCorrectAnswerSound();
+            return;
+        } else if (type === 'incorrect') {
+            playWrongAnswerSound();
+            return;
+        } else if (type === 'transition') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1200, now);
+            osc.frequency.linearRampToValueAtTime(2000, now + 0.2);
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.05, now + 0.1);
+            gain.gain.linearRampToValueAtTime(0, now + 0.2);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(now); osc.stop(now + 0.2);
+        } else if (type === 'end') {
+            // Soft short tech sound instead of strong chord
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, now);
+            osc.frequency.exponentialRampToValueAtTime(1200, now + 0.3);
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.05, now + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now); osc.stop(now + 0.5);
+        }
+    } catch (e) { }
+}
+
+function createQuiz6Engine(questions) {
+    let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
+
+    function start() {
+        const introPanel = document.getElementById('q6-intro-panel');
+        const qPanel = document.getElementById('q6-question-panel');
+        if (introPanel) introPanel.style.display = 'none';
+        if (qPanel) {
+            qPanel.style.display = 'block';
+            qPanel.style.opacity = '0';
+            setTimeout(() => qPanel.style.opacity = '1', 50);
+        }
+        playQuiz6Audio('start');
+        const m = document.getElementById('q6-bg-music');
+        if (m) {
+            m.volume = 0.15;
+            m.play().catch(e => console.log('Audio autoplay blocked'));
+        }
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function render() {
+        const qPanel = document.getElementById('q6-question-panel');
+        if (qPanel) qPanel.classList.remove('q-result-anim');
+
+        const _q6hud = document.getElementById('q6-hud-status'); if (_q6hud) _q6hud.textContent = '🟢 ANÁLISE EM EXECUÇÃO';
+
+        const q = questions[idx];
+
+        const counter = document.getElementById('q6-counter');
+        if (counter) counter.textContent = `ANÁLISE ${idx + 1}/${questions.length}`;
+
+        const txt = document.getElementById('q6-text');
+        if (txt) txt.innerHTML = q.q;
+
+        const opts = document.getElementById('q6-options');
+        if (opts) {
+            opts.innerHTML = '';
+
+            // Botão ✅ LIBERAR (índice 0)
+            const btnA = document.createElement('div');
+            btnA.className = 'q-opt opt-approve';
+            btnA.innerHTML = '✅ LIBERAR';
+            btnA.onclick = () => selectAnswer(0, btnA);
+            opts.appendChild(btnA);
+
+            // Botão ❌ NÃO LIBERAR (índice 1)
+            const btnR = document.createElement('div');
+            btnR.className = 'q-opt opt-reject';
+            btnR.innerHTML = '❌ NÃO LIBERAR';
+            btnR.onclick = () => selectAnswer(1, btnR);
+            opts.appendChild(btnR);
+        }
+
+        const fb = document.getElementById('q6-feedback');
+        if (fb) { fb.className = 'q-feedback'; fb.textContent = ''; }
+
+        const vCont = document.getElementById('q6-verify-container');
+        if (vCont) { vCont.style.display = 'none'; vCont.style.opacity = '0'; vCont.style.visibility = 'hidden'; }
+
+        const btn = document.getElementById('btn-next-q6');
+        if (btn) btn.className = 'btn-next-q';
+        answered = false;
+        selectedOptIdx = -1;
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function selectAnswer(i, el) {
+        if (answered) return;
+        selectedOptIdx = i;
+        const allOpts = document.querySelectorAll('#q6-options .q-opt');
+        allOpts.forEach(clearAnswerState);
+        el.classList.add('selected');
+        playQuiz6Audio('click');
+
+        const vCont = document.getElementById('q6-verify-container');
+        if (vCont) {
+            vCont.style.display = 'block';
+            setTimeout(() => {
+                vCont.style.opacity = '1';
+                vCont.style.visibility = 'visible';
+            }, 50);
+        }
+    }
+
+    function verify() {
+        if (answered || selectedOptIdx === -1) return;
+        answered = true;
+
+        const vCont = document.getElementById('q6-verify-container');
+        if (vCont) { vCont.style.display = 'none'; vCont.style.opacity = '0'; vCont.style.visibility = 'hidden'; }
+
+        const q = questions[idx];
+        const allOpts = document.querySelectorAll('#q6-options .q-opt');
+        allOpts.forEach(function (o) {
+            clearAnswerState(o);
+            o.style.pointerEvents = 'none';
+        });
+        if (allOpts[selectedOptIdx]) allOpts[selectedOptIdx].classList.add('selected');
+        const fb = document.getElementById('q6-feedback');
+
+        if (selectedOptIdx === q.correct) {
+            if (fb) { fb.innerHTML = `<span style="font-family:monospace; color:#5ddb8c;">[ DECISÃO CORRETA ]</span> ${q.feedback}`; fb.className = 'q-feedback ok'; }
+            document.getElementById('q6-hud-status').textContent = '✅ ANÁLISE CONCLUÍDA: PROCEDIMENTO VALIDADO';
+            score++; playQuiz6Audio('correct');
+        } else {
+            if (fb) { fb.innerHTML = `<span style="font-family:monospace; color:#e74c3c;">[ FALHA DE SEGURANÇA ]</span> ${q.feedback}`; fb.className = 'q-feedback nok'; }
+            document.getElementById('q6-hud-status').innerHTML = '<span style="color:#e74c3c;">⚠️ ALERTA: DECISÃO INCORRETA</span>';
+            playQuiz6Audio('incorrect');
+        }
+        const btn = document.getElementById('btn-next-q6');
+        if (btn) btn.className = 'btn-next-q show';
+
+        setTimeout(function () {
+            const target = document.getElementById('q6-feedback');
+            if (target && window.matchMedia('(max-width: 768px)').matches) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }, 80);
+    }
+
+    function next() {
+        idx++;
+        if (idx < questions.length) {
+            playQuiz6Audio('transition');
+            render();
+        }
+        else { showResult(); }
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function showResult() {
+        playQuiz6Audio('end');
+        const m = document.getElementById('q6-bg-music');
+        if (m) m.pause();
+
+        const qPanel = document.getElementById('q6-question-panel');
+        if (qPanel) qPanel.style.display = 'none';
+        const rPanel = document.getElementById('q6-result-panel');
+        if (rPanel) {
+            rPanel.style.display = 'block';
+            rPanel.classList.remove('q-result-anim');
+            void rPanel.offsetWidth;
+            rPanel.classList.add('q-result-anim');
+        }
+        const pct = score / questions.length;
+        const approved = pct >= 0.60;
+
+        const pctEl = document.getElementById('q6-pct');
+        if (pctEl) {
+            pctEl.textContent = Math.round(pct * 100) + '%';
+            pctEl.className = 'result-pct ' + (approved ? 'green' : 'red-c');
+            if (!approved) {
+                pctEl.style.textShadow = '0 0 50px rgba(231,76,60,0.5)';
+            } else {
+                pctEl.style.textShadow = '0 0 50px rgba(46,204,113,0.5)';
+            }
+        }
+
+        const starsEl = document.getElementById('q6-stars');
+        if (starsEl) {
+            starsEl.textContent = pct === 1 ? '⭐⭐⭐' : pct >= 0.60 ? '⭐⭐' : '⭐';
+            starsEl.classList.remove('stars-anim');
+            void starsEl.offsetWidth;
+            starsEl.classList.add('stars-anim');
+        }
+
+        const status = document.getElementById('q6-status');
+        if (status) {
+            status.textContent = approved ? '✅ Aprovado!' : '❌ Tente Novamente';
+            status.className = 'r-status ' + (approved ? 'ap' : 'ref');
+        }
+
+        const sub = document.getElementById('q6-sub');
+        if (sub) {
+            sub.textContent = approved
+                ? `Você validou ${score} de ${questions.length} operações corretamente. Os procedimentos operacionais foram validados com sucesso.`
+                : `Você validou ${score} de ${questions.length} operações corretamente. Revise os procedimentos operacionais e tente novamente.`;
+        }
+
+        const subAdd = document.getElementById('q6-sub-additional');
+        if (subAdd) subAdd.textContent = '';
+
+        const btnF = document.getElementById('q6-btn-final');
+        if (btnF) {
+            btnF.textContent = 'Refazer';
+            btnF.onclick = resetQuiz6;
+        }
+        updateNextButton();
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    function reset() {
+        idx = 0; score = 0; answered = false; selectedOptIdx = -1;
+        const introPanel = document.getElementById('q6-intro-panel');
+        const qPanel = document.getElementById('q6-question-panel');
+        const rPanel = document.getElementById('q6-result-panel');
+
+        if (introPanel) introPanel.style.display = 'block';
+        if (qPanel) qPanel.style.display = 'none';
+        if (rPanel) rPanel.style.display = 'none';
+        const m = document.getElementById('q6-bg-music');
+        if (m) { m.pause(); m.currentTime = 0; }
+
+        // Re-render immediately to clear visual selections
+        render();
+        try { window.updateQuizAudioHelper(); } catch (e) { }
+    }
+
+    return { start, render, verify, next, reset };
+}
+
+const quiz6 = createQuiz6Engine(q6_questions);
+if (document.getElementById('q6-question-panel')) quiz6.render();
+function startQuiz6Intro() { quiz6.start(); }
+function verifyAnswer6() { quiz6.verify(); }
+function nextQuestion6() { quiz6.next(); }
+function resetQuiz6() { quiz6.reset(); }
+
+
+
+/* === Override Próximo button label/behavior at module end === */
+(function () {
+    const btnFwd = document.getElementById('btn-fwd');
+    if (!btnFwd) return;
+
+    // Normalize button structure: <span class="fwd-label">TEXT</span> + <svg/>
+    (function normalize() {
+        const svg = btnFwd.querySelector('svg');
+        let label = btnFwd.querySelector('.fwd-label');
+        if (!label) {
+            label = document.createElement('span');
+            label.className = 'fwd-label';
+            label.textContent = 'PRÓXIMO';
+            btnFwd.innerHTML = '';
+            btnFwd.appendChild(label);
+            if (svg) btnFwd.appendChild(svg);
+        }
+    })();
+
+    const origUpdate = window.updateNextButton;
+    window.updateNextButton = function () {
+        if (typeof origUpdate === 'function') origUpdate();
+        try {
+            const total = document.querySelectorAll('.slide').length;
+            const label = btnFwd.querySelector('.fwd-label');
+            const isLast = currentSlide === total - 1;
+            const hasNextModule = window.MODULE_NAV && window.MODULE_NAV.next;
+
+            if (isLast && hasNextModule) {
+                // Last slide of non-final module: "PRÓXIMO MÓDULO"
+                btnFwd.style.display = 'flex';
+                btnFwd.disabled = !isSlideCompleted(currentSlide);
+                if (label) label.textContent = 'PRÓXIMO MÓDULO';
+                btnFwd.classList.add('btn-next-module');
+            } else {
+                // Restore default label "PRÓXIMO"
+                if (label) label.textContent = 'PRÓXIMO';
+                btnFwd.classList.remove('btn-next-module');
+            }
+
+            // Cover slide (index, slide 0): hide nav completely - "INICIAR" handles it
+            const navEl = document.getElementById('nav');
+            if (window.MODULE_NAV && window.MODULE_NAV.id === 'index' && currentSlide === 0) {
+                if (navEl) navEl.classList.add('nav-hidden-cover');
+            } else {
+                if (navEl) navEl.classList.remove('nav-hidden-cover');
+            }
+        } catch (e) { }
+    };
+    try { window.updateNextButton(); } catch (e) { }
+})();
+
+
+
+/* ════════════════════════════════════════
+   GLOBAL CLICK SOUND for cards (sem duplicar)
+   Toca o som do flip card SOMENTE em cards que
+   não tem som próprio. Detecta pelo onclick handler.
+   ════════════════════════════════════════ */
+(function () {
+    const cardSelectors = [
+        '.flip-card',
+        '.comp-card-modern',
+        '.compare-card',
+        '.hub-spoke',
+        '.icon-card',
+        '.def-banner',
+        '.check-item',
+        '.stat-pill',
+        '.risk-card',
+        '.sum-item',
+        '.rule-card',
+        '.rampas-card',
+        '.mod5-card',
+        '.hud-panel-item',
+        '.passo-card',
+        '.c-badge',
+        '.epi-img-wrapper',
+        '.epi-card'
+    ];
+    const soundPatterns = /playBeep|playHUDBeep|playTechClick|playQuiz6Audio|soundClick|playClick|clickAudio|new Audio/;
+
+    function hasOwnSound(el) {
+        if (!el) return false;
+        // Walk up the tree checking onclick attributes
+        let cur = el;
+        while (cur && cur !== document.body) {
+            const oc = cur.getAttribute && cur.getAttribute('onclick');
+            if (oc && soundPatterns.test(oc)) return true;
+            cur = cur.parentElement;
+        }
+        return false;
+    }
+
+    document.addEventListener('click', function (ev) {
+        const target = ev.target.closest(cardSelectors.join(','));
+        if (!target) return;
+        if (hasOwnSound(target)) return;
+        try { playBeep('flip'); } catch (e) { }
+    }, true);
+})();
+
+
+/* ════════════════════════════════════════
+   ACESSIBILIDADE — Ouvir (TTS) & Libras
+   Injetado automaticamente em todas as páginas
+   ════════════════════════════════════════ */
+(function () {
+    if (window.__a11yInjected) return;
+    window.__a11yInjected = true;
+
+    function init() {
+        if (document.getElementById('a11y-bar')) return;
+
+        // ── Barra de ferramentas dobrável ──
+        const bar = document.createElement('div');
+        bar.id = 'a11y-bar';
+        bar.setAttribute('role', 'toolbar');
+        bar.setAttribute('aria-label', 'Ferramentas de acessibilidade');
+        bar.innerHTML = `
+            <button type="button" id="a11y-launcher" aria-expanded="false" aria-controls="a11y-tools" aria-label="Abrir ferramentas de acessibilidade" title="Acessibilidade">
+                <img src="assets/accessibility-icon.png" alt="" aria-hidden="true">
+            </button>
+            <div id="a11y-tools" role="group" aria-label="Opções de acessibilidade">
+                <button type="button" class="a11y-btn" id="a11y-btn-ouvir" aria-pressed="false" aria-label="Ouvir o conteúdo do slide">
+                    <span class="a11y-ico" aria-hidden="true">🔊</span>
+                    <span class="a11y-lbl">Ouvir</span>
+                </button>
+                <button type="button" class="a11y-btn" id="a11y-btn-libras" aria-label="Tradução em Libras">
+                    <span class="a11y-ico" aria-hidden="true">👋</span>
+                    <span class="a11y-lbl">Libras</span>
+                </button>
+            </div>
+            <div class="audio-helper">Reproduza o áudio em cada nova pergunta.</div>
+        `;
+        document.body.appendChild(bar);
+
+        // ── Posiciona o launcher imediatamente à esquerda do logo ──
+        function positionA11yBar() {
+            const logo = document.getElementById('logo');
+            if (!logo) return;
+            const r = logo.getBoundingClientRect();
+            const gap = 10;
+            const launcherSize = parseFloat(getComputedStyle(document.getElementById('a11y-launcher')).width) || 36;
+            // alinhamento vertical: centro do logo
+            const topPx = Math.max(8, r.top + (r.height - launcherSize) / 2);
+            const rightPx = Math.max(8, window.innerWidth - r.left + gap);
+            bar.style.top = topPx + 'px';
+            bar.style.right = rightPx + 'px';
+        }
+        positionA11yBar();
+        window.addEventListener('resize', positionA11yBar);
+        window.addEventListener('load', positionA11yBar);
+        // Re-checa logo após imagens carregarem (o logo é uma <img> e pode mudar de tamanho)
+        const logoEl = document.getElementById('logo');
+        if (logoEl) {
+            const logoImg = logoEl.querySelector('img');
+            if (logoImg) {
+                if (logoImg.complete) positionA11yBar();
+                else logoImg.addEventListener('load', positionA11yBar);
+            }
+        }
+
+        // ── Toggle do launcher ──
+        const launcher = document.getElementById('a11y-launcher');
+        function setOpen(open) {
+            bar.classList.toggle('open', open);
+            launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) window.updateQuizAudioHelper();
+        }
+        launcher.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setOpen(!bar.classList.contains('open'));
+        });
+        // Fecha ao clicar fora
+        document.addEventListener('click', function (e) {
+            if (!bar.contains(e.target) && bar.classList.contains('open')) setOpen(false);
+        });
+        // Fecha com ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && bar.classList.contains('open')) setOpen(false);
+        });
+
+        // ── Modal Libras ──
+        const modal = document.createElement('div');
+        modal.id = 'libras-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'libras-modal-title');
+        modal.innerHTML = `
+            <div class="lm-box">
+                <button type="button" class="lm-close" aria-label="Fechar">×</button>
+                <div class="lm-ico" aria-hidden="true">👐</div>
+                <h3 id="libras-modal-title">Tradução em Libras</h3>
+                <p>Para acompanhar este treinamento em <strong>Língua Brasileira de Sinais</strong>, ative o <strong>VLibras</strong> — o tradutor gratuito do Governo Federal disponível para navegadores e celular.</p>
+                <div class="lm-actions">
+                    <button type="button" id="libras-go">Abrir VLibras</button>
+                    <button type="button" class="secondary" id="libras-cancel">Fechar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // ── OUVIR (ÁUDIO LOCAL) ──
+        const btnOuvir = document.getElementById('a11y-btn-ouvir');
+        let currentAudio = null;
+
+        function stopSpeak() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            if (btnOuvir) {
+                btnOuvir.classList.remove('is-active');
+                btnOuvir.setAttribute('aria-pressed', 'false');
+                btnOuvir.querySelector('.a11y-lbl').textContent = 'Ouvir';
+            }
+        }
+
+        /* Detecta o arquivo de áudio correspondente ao estado atualmente
+           visível na tela. Para slides multi-estado (quizzes, micro-quiz
+           de condução) o nome inclui o sub-estado: intro, q{N} ou result.   */
+        const AUDIO_DIR = 'audios-novos';
+        function resolveAudioFile(pageNum) {
+            const fallback = `${AUDIO_DIR}/pagina-${pageNum}.mp3`;
+            try {
+                if (typeof AUDIO_DATA === 'undefined' || !AUDIO_DATA.MULTI_STATE) return fallback;
+
+                const activeSlide = document.querySelector('.slide.active');
+                if (!activeSlide || !activeSlide.id) return fallback;
+
+                const cfg = AUDIO_DATA.MULTI_STATE[activeSlide.id];
+                if (!cfg) return fallback;
+
+                const isVisible = (sel) => {
+                    if (!sel) return false;
+                    const el = activeSlide.querySelector(sel) || document.querySelector(sel);
+                    if (!el) return false;
+                    const cs = window.getComputedStyle(el);
+                    if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+                    return el.offsetParent !== null || el.getClientRects().length > 0;
+                };
+
+                if (cfg.panels && cfg.panels.result && isVisible(cfg.panels.result)) {
+                    return `${AUDIO_DIR}/pagina-${pageNum}-result.mp3`;
+                }
+                if (cfg.panels && cfg.panels.intro && isVisible(cfg.panels.intro)) {
+                    return `${AUDIO_DIR}/pagina-${pageNum}-intro.mp3`;
+                }
+                if (cfg.panels && cfg.panels.question && isVisible(cfg.panels.question)) {
+                    const counter = activeSlide.querySelector(cfg.counterSelector) ||
+                                    document.querySelector(cfg.counterSelector);
+                    let qNum = 1;
+                    if (counter) {
+                        const pat = cfg.counterPattern || /(\d+)/;
+                        const m = (counter.textContent || '').match(pat);
+                        if (m && m[1]) qNum = parseInt(m[1], 10) || 1;
+                    }
+                    return `${AUDIO_DIR}/pagina-${pageNum}-q${qNum}.mp3`;
+                }
+            } catch (e) {
+                console.warn('resolveAudioFile falhou, usando fallback:', e);
+            }
+            return fallback;
+        }
+
+        async function startSpeak() {
+            if (btnOuvir) {
+                btnOuvir.classList.add('is-active');
+                btnOuvir.setAttribute('aria-pressed', 'true');
+                btnOuvir.querySelector('.a11y-lbl').textContent = 'Lendo...';
+            }
+
+            const pageNum = nr11GlobalSlide();
+            const audioSrc = resolveAudioFile(pageNum);
+
+            try {
+                currentAudio = new Audio(audioSrc);
+
+                const wasPlayingMusic = window.bgMusic && !window.bgMusic.paused;
+                if (wasPlayingMusic) window.bgMusic.pause();
+
+                await currentAudio.play();
+
+                currentAudio.onended = () => {
+                    stopSpeak();
+                    if (wasPlayingMusic && window.bgMusic) window.bgMusic.play().catch(() => { });
+                };
+
+                currentAudio.onerror = () => {
+                    console.error('Áudio local não encontrado: ' + audioSrc);
+                    stopSpeak();
+                };
+            } catch (err) {
+                console.error('Erro ao iniciar áudio:', err);
+                stopSpeak();
+            }
+        }
+
+        if (btnOuvir) {
+            btnOuvir.addEventListener('click', function () {
+                if (btnOuvir.classList.contains('is-active')) {
+                    stopSpeak();
+                } else {
+                    startSpeak();
+                }
+            });
+        }
+
+        // Para a fala ao trocar de slide / sair da página
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) stopSpeak();
+        });
+        window.addEventListener('beforeunload', stopSpeak);
+
+        // Hook em goTo para parar a leitura ao mudar slide
+        if (typeof window.goTo === 'function' && !window.goTo.__a11yHooked) {
+            const origGoTo = window.goTo;
+            window.goTo = function () {
+                stopSpeak();
+                const result = origGoTo.apply(this, arguments);
+                window.updateQuizAudioHelper();
+                return result;
+            };
+            window.goTo.__a11yHooked = true;
+        }
+
+        window.updateQuizAudioHelper();
+        ['q1-question-panel', 'sq2-question-panel', 'conducao-question-panel', 'q3-question-panel', 'q4-question-panel', 'q5-question-panel', 'q6-question-panel'].forEach(function (id) {
+            const panel = document.getElementById(id);
+            if (panel) {
+                new MutationObserver(window.updateQuizAudioHelper).observe(panel, { attributes: true, attributeFilter: ['style', 'class'] });
+            }
+        });
+
+        // ── LIBRAS ──
+        const btnLibras = document.getElementById('a11y-btn-libras');
+        const lmClose = modal.querySelector('.lm-close');
+        const lmCancel = document.getElementById('libras-cancel');
+        const lmGo = document.getElementById('libras-go');
+
+        function openLibras() { modal.classList.add('active'); }
+        function closeLibras() { modal.classList.remove('active'); }
+
+        btnLibras.addEventListener('click', openLibras);
+        lmClose.addEventListener('click', closeLibras);
+        lmCancel.addEventListener('click', closeLibras);
+        lmGo.addEventListener('click', function () {
+            window.open('https://vlibras.gov.br/', '_blank', 'noopener,noreferrer');
+            closeLibras();
+        });
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeLibras();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeLibras();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+
+/* ════════════════════════════════════════
+   MOBILE PERF — lazy load em imagens internas dos slides
+   ════════════════════════════════════════ */
+(function () {
+    function shouldSkipLazy(img) {
+        if (img.closest('.s1-hero-img, #logo, #a11y-bar, #nav, #a11y-launcher, .a11y-btn')) return true;
+        if (img.closest('#s-mod6-comp-preventiva')) return true;
+        if (img.closest('#s-mod6-mensagem-final')) return true;
+        if (img.closest('#s-quiz6')) return true;
+        if (img.id === 'modalImg') return true;
+        return false;
+    }
+
+    function applySlideImageLazyLoading() {
+        document.querySelectorAll('.slide img').forEach(function (img) {
+            if (shouldSkipLazy(img)) return;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applySlideImageLazyLoading);
+    } else {
+        applySlideImageLazyLoading();
+    }
+})();
+/* ════════════════════════════════════════
+   TUTORIAL OBRIGATÓRIO — primeira tela
+   ════════════════════════════════════════ */
+(function () {
+    if (window.__tutorialInjected) return;
+    window.__tutorialInjected = true;
+
+    function isIndexPage() {
+        return !!(window.MODULE_NAV && window.MODULE_NAV.id === 'index');
+    }
+
+    function addReplayButton() {
+        if (document.querySelector('.tutorial-replay')) return;
+        const startBtn = document.querySelector('#s1 .btn-start');
+        if (!startBtn) return;
+        const replay = document.createElement('button');
+        replay.type = 'button';
+        replay.className = 'btn-tutorial tutorial-replay';
+        replay.innerHTML = '▶ Ver tutorial';
+        replay.onclick = function() {
+            const staticModal = document.getElementById('tutorialModal');
+            if (staticModal) staticModal.classList.add('active');
+        };
+        startBtn.insertAdjacentElement('afterend', replay);
+    }
+
+    function init() {
+        if (!isIndexPage()) return;
+        addReplayButton();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyDemoModeUI);
+} else {
+    applyDemoModeUI();
+}

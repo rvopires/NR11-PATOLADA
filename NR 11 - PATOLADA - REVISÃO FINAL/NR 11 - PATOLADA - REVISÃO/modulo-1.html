@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Módulo 1 - Introdução e Legislação</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <link rel="stylesheet" href="shared.css?v=14">
+    <script>
+        window.MODULE_NAV = {
+            id: "modulo-1",
+            prev: "index.html",
+            next: "modulo-2.html",
+            label: "Módulo 1 - Introdução e Legislação"
+        };
+    </script>
+</head>
+<body>
+
+    <button id="btn-demo" onclick="toggleDemoMode()"
+        style="position: fixed; top: 30px; right: 210px; left: auto; bottom: auto; z-index: 9999; background: #3d1a00; color: #ffffff; border: 1.5px solid #a0522d; border-radius: 50px; padding: 7px 16px 7px 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: var(--font-p); letter-spacing: 0.2px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;"
+        onmouseover="if(!window.demoMode){this.style.background='#6a6a6a'; this.style.borderColor='#9a9a9a';}"
+        onmouseout="if(!window.demoMode){this.style.background='#5a5a5a'; this.style.borderColor='#888888'; this.style.color='#f0f0f0';}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>Modo Simulação</button>
+    <div id="demo-indicator"
+        style="position: fixed; top: 15px; right: 15px; z-index: 9999; background: var(--gold); color: var(--black); padding: 5px 15px; font-size: 12px; font-weight: bold; font-family: var(--font-h); border-radius: 99px; box-shadow: 0 0 15px rgba(241,196,15,0.5); opacity: 0; pointer-events: none; transition: all 0.3s; transform: translateY(-20px);">
+        Modo Simulação Ativado</div>
+
+    <div id="app">
+
+        <div id="pbar-wrap">
+            <div id="pbar" style="width:2.56%"></div>
+        </div>
+
+        <div id="slide-counter"></div>
+
+        <div id="logo">
+            <img src="https://i.imgur.com/c1m4CIy.png" alt="Tecno-Cursos"
+                onerror="this.onerror=null;this.src='https://imgur.com/c1m4CIy.png'">
+        </div>
+
+        <div id="slides">
+            <div class="slide active" id="intro-m1">
+                <div class="mod-intro">
+                    <div class="mod-intro-pill">INÍCIO DO MÓDULO</div>
+                    <div class="mod-intro-num">MÓDULO 1</div>
+                    <div class="mod-intro-title">Introdução e Legislação</div>
+                </div>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,50 C480,10 960,85 1440,30 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s3">
+                <div class="top-bar">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🎯 Módulo 1</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        Objetivos do <span>Treinamento</span></h2>
+
+                </div>
+                <div class="content-area">
+                    <style>
+                        #s3 .m1o-mobile-wrap {
+                            display: none;
+                        }
+
+                        @media (max-width: 768px) {
+                            #s3 .grid-2x2 {
+                                display: none !important;
+                            }
+
+                            #s3 .m1o-mobile-wrap {
+                                display: block;
+                                width: 100%;
+                                position: relative;
+                                z-index: 3;
+                            }
+
+                            #s3 .content-area {
+                                justify-content: flex-start !important;
+                                align-items: center !important;
+                                padding-top: 12px !important;
+                                padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+                                overflow: hidden !important;
+                            }
+
+                            #s3 .m1o-layout {
+                                width: 100%;
+                                padding: 28px 14px 8px;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                gap: 12px;
+                            }
+
+                            #s3 .m1o-carousel {
+                                width: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                gap: 12px;
+                            }
+
+                            #s3 .m1o-card {
+                                width: 100%;
+                                position: relative;
+                                background: linear-gradient(145deg, #0b1120, #060a13);
+                                border: 1px solid rgba(46, 204, 113, 0.45);
+                                border-radius: 14px;
+                                overflow: hidden;
+                                box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                                touch-action: pan-y;
+                            }
+
+                            #s3 .m1o-card-accent {
+                                height: 4px;
+                                background: linear-gradient(90deg, transparent, var(--green) 30%, var(--green-lt) 70%, transparent);
+                                opacity: 0.85;
+                            }
+
+                            #s3 .m1o-card-inner {
+                                padding: 22px 18px 24px;
+                                text-align: center;
+                            }
+
+                            #s3 .m1o-card-icon {
+                                font-size: 44px;
+                                line-height: 1;
+                                margin-bottom: 14px;
+                                filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.4));
+                            }
+
+                            #s3 .m1o-card-title {
+                                font-family: var(--font-h);
+                                font-size: 18px;
+                                font-weight: 800;
+                                color: var(--gold);
+                                margin-bottom: 10px;
+                                text-transform: uppercase;
+                                letter-spacing: 1px;
+                            }
+
+                            #s3 .m1o-card-divider {
+                                width: 48px;
+                                height: 2px;
+                                margin: 0 auto 12px;
+                                border-radius: 2px;
+                                background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                            }
+
+                            #s3 .m1o-card-desc {
+                                font-size: 15px;
+                                line-height: 1.5;
+                                color: rgba(255, 255, 255, 0.78);
+                                margin: 0 auto;
+                                max-width: 300px;
+                            }
+
+                            #s3 .m1o-progress {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 8px;
+                            }
+
+                            #s3 .m1o-dot {
+                                width: 8px;
+                                height: 8px;
+                                border-radius: 50%;
+                                background: rgba(255, 255, 255, 0.2);
+                                border: 1px solid rgba(255, 255, 255, 0.15);
+                                transition: all 0.3s ease;
+                            }
+
+                            #s3 .m1o-dot.is-active {
+                                width: 22px;
+                                border-radius: 4px;
+                                background: rgba(46, 204, 113, 0.7);
+                                border-color: rgba(46, 204, 113, 0.9);
+                            }
+
+                            #s3 .m1o-dot.is-done {
+                                background: rgba(46, 204, 113, 0.35);
+                                border-color: rgba(46, 204, 113, 0.5);
+                            }
+
+                            #s3 .m1o-carousel-nav {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 14px;
+                                position: relative;
+                                z-index: 20;
+                                pointer-events: auto;
+                                padding-bottom: 4px;
+                            }
+
+                            #s3 .m1o-nav-btn {
+                                width: 42px;
+                                height: 42px;
+                                border-radius: 50%;
+                                border: 1px solid rgba(255, 255, 255, 0.45);
+                                background: rgba(10, 10, 10, 0.95);
+                                color: #fff;
+                                font-size: 22px;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                pointer-events: auto;
+                                touch-action: manipulation;
+                                z-index: 21;
+                            }
+
+                            #s3 .m1o-nav-btn:disabled {
+                                opacity: 0.35;
+                                cursor: not-allowed;
+                                pointer-events: none;
+                            }
+
+                            #s3 .m1o-counter {
+                                font-family: var(--font-h);
+                                font-size: 15px;
+                                font-weight: 700;
+                                color: #fff;
+                                min-width: 40px;
+                                text-align: center;
+                            }
+
+                            #s3 .wave {
+                                z-index: 0;
+                                pointer-events: none;
+                            }
+                        }
+                    </style>
+                    <div class="grid-2x2">
+                        <div class="icon-card"
+                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
+                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
+                            <div class="ic-text" style="margin-top:8px;">
+                                <h4>Operação Segura</h4>
+                                <p>Utilizar a empilhadeira corretamente e com segurança</p>
+                            </div>
+                        </div>
+                        <div class="icon-card"
+                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
+                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
+                            <div class="ic-text" style="margin-top:8px;">
+                                <h4>Prevenção de Riscos</h4>
+                                <p>Garantir a segurança e prevenir acidentes no ambiente</p>
+                            </div>
+                        </div>
+                        <div class="icon-card"
+                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
+                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
+                            <div class="ic-text" style="margin-top:8px;">
+                                <h4>Normas e Leis</h4>
+                                <p>Cumprir todas as exigências legais da NR-11</p>
+                            </div>
+                        </div>
+                        <div class="icon-card"
+                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
+                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
+                            <div class="ic-text" style="margin-top:8px;">
+                                <h4>Objetivo Central</h4>
+                                <p>Preservar a integridade física de todos os colaboradores</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m1o-mobile-wrap">
+                        <div class="m1o-layout">
+                            <div class="m1o-carousel">
+                                <div class="m1o-card" id="m1o-card">
+                                    <div class="m1o-card-accent" aria-hidden="true"></div>
+                                    <div class="m1o-card-inner">
+                                        <div class="m1o-card-icon" id="m1o-card-icon">🚜</div>
+                                        <h3 class="m1o-card-title" id="m1o-card-title">Operação Segura</h3>
+                                        <div class="m1o-card-divider" aria-hidden="true"></div>
+                                        <p class="m1o-card-desc" id="m1o-card-desc">Utilizar a empilhadeira
+                                            corretamente e com segurança</p>
+                                    </div>
+                                </div>
+
+                                <div class="m1o-progress" id="m1o-progress" aria-hidden="true">
+                                    <span class="m1o-dot is-active"></span>
+                                    <span class="m1o-dot"></span>
+                                    <span class="m1o-dot"></span>
+                                    <span class="m1o-dot"></span>
+                                </div>
+
+                                <div class="m1o-carousel-nav">
+                                    <button type="button" class="m1o-nav-btn" id="m1o-prev"
+                                        aria-label="Objetivo anterior">‹</button>
+                                    <span class="m1o-counter" id="m1o-counter">1/4</span>
+                                    <button type="button" class="m1o-nav-btn" id="m1o-next"
+                                        aria-label="Próximo objetivo">›</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span id="m1o-tracker" class="req-item" style="display:none" aria-hidden="true"></span>
+
+                    <script>
+                        (function () {
+                            const M1O_CARDS = [
+                                { icon: '🚜', title: 'Operação Segura', desc: 'Utilizar a empilhadeira corretamente e com segurança' },
+                                { icon: '🛡️', title: 'Prevenção de Riscos', desc: 'Garantir a segurança e prevenir acidentes no ambiente' },
+                                { icon: '📜', title: 'Normas e Leis', desc: 'Cumprir todas as exigências legais da NR-11' },
+                                { icon: '🎯', title: 'Objetivo Central', desc: 'Preservar a integridade física de todos os colaboradores' }
+                            ];
+
+                            let m1oIdx = 0;
+                            const viewed = new Set([0]);
+
+                            const iconEl = document.getElementById('m1o-card-icon');
+                            const titleEl = document.getElementById('m1o-card-title');
+                            const descEl = document.getElementById('m1o-card-desc');
+                            const counterEl = document.getElementById('m1o-counter');
+                            const progressEl = document.getElementById('m1o-progress');
+                            const cardEl = document.getElementById('m1o-card');
+                            const prevBtn = document.getElementById('m1o-prev');
+                            const nextBtn = document.getElementById('m1o-next');
+
+                            function m1oMarkTrackerDone() {
+                                const tracker = document.getElementById('m1o-tracker');
+                                if (!tracker || tracker.classList.contains('req-done')) return;
+                                tracker.classList.add('req-done');
+                                if (typeof updateNextButton === 'function') updateNextButton();
+                            }
+
+                            function markM1oProgress() {
+                                if (!window.matchMedia('(max-width: 768px)').matches) return;
+                                viewed.add(m1oIdx);
+                                if (viewed.size >= M1O_CARDS.length) {
+                                    m1oMarkTrackerDone();
+                                }
+                            }
+
+                            function updateM1oNav() {
+                                if (prevBtn) prevBtn.disabled = m1oIdx === 0;
+                                if (nextBtn) nextBtn.disabled = m1oIdx >= M1O_CARDS.length - 1;
+                            }
+
+                            function renderM1oCard() {
+                                const c = M1O_CARDS[m1oIdx];
+                                if (iconEl) iconEl.textContent = c.icon;
+                                if (titleEl) titleEl.textContent = c.title;
+                                if (descEl) descEl.textContent = c.desc;
+                                if (counterEl) counterEl.textContent = (m1oIdx + 1) + '/' + M1O_CARDS.length;
+                                if (progressEl) {
+                                    progressEl.querySelectorAll('.m1o-dot').forEach(function (dot, i) {
+                                        dot.classList.toggle('is-active', i === m1oIdx);
+                                        dot.classList.toggle('is-done', viewed.has(i) && i !== m1oIdx);
+                                    });
+                                }
+                                updateM1oNav();
+                                markM1oProgress();
+                            }
+
+                            function m1oGo(dir) {
+                                const next = m1oIdx + dir;
+                                if (next < 0 || next >= M1O_CARDS.length) return;
+                                m1oIdx = next;
+                                if (typeof playTechClick === 'function') playTechClick();
+                                renderM1oCard();
+                            }
+
+                            if (prevBtn) prevBtn.addEventListener('click', function () { m1oGo(-1); });
+                            if (nextBtn) nextBtn.addEventListener('click', function () { m1oGo(1); });
+
+                            let touchX = null;
+                            if (cardEl) {
+                                cardEl.addEventListener('touchstart', function (e) {
+                                    touchX = e.touches[0].clientX;
+                                }, { passive: true });
+                                cardEl.addEventListener('touchend', function (e) {
+                                    if (touchX === null) return;
+                                    const dx = e.changedTouches[0].clientX - touchX;
+                                    touchX = null;
+                                    if (Math.abs(dx) < 40) return;
+                                    if (dx < 0 && m1oIdx >= M1O_CARDS.length - 1) return;
+                                    if (dx > 0 && m1oIdx <= 0) return;
+                                    m1oGo(dx < 0 ? 1 : -1);
+                                }, { passive: true });
+                            }
+
+                            if (!window.matchMedia('(max-width: 768px)').matches) {
+                                m1oMarkTrackerDone();
+                            }
+
+                            renderM1oCard();
+                        })();
+                    </script>
+                </div>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,50 C480,10 960,85 1440,30 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s2">
+                <div class="top-bar">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🎯 Módulo 1</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        O que é a <span>NR-11?</span></h2>
+
+                </div>
+                <div class="content-area">
+                    <p class="s2-acc-hint">👆 Toque em cada item para ver mais</p>
+                    <div class="def-banner s2-acc-item">
+                        <div class="ic-circle">📖</div>
+                        <div class="ic-text">
+                            <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                <h4>Definição</h4>
+                                <span class="s2-acc-chevron" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                </span>
+                            </button>
+                            <div class="s2-acc-body">
+                                <p>A NR-11 estabelece requisitos de <strong style="color:var(--gold-lt)">segurança</strong>
+                                    para as
+                                    operações de transporte, movimentação, armazenagem e manuseio de materiais, com ênfase
+                                    na operação de
+                                    equipamentos como a empilhadeira patolada.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three-col">
+                        <div class="icon-card s2-acc-item" style="flex-direction:column; align-items:center; text-align:center;">
+                        <div class="ic-circle">📖</div>
+                            <div class="ic-text">
+                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                    <h4>Transporte de Materiais</h4>
+                                    <span class="s2-acc-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    </span>
+                                </button>
+                                <div class="s2-acc-body">
+                                    <p>Regras para movimentação segura de cargas no ambiente de trabalho</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon-card s2-acc-item" style="flex-direction:column; align-items:center; text-align:center;">
+                        <div class="ic-circle">📖</div>
+                            <div class="ic-text">
+                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                    <h4>Armazenagem Segura</h4>
+                                    <span class="s2-acc-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    </span>
+                                </button>
+                                <div class="s2-acc-body">
+                                    <p>Normas para estocagem, organização e estabilidade de cargas</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon-card s2-acc-item" style="flex-direction:column; align-items:center; text-align:center;">
+                        <div class="ic-circle">📖</div>
+                            <div class="ic-text">
+                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                    <h4>Segurança Operacional</h4>
+                                    <span class="s2-acc-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    </span>
+                                </button>
+                                <div class="s2-acc-body">
+                                    <p>Proteger o trabalhador durante todas as fases da operação logística</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="s2-scroll-down" class="slide-scroll-btn"
+                    onclick="scrollSlideDown('s2')" aria-label="Rolar para baixo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,60 C360,20 720,90 1080,35 C1260,10 1380,70 1440,55 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s4"
+                style="background: radial-gradient(circle at center, rgba(11, 31, 75, 1) 0%, rgba(5, 10, 20, 1) 100%); overflow: hidden;">
+                <!-- Fundo HUD Cinematográfico -->
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.12) 0%, transparent 65%); animation: s1b-glow 4s infinite alternate ease-in-out;">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.03) 3px, rgba(46, 204, 113, 0.03) 4px);">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 60px 60px; animation: s1b-smoke 30s infinite linear;">
+                </div>
+                <div class="top-bar" style="position: relative; z-index: 2;">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🎯 Módulo 1</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        Requisitos Obrigatórios — <span>NR-11</span></h2>
+
+                </div>
+                <div class="content-area"
+                    style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                        <iframe
+                            src="https://player.vimeo.com/video/1193373591?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="wave" style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;"><svg
+                        viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s6">
+                <div class="top-bar">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🎯 Módulo 1</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        Cartão de <span>Identificação</span></h2>
+
+                </div>
+                <div class="content-area" style="align-items: center; text-align: center; justify-content: center;">
+                    <div class="badge-scene">
+                        <div class="badge-lanyard" style="top: -40px; height: 60px;"></div>
+                        <div class="badge-img-wrapper">
+                            <img src="https://imgur.com/B83Zchf.png" alt="Cartão de Identificação" />
+                        </div>
+                    </div>
+                    <p style="font-size: 16px; color: rgba(255,255,255,0.6); max-width: 400px; margin: 30px auto 0;">A
+                        carteirinha
+                        <strong>pessoal, intransferível</strong> e deve permanecer visível em seu uniforme durante todo
+                        o
+                        expediente.
+                    </p>
+                </div>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,55 C480,10 960,90 1440,40 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s7">
+                <div class="top-bar">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🎯 Módulo 1</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        Validade da <span>Autorização</span></h2>
+
+                </div>
+                <div class="content-area" style="justify-content:center;align-items:center;">
+                    <div
+                        style="width: 100%; text-align: center; margin-bottom: 24px; font-size: 18px; color: var(--green-lt); font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 0 12px rgba(46, 204, 113, 0.5); animation: pulse 2s infinite;">
+                        👆 Toque nos cards para avançar</div>
+                    <div
+                        style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;width:100%;max-width:780px;">
+
+                        <!-- Card 1 -->
+                        <div class="flip-card req-item"
+                            onclick="this.classList.toggle('flipped');this.classList.add('req-done');updateNextButton();">
+                            <div class="flip-inner">
+                                <div class="flip-front">
+                                    <div style="font-size:46px;margin-bottom:12px;">🔄</div>
+                                    <div
+                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
+                                        Renovação
+                                        Anual</div>
+                                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px;">Toque para
+                                        ver</div>
+                                </div>
+                                <div class="flip-back">
+                                    <div style="font-size:28px;margin-bottom:10px;">🔄</div>
+                                    <h4
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--gold-lt);margin-bottom:8px;">
+                                        Renovação Anual</h4>
+                                    <p style="font-size:14px;line-height:1.5;color:var(--cream);">A autorização deve ser
+                                        renovada a cada
+                                        <strong>12 meses</strong> com reciclagem teórica, prática e exame médico
+                                        atualizado.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="flip-card req-item"
+                            onclick="this.classList.toggle('flipped');this.classList.add('req-done');updateNextButton();">
+                            <div class="flip-inner">
+                                <div class="flip-front">
+                                    <div style="font-size:46px;margin-bottom:12px;">🔄</div>
+                                    <div
+                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
+                                        Exame Médico
+                                        Periódico</div>
+                                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px;">Toque para
+                                        ver</div>
+                                </div>
+                                <div class="flip-back">
+                                    <div style="font-size:28px;margin-bottom:10px;">🔄</div>
+                                    <h4
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--gold-lt);margin-bottom:8px;">
+                                        Exame Médico Periódico</h4>
+                                    <p style="font-size:14px;line-height:1.5;color:var(--cream);">Avaliação de saúde
+                                        obrigatória para
+                                        confirmar <strong>aptidão física e mental</strong> do operador para continuar na
+                                        função.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="flip-card req-item"
+                            onclick="this.classList.toggle('flipped');this.classList.add('req-done');updateNextButton();">
+                            <div class="flip-inner">
+                                <div class="flip-front">
+                                    <div style="font-size:46px;margin-bottom:12px;">🔄</div>
+                                    <div
+                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
+                                        Controle de
+                                        Validade</div>
+                                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px;">Toque para
+                                        ver</div>
+                                </div>
+                                <div class="flip-back">
+                                    <div style="font-size:28px;margin-bottom:10px;">🔄</div>
+                                    <h4
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--gold-lt);margin-bottom:8px;">
+                                        Controle de Validade</h4>
+                                    <p style="font-size:14px;line-height:1.5;color:var(--cream);">A empresa é
+                                        responsável por monitorar os
+                                        vencimentos e notificar os operadores com <strong>antecedência mínima de 30
+                                            dias</strong>.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <button type="button" id="s7-scroll-down" class="slide-scroll-btn"
+                    onclick="scrollSlideDown('s7')" aria-label="Rolar para baixo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,60 C360,20 720,90 1080,35 L1440,55 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="sq1">
+                <div class="top-bar">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🎯 Quiz · Módulo 1</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(32px, 5vw, 48px); letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(46, 204, 113, 0.6); position: relative; display: inline-block;">
+                        <div
+                            style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%); z-index: -1; filter: blur(10px);">
+                        </div>
+                        Hora do <span>Desafio</span>
+                    </h2>
+
+                </div>
+                <div class="content-area">
+                    <div class="quiz-wrap">
+                        <div id="q1-intro-panel" style="text-align: center; padding: 40px 20px; position: relative;">
+                            <!-- Efeitos Visuais Sutis HUD -->
+                            <div
+                                style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at center, rgba(46, 204, 113, 0.05) 0%, transparent 60%);">
+                            </div>
+                            <div
+                                style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.3), transparent);">
+                            </div>
+                            <div
+                                style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.3), transparent);">
+                            </div>
+
+                            <div class="hud-anim-enter"
+                                style="position: relative; z-index: 1; max-width: 850px; margin: 0 auto 30px; padding: 50px 30px; border-radius: 8px; background: rgba(5, 15, 10, 0.6); border: 1px solid rgba(46, 204, 113, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(46,204,113,0.05); backdrop-filter: blur(12px); animation-delay: 0.2s; opacity: 0; overflow: hidden;">
+
+                                <!-- Efeitos Visuais HUD Premium Internos -->
+                                <div
+                                    style="position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46,204,113,0.03) 3px, rgba(46,204,113,0.03) 4px);">
+                                </div>
+                                <div
+                                    style="position: absolute; inset: 0; pointer-events: none; opacity: 0.3; background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px; animation: s1b-smoke 40s infinite linear;">
+                                </div>
+                                <div
+                                    style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.4), transparent);">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.4), transparent);">
+                                </div>
+                                <div
+                                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 80%; background: radial-gradient(circle, rgba(46,204,113,0.08) 0%, transparent 70%); pointer-events: none; animation: pulse 4s infinite;">
+                                </div>
+
+                                <!-- PROTOCOLO DE AVALIAção -->
+                                <div
+                                    style="position: relative; font-family: var(--font-h); font-size: 12px; font-weight: 700; color: rgba(46,204,113,0.8); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                                    <span style="width: 30px; height: 1px; background: rgba(46,204,113,0.4);"></span>
+                                    PROTOCOLO DE AVALIAção
+                                    <span style="width: 30px; height: 1px; background: rgba(46,204,113,0.4);"></span>
+                                </div>
+
+                                <!-- MOSTRE QUE VOCÊ DOMINA -->
+                                <h3
+                                    style="position: relative; font-family: var(--font-h); font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; color: var(--white); text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-bottom: 16px; text-shadow: 0 0 15px rgba(46,204,113,0.5);">
+                                    MOSTRE QUE VOCÊ DOMINA
+                                </h3>
+
+                                <!-- Texto Inferior -->
+                                <p
+                                    style="position: relative; font-size: clamp(16px, 2vw, 18px); color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto; line-height: 1.5; font-weight: 300;">
+                                    os principais procedimentos<br>da operação segura
+                                </p>
+
+                                <div class="hud-anim-enter"
+                                    style="position: relative; z-index: 1; font-family: var(--font-h); font-size: 14px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-top: 40px; margin-bottom: 40px; animation-delay: 0.3s; opacity: 0; display: inline-flex; align-items: center; gap: 8px; background: rgba(10, 30, 20, 0.9); padding: 10px 20px; border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 8px; box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);">
+                                    <span
+                                        style="display:inline-block; width:6px; height:6px; background:var(--green); border-radius:50%; box-shadow:0 0 6px var(--green);"></span>
+                                    5 PERGUNTAS &middot; Mínimo DE 70% DE ACERTOS
+                                </div><br>
+
+                                <div class="hud-anim-enter"
+                                    style="position: relative; display: inline-block; z-index: 2; animation-delay: 0.4s; opacity: 0;">
+                                    <!-- Círculo Tecnológico Atrês do Botão -->
+                                    <div
+                                        style="position: absolute; inset: -15px; border-radius: 99px; border: 1px dashed rgba(46,204,113,0.3); pointer-events: none;">
+                                    </div>
+                                    <div
+                                        style="position: absolute; inset: -5px; border-radius: 99px; background: rgba(46,204,113,0.15); filter: blur(10px); animation: pulse 2s infinite; pointer-events: none;">
+                                    </div>
+
+                                    <button class="btn-tf-verify"
+                                        style="position: relative; font-size: 18px; padding: 15px 40px; border-radius: 99px; display: inline-flex; align-items: center; gap: 10px; background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.6); color: var(--green-lt); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; box-shadow: 0 0 20px rgba(46, 204, 113, 0.2); transition: all 0.3s ease; animation: pulse 3s infinite;"
+                                        onmouseover="this.style.boxShadow='0 0 30px rgba(46,204,113,0.4)'; this.style.background='rgba(46, 204, 113, 0.25)';"
+                                        onmouseout="this.style.boxShadow='0 0 20px rgba(46, 204, 113, 0.2)'; this.style.background='rgba(46, 204, 113, 0.1)';"
+                                        onclick="startQuiz1Intro()">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            style="filter: drop-shadow(0 0 4px rgba(46,204,113,0.5));">
+                                            <polygon points="5 3 19 12 5 21"></polygon>
+                                        </svg>
+                                        INICIAR DESAFIO
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="q1-question-panel" style="display:none; transition: opacity 0.5s ease;">
+                            <div class="q-meta">
+                                <div class="q-dots">
+                                    <div class="qdot2 cur" id="q1dot0"></div>
+                                    <div class="qdot2" id="q1dot1"></div>
+                                    <div class="qdot2" id="q1dot2"></div>
+                                </div>
+                                <div class="q-lbl" id="q1-counter">Pergunta 1 de 3</div>
+                            </div>
+                            <div class="q-text" id="q1-text"></div>
+                            <div class="q-options" id="q1-options"></div>
+                            <div id="q1-verify-container"
+                                style="text-align: center; margin-top: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                <button class="btn-tf-verify" id="btn-tf-verify-q1" onclick="verifyAnswer1()">✔
+                                    Verificar
+                                    Resposta</button>
+                            </div>
+                            <div class="q-feedback" id="q1-feedback"></div>
+                            <button class="btn-next-q" id="btn-next-q1" onclick="nextQuestion1()">Continuar →</button>
+                        </div>
+                        <div id="q1-result-panel" style="display:none;text-align:center;">
+                            <div class="result-pct green" id="q1-pct">--</div>
+                            <div class="r-stars" id="q1-stars">⭐⭐⭐</div>
+                            <div class="r-status" id="q1-status"></div>
+                            <div class="r-sub" id="q1-sub"></div>
+                            <button class="btn-retry" onclick="resetQuiz1()">↺ Tentar Novamente</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,55 C480,15 960,85 1440,35 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+        </div>
+
+        <div id="nav">
+            <button class="nav-btn" id="btn-back" onclick="modulePrev()" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                ANTERIOR
+            </button>
+            <button class="nav-btn" id="btn-fwd" onclick="moduleNext()">
+                PRÓXIMO
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="img-modal-overlay" id="imgModal" onclick="closeImageModal(event)">
+            <div class="img-modal-content" onclick="event.stopPropagation()">
+                <button class="img-modal-close" onclick="closeImageModal()">×</button>
+                <img id="modalImg" alt="Imagem Ampliada">
+            </div>
+        </div>
+
+    </div>
+
+    <script src="audio-data.js"></script>
+    <script src="shared.js?v=8"></script>
+</body>
+
+</html>

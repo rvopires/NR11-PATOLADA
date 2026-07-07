@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Módulo 6 - Conclusão</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <link rel="stylesheet" href="shared.css?v=14">
+    <link rel="preload" as="image" href="https://i.imgur.com/gtuC8HP.png">
+    <link rel="preload" as="image" href="https://i.imgur.com/7BJLUgg.png">
+    <script>
+        window.MODULE_NAV = {
+            id: "modulo-6",
+            prev: "modulo-5.html",
+            next: null,
+            label: "Módulo 6 - Conclusão"
+        };
+    </script>
+</head>
+<body>
+
+    <button id="btn-demo" onclick="toggleDemoMode()"
+        style="position: fixed; top: 30px; right: 210px; left: auto; bottom: auto; z-index: 9999; background: #3d1a00; color: #ffffff; border: 1.5px solid #a0522d; border-radius: 50px; padding: 7px 16px 7px 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: var(--font-p); letter-spacing: 0.2px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;"
+        onmouseover="if(!window.demoMode){this.style.background='#6a6a6a'; this.style.borderColor='#9a9a9a';}"
+        onmouseout="if(!window.demoMode){this.style.background='#5a5a5a'; this.style.borderColor='#888888'; this.style.color='#f0f0f0';}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>Modo Simulação</button>
+    <div id="demo-indicator"
+        style="position: fixed; top: 15px; right: 15px; z-index: 9999; background: var(--gold); color: var(--black); padding: 5px 15px; font-size: 12px; font-weight: bold; font-family: var(--font-h); border-radius: 99px; box-shadow: 0 0 15px rgba(241,196,15,0.5); opacity: 0; pointer-events: none; transition: all 0.3s; transform: translateY(-20px);">
+        Modo Simulação Ativado</div>
+
+    <div id="app">
+
+        <div id="pbar-wrap">
+            <div id="pbar" style="width:2.56%"></div>
+        </div>
+
+        <div id="slide-counter"></div>
+
+        <div id="logo">
+            <img src="https://i.imgur.com/c1m4CIy.png" alt="Tecno-Cursos"
+                onerror="this.onerror=null;this.src='https://imgur.com/c1m4CIy.png'">
+        </div>
+
+        <div id="slides">
+            <div class="slide active" id="s-mod6-intro">
+                <div class="mod-intro">
+                    <div class="mod-intro-pill">ENCERRAMENTO</div>
+                    <div class="mod-intro-num">MÓDULO 6</div>
+                    <div class="mod-intro-title">Reforçando o compromisso com a Segurança Operacional</div>
+                </div>
+                <div class="wave">
+                    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,50 C480,10 960,85 1440,30 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="slide" id="s-mod6-video-encerramento"
+                style="background: radial-gradient(circle at center, rgba(11, 31, 75, 1) 0%, rgba(5, 10, 20, 1) 100%); overflow: hidden;">
+                <!-- Fundo HUD Cinematográfico -->
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.12) 0%, transparent 65%); animation: s1b-glow 4s infinite alternate ease-in-out;">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.03) 3px, rgba(46, 204, 113, 0.03) 4px);">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 60px 60px; animation: s1b-smoke 30s infinite linear;">
+                </div>
+                <div class="top-bar" style="position: relative; z-index: 2;">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🏁 MÓDULO 6</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4); text-transform: none !important;">
+                        Recapitulação</h2>
+                </div>
+                <div class="content-area"
+                    style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; margin-top: 25px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                        <iframe
+                            src="https://player.vimeo.com/video/1193333739?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="wave" style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;"><svg
+                        viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s-mod6-compromissos">
+                <style>
+                    .hud-panel-grid {
+                        display: grid;
+                        grid-template-columns: 1fr;
+                        gap: 15px;
+                        width: 100%;
+                        max-width: 800px;
+                        margin: 0 auto;
+                    }
+
+                    .hud-panel-item {
+                        display: flex;
+                        align-items: center;
+                        background: linear-gradient(145deg, #0b1120, #060a13);
+                        border: 1px solid rgba(255, 255, 255, 0.06);
+                        border-radius: 12px;
+                        padding: 20px 30px;
+                        cursor: pointer;
+                        transition: all 0.4s cubic-bezier(0.18, 1, 0.26, 1);
+                        position: relative;
+                        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01), 0 5px 15px rgba(0, 0, 0, 0.3);
+                        overflow: hidden;
+                    }
+
+                    .hud-panel-item:hover {
+                        transform: translateY(-3px) translateX(3px);
+                        border-color: rgba(255, 255, 255, 0.15);
+                        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02), 0 10px 25px rgba(0, 0, 0, 0.4);
+                    }
+
+                    @keyframes panel-activate {
+                        0% {
+                            box-shadow: 0 0 0 rgba(46, 204, 113, 0);
+                            border-color: rgba(255, 255, 255, 0.15);
+                            transform: scale(1);
+                        }
+
+                        50% {
+                            box-shadow: 0 0 30px rgba(46, 204, 113, 0.6), inset 0 0 20px rgba(46, 204, 113, 0.2);
+                            border-color: var(--green);
+                            transform: scale(1.02);
+                        }
+
+                        100% {
+                            box-shadow: 0 0 20px rgba(46, 204, 113, 0.2), inset 0 0 10px rgba(46, 204, 113, 0.05);
+                            border-color: var(--green);
+                            transform: scale(1);
+                        }
+                    }
+
+                    .hud-panel-item.req-done {
+                        animation: panel-activate 0.6s cubic-bezier(0.18, 1, 0.26, 1) forwards;
+                    }
+
+                    .hud-panel-num {
+                        font-family: var(--font-h);
+                        font-size: 24px;
+                        font-weight: 900;
+                        color: rgba(255, 255, 255, 0.1);
+                        margin-right: 25px;
+                        transition: all 0.3s;
+                    }
+
+                    .hud-panel-item.req-done .hud-panel-num {
+                        color: var(--green);
+                        text-shadow: 0 0 10px rgba(46, 204, 113, 0.6);
+                    }
+
+                    .hud-panel-content {
+                        flex: 1;
+                        text-align: left;
+                    }
+
+                    .hud-panel-title {
+                        font-family: var(--font-h);
+                        font-size: 18px;
+                        color: var(--gold);
+                        margin-bottom: 5px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        font-weight: 700;
+                    }
+
+                    .hud-panel-desc {
+                        font-size: 15px;
+                        color: rgba(255, 255, 255, 0.7);
+                        line-height: 1.4;
+                    }
+
+                    .hud-panel-icon {
+                        margin-left: 20px;
+                        opacity: 0.2;
+                        transition: all 0.3s;
+                    }
+
+                    .hud-panel-item.req-done .hud-panel-icon {
+                        opacity: 1;
+                        color: var(--green);
+                        filter: drop-shadow(0 0 5px var(--green));
+                    }
+
+                    .scanner-line {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 2px;
+                        background: var(--green);
+                        box-shadow: 0 0 10px var(--green);
+                        opacity: 0;
+                        pointer-events: none;
+                    }
+
+                    @keyframes scanner-run {
+                        0% {
+                            top: 0;
+                            opacity: 0;
+                        }
+
+                        10% {
+                            opacity: 1;
+                        }
+
+                        90% {
+                            opacity: 1;
+                        }
+
+                        100% {
+                            top: 100%;
+                            opacity: 0;
+                        }
+                    }
+
+                    .hud-panel-item.req-done .scanner-line {
+                        animation: scanner-run 0.8s ease-in-out;
+                    }
+
+                    .hud-check {
+                        position: absolute;
+                        right: 15px;
+                        top: 15px;
+                        color: var(--green);
+                        font-size: 16px;
+                        opacity: 0;
+                        transform: scale(0);
+                        transition: all 0.4s cubic-bezier(0.18, 1, 0.26, 1);
+                        text-shadow: 0 0 10px var(--green);
+                    }
+
+                    .hud-panel-item.req-done .hud-check {
+                        opacity: 1;
+                        transform: scale(1);
+                        transition-delay: 0.2s;
+                    }
+
+                    .comp-progress {
+                        font-family: var(--font-h);
+                        font-size: 14px;
+                        color: var(--green);
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        margin-top: 20px;
+                        text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+                        animation: pulse-soft 2s infinite;
+                    }
+
+                    @keyframes pulse-soft {
+                        0% {
+                            opacity: 0.5;
+                        }
+
+                        50% {
+                            opacity: 1;
+                        }
+
+                        100% {
+                            opacity: 0.5;
+                        }
+                    }
+
+                    .comp-counter {
+                        font-family: var(--font-h);
+                        font-size: 13px;
+                        color: rgba(46, 204, 113, 0.8);
+                        margin-top: 10px;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                    }
+
+                    .comp-check-icon {
+                        font-size: 18px;
+                        color: var(--green);
+                        margin-top: 10px;
+                        text-shadow: 0 0 10px var(--green);
+                        animation: pulse-soft 2s infinite;
+                    }
+
+                    .comp-wrapper {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                        width: 100%;
+                        margin-top: 0;
+                        margin-bottom: 25px;
+                    }
+
+                    .comp-success {
+                        font-family: var(--font-h);
+                        font-size: 16px;
+                        color: var(--green);
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        margin-top: 0;
+                        margin-bottom: 25px;
+                        text-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+                        opacity: 0;
+                        transform: translateY(10px);
+                        transition: all 0.5s ease;
+                        display: none;
+                        text-align: center;
+                    }
+
+                    .comp-success.show {
+                        display: block;
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+
+                    #s-mod6-compromissos .m6c-mobile-wrap {
+                        display: none;
+                    }
+
+                    @media (max-width: 768px) {
+                        #s-mod6-compromissos .m6c-desktop-wrap,
+                        #s-mod6-compromissos .m6c-desktop-hint,
+                        #s-mod6-compromissos .comp-success {
+                            display: none !important;
+                        }
+
+                        #s-mod6-compromissos .m6c-mobile-wrap {
+                            display: block;
+                            width: 100%;
+                            position: relative;
+                            z-index: 3;
+                        }
+
+                        #s-mod6-compromissos .content-area {
+                            justify-content: flex-start !important;
+                            align-items: center !important;
+                            padding-top: 12px !important;
+                            padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+                            overflow: hidden !important;
+                        }
+
+                        #s-mod6-compromissos .m6c-layout {
+                            width: 100%;
+                            padding: 28px 14px 8px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 12px;
+                        }
+
+                        #s-mod6-compromissos .m6c-carousel {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 12px;
+                        }
+
+                        #s-mod6-compromissos .m6c-card {
+                            width: 100%;
+                            position: relative;
+                            background: linear-gradient(145deg, #0b1120, #060a13);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 14px;
+                            overflow: hidden;
+                            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.01);
+                        }
+
+                        #s-mod6-compromissos .m6c-card.is-active {
+                            border-color: rgba(46, 204, 113, 0.45);
+                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                        }
+
+                        #s-mod6-compromissos .m6c-card-accent {
+                            height: 4px;
+                            background: linear-gradient(90deg, transparent, var(--green) 30%, var(--green-lt) 70%, transparent);
+                            opacity: 0.85;
+                        }
+
+                        #s-mod6-compromissos .m6c-card-inner {
+                            padding: 20px 18px 22px;
+                            text-align: center;
+                        }
+
+                        #s-mod6-compromissos .m6c-card-label {
+                            display: inline-block;
+                            font-family: var(--font-h);
+                            font-size: 11px;
+                            font-weight: 700;
+                            letter-spacing: 0.14em;
+                            text-transform: uppercase;
+                            color: rgba(46, 204, 113, 0.85);
+                            margin-bottom: 12px;
+                        }
+
+                        #s-mod6-compromissos .m6c-card-icon {
+                            width: 56px;
+                            height: 56px;
+                            margin: 0 auto 14px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: var(--green);
+                            filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.4));
+                        }
+
+                        #s-mod6-compromissos .m6c-card-title {
+                            font-family: var(--font-h);
+                            font-size: 18px;
+                            font-weight: 800;
+                            color: var(--gold);
+                            margin-bottom: 10px;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                        }
+
+                        #s-mod6-compromissos .m6c-card-divider {
+                            width: 48px;
+                            height: 2px;
+                            margin: 0 auto 12px;
+                            border-radius: 2px;
+                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                        }
+
+                        #s-mod6-compromissos .m6c-card-desc {
+                            font-size: 14px;
+                            line-height: 1.5;
+                            color: rgba(255, 255, 255, 0.78);
+                            margin: 0 auto;
+                            max-width: 300px;
+                        }
+
+                        #s-mod6-compromissos .m6c-progress {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
+                        }
+
+                        #s-mod6-compromissos .m6c-dot {
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            background: rgba(255, 255, 255, 0.2);
+                            border: 1px solid rgba(255, 255, 255, 0.15);
+                            transition: all 0.3s ease;
+                        }
+
+                        #s-mod6-compromissos .m6c-dot.is-active {
+                            width: 22px;
+                            border-radius: 4px;
+                            background: rgba(46, 204, 113, 0.7);
+                            border-color: rgba(46, 204, 113, 0.9);
+                        }
+
+                        #s-mod6-compromissos .m6c-dot.is-done {
+                            background: rgba(46, 204, 113, 0.35);
+                            border-color: rgba(46, 204, 113, 0.5);
+                        }
+
+                        #s-mod6-compromissos .m6c-carousel-nav {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 14px;
+                            position: relative;
+                            z-index: 20;
+                            pointer-events: auto;
+                            padding-bottom: 4px;
+                        }
+
+                        #s-mod6-compromissos .m6c-nav-btn {
+                            width: 42px;
+                            height: 42px;
+                            border-radius: 50%;
+                            border: 1px solid rgba(255, 255, 255, 0.45);
+                            background: rgba(10, 10, 10, 0.95);
+                            color: #fff;
+                            font-size: 22px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            pointer-events: auto;
+                            touch-action: manipulation;
+                            z-index: 21;
+                        }
+
+                        #s-mod6-compromissos .m6c-counter {
+                            font-family: var(--font-h);
+                            font-size: 15px;
+                            font-weight: 700;
+                            color: #fff;
+                            min-width: 40px;
+                            text-align: center;
+                        }
+
+                        #s-mod6-compromissos .wave {
+                            z-index: 0;
+                            pointer-events: none;
+                        }
+                    }
+                </style>
+
+                <div class="top-bar">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🏁 MÓDULO 6</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        Compromissos <span>Operaçãonais</span></h2>
+
+                </div>
+
+                <div class="content-area" style="padding-top: 15px;">
+                    <div class="comp-wrapper m6c-desktop-hint" id="comp-wrapper">
+                        <div class="comp-progress" id="comp-hint-msg" style="margin-top: 0;">Toque nos painéis para
+                            confirmar os
+                            compromissos operacionais ✔</div>
+                        <div class="comp-counter" id="comp-counter-wrap"><span id="comp-counter-text">0/4 compromissos
+                                confirmados</span></div>
+                    </div>
+                    <div class="comp-success" id="comp-success-msg">✅ Compromissos operacionais confirmados</div>
+
+                    <div class="hud-panel-grid m6c-desktop-wrap">
+
+                        <!-- Item 1 -->
+                        <div class="hud-panel-item m6c-desktop-item" onclick="activateCompromisso(this)">
+                            <div class="scanner-line"></div>
+                            <div class="hud-check">✔</div>
+                            <div class="hud-panel-num">01</div>
+                            <div class="hud-panel-content">
+                                <div class="hud-panel-title">Segurança</div>
+                                <div class="hud-panel-desc">Cumprir procedimentos reduz riscos operacionais.</div>
+                            </div>
+                            <div class="hud-panel-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="hud-panel-item m6c-desktop-item" onclick="activateCompromisso(this)">
+                            <div class="scanner-line"></div>
+                            <div class="hud-check">✔</div>
+                            <div class="hud-panel-num">02</div>
+                            <div class="hud-panel-content">
+                                <div class="hud-panel-title">Responsabilidade</div>
+                                <div class="hud-panel-desc">Cada operador é responsável por uma operação segura.</div>
+                            </div>
+                            <div class="hud-panel-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="hud-panel-item m6c-desktop-item" onclick="activateCompromisso(this)">
+                            <div class="scanner-line"></div>
+                            <div class="hud-check">✔</div>
+                            <div class="hud-panel-num">03</div>
+                            <div class="hud-panel-content">
+                                <div class="hud-panel-title">Prevenção</div>
+                                <div class="hud-panel-desc">Atitudes preventivas ajudam a evitar acidentes.</div>
+                            </div>
+                            <div class="hud-panel-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                                    </path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="hud-panel-item m6c-desktop-item" onclick="activateCompromisso(this)">
+                            <div class="scanner-line"></div>
+                            <div class="hud-check">✔</div>
+                            <div class="hud-panel-num">04</div>
+                            <div class="hud-panel-content">
+                                <div class="hud-panel-title">Atenção Operacional</div>
+                                <div class="hud-panel-desc">Manter foco total durante a movimentação é essencial.</div>
+                            </div>
+                            <div class="hud-panel-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                                </svg>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="m6c-mobile-wrap">
+                        <div class="m6c-layout">
+                            <div class="m6c-carousel">
+                                <div class="m6c-card is-active" id="m6c-card">
+                                    <div class="m6c-card-accent" aria-hidden="true"></div>
+                                    <div class="m6c-card-inner">
+                                        <span class="m6c-card-label" id="m6c-card-label">Compromisso 01</span>
+                                        <div class="m6c-card-icon" id="m6c-card-icon"></div>
+                                        <h3 class="m6c-card-title" id="m6c-card-title">Segurança</h3>
+                                        <div class="m6c-card-divider" aria-hidden="true"></div>
+                                        <p class="m6c-card-desc" id="m6c-card-desc">Cumprir procedimentos reduz riscos operacionais.</p>
+                                    </div>
+                                </div>
+
+                                <div class="m6c-progress" id="m6c-progress" aria-hidden="true">
+                                    <span class="m6c-dot is-active"></span>
+                                    <span class="m6c-dot"></span>
+                                    <span class="m6c-dot"></span>
+                                    <span class="m6c-dot"></span>
+                                </div>
+
+                                <div class="m6c-carousel-nav">
+                                    <button type="button" class="m6c-nav-btn" id="m6c-prev" aria-label="Compromisso anterior">‹</button>
+                                    <span class="m6c-counter" id="m6c-counter">1/4</span>
+                                    <button type="button" class="m6c-nav-btn" id="m6c-next" aria-label="Próximo compromisso">›</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span id="m6c-tracker" class="req-item" style="display:none" aria-hidden="true"></span>
+                </div>
+                <div class="wave">
+                    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg>
+                </div>
+
+                <script>
+                    function activateCompromisso(el) {
+                        if (el.classList.contains('req-done')) return;
+                        el.classList.add('req-done');
+
+                        if (typeof playTechClick === 'function') {
+                            playTechClick();
+                        } else if (window.soundClick) {
+                            window.soundClick.play();
+                        }
+
+                        const container = document.getElementById('s-mod6-compromissos');
+                        const total = container.querySelectorAll('.m6c-desktop-item').length;
+                        const done = container.querySelectorAll('.m6c-desktop-item.req-done').length;
+
+                        const counterEl = document.getElementById('comp-counter-text');
+                        if (counterEl) counterEl.innerText = done + '/' + total + ' compromissos confirmados';
+
+                        if (done === total) {
+                            const wrapper = document.getElementById('comp-wrapper');
+                            if (wrapper) wrapper.style.display = 'none';
+
+                            const successMsg = document.getElementById('comp-success-msg');
+                            if (successMsg) successMsg.classList.add('show');
+
+                            m6cMarkTrackerDone();
+                        }
+                    }
+
+                    function m6cMarkTrackerDone() {
+                        const tracker = document.getElementById('m6c-tracker');
+                        if (!tracker || tracker.classList.contains('req-done')) return;
+                        tracker.classList.add('req-done');
+                        if (typeof updateNextButton === 'function') updateNextButton();
+                    }
+
+                    (function () {
+                        const M6C_CARDS = [
+                            {
+                                step: '01',
+                                title: 'Segurança',
+                                desc: 'Cumprir procedimentos reduz riscos operacionais.',
+                                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>'
+                            },
+                            {
+                                step: '02',
+                                title: 'Responsabilidade',
+                                desc: 'Cada operador é responsável por uma operação segura.',
+                                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'
+                            },
+                            {
+                                step: '03',
+                                title: 'Prevenção',
+                                desc: 'Atitudes preventivas ajudam a evitar acidentes.',
+                                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+                            },
+                            {
+                                step: '04',
+                                title: 'Atenção Operacional',
+                                desc: 'Manter foco total durante a movimentação é essencial.',
+                                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>'
+                            }
+                        ];
+
+                        let m6cIdx = 0;
+                        const viewed = new Set([0]);
+
+                        const cardEl = document.getElementById('m6c-card');
+                        const labelEl = document.getElementById('m6c-card-label');
+                        const iconEl = document.getElementById('m6c-card-icon');
+                        const titleEl = document.getElementById('m6c-card-title');
+                        const descEl = document.getElementById('m6c-card-desc');
+                        const counterEl = document.getElementById('m6c-counter');
+                        const progressEl = document.getElementById('m6c-progress');
+
+                        function updateM6cDots() {
+                            if (!progressEl) return;
+                            const dots = progressEl.querySelectorAll('.m6c-dot');
+                            dots.forEach(function (dot, i) {
+                                dot.classList.toggle('is-active', i === m6cIdx);
+                                dot.classList.toggle('is-done', viewed.has(i) && i !== m6cIdx);
+                            });
+                        }
+
+                        function markM6cProgress() {
+                            if (!window.matchMedia('(max-width: 768px)').matches) return;
+                            viewed.add(m6cIdx);
+                            if (viewed.size >= M6C_CARDS.length) {
+                                m6cMarkTrackerDone();
+                            }
+                        }
+
+                        function renderM6cCard() {
+                            const c = M6C_CARDS[m6cIdx];
+                            if (labelEl) labelEl.textContent = 'Compromisso ' + c.step;
+                            if (iconEl) iconEl.innerHTML = c.icon;
+                            if (titleEl) titleEl.textContent = c.title;
+                            if (descEl) descEl.textContent = c.desc;
+                            if (counterEl) counterEl.textContent = (m6cIdx + 1) + '/' + M6C_CARDS.length;
+                            if (cardEl) cardEl.classList.add('is-active');
+                            updateM6cDots();
+                            markM6cProgress();
+                            if (prevBtn) prevBtn.disabled = m6cIdx === 0;
+                            if (nextBtn) nextBtn.disabled = m6cIdx >= M6C_CARDS.length - 1;
+                        }
+
+                        function m6cGo(dir) {
+                            const next = m6cIdx + dir;
+                            if (next < 0 || next >= M6C_CARDS.length) return;
+                            m6cIdx = next;
+                            if (typeof playTechClick === 'function') playTechClick();
+                            renderM6cCard();
+                        }
+
+                        const prevBtn = document.getElementById('m6c-prev');
+                        const nextBtn = document.getElementById('m6c-next');
+                        if (prevBtn) prevBtn.addEventListener('click', function () { m6cGo(-1); });
+                        if (nextBtn) nextBtn.addEventListener('click', function () { m6cGo(1); });
+
+                        renderM6cCard();
+                    })();
+                </script>
+            </div>
+
+            <div class="slide" id="s-mod6-comp-preventiva">
+                <style>
+                    #s-mod6-comp-preventiva .comp-cards-grid {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        width: 100%;
+                        align-items: center;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern {
+                        width: 100%;
+                        background: linear-gradient(145deg, rgba(20, 25, 40, 0.95), rgba(10, 15, 25, 0.98));
+                        border: 1px solid rgba(255, 255, 255, 0.06);
+                        border-radius: 12px;
+                        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 2px 10px rgba(255, 255, 255, 0.03);
+                        overflow: hidden;
+                        transition: all 0.4s cubic-bezier(0.18, 1, 0.26, 1) !important;
+                        cursor: pointer !important;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern:nth-child(1) {
+                        border-top: 4px solid #ff4757;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern:nth-child(2) {
+                        border-top: 4px solid #2ecc71;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern:nth-child(1):hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 20px 40px rgba(255, 71, 87, 0.2), inset 0 2px 15px rgba(255, 71, 87, 0.08) !important;
+                        border-color: rgba(255, 71, 87, 0.3) !important;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern:nth-child(2):hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 20px 40px rgba(46, 204, 113, 0.2), inset 0 2px 15px rgba(46, 204, 113, 0.08) !important;
+                        border-color: rgba(46, 204, 113, 0.3) !important;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern:nth-child(1).req-done {
+                        background: linear-gradient(145deg, rgba(255, 71, 87, 0.12), rgba(15, 20, 35, 0.95)) !important;
+                        box-shadow: 0 15px 40px rgba(255, 71, 87, 0.25), inset 0 0 25px rgba(255, 71, 87, 0.1) !important;
+                        border: 1px solid rgba(255, 71, 87, 0.4) !important;
+                        border-top: 4px solid #ff4757 !important;
+                        transform: scale(1.02);
+                    }
+                    #s-mod6-comp-preventiva .comp-card-modern:nth-child(2).req-done {
+                        background: linear-gradient(145deg, rgba(46, 204, 113, 0.12), rgba(15, 20, 35, 0.95)) !important;
+                        box-shadow: 0 15px 40px rgba(46, 204, 113, 0.25), inset 0 0 25px rgba(46, 204, 113, 0.1) !important;
+                        border: 1px solid rgba(46, 204, 113, 0.4) !important;
+                        border-top: 4px solid #2ecc71 !important;
+                        transform: scale(1.02);
+                    }
+                    @media (min-width: 769px) {
+                        #s-mod6-comp-preventiva .comp-cards-grid {
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: stretch;
+                            gap: 45px;
+                        }
+                        #s-mod6-comp-preventiva .comp-card-modern {
+                            flex: 1;
+                            max-width: 410px;
+                        }
+                        #s-mod6-comp-preventiva .comp-card-img-wrap {
+                            height: 200px !important;
+                        }
+                        #s-mod6-comp-preventiva .comp-card-body {
+                            padding: 24px !important;
+                        }
+                    }
+                    @media (max-width: 768px) {
+                        #s-mod6-comp-preventiva .m6p-desktop-wrap,
+                        #s-mod6-comp-preventiva .m6p-desktop-hint,
+                        #s-mod6-comp-preventiva #prev-success-msg {
+                            display: none !important;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-mobile-wrap {
+                            display: block;
+                            width: 100%;
+                            position: relative;
+                            z-index: 3;
+                        }
+
+                        #s-mod6-comp-preventiva .content-area {
+                            justify-content: flex-start !important;
+                            align-items: center !important;
+                            padding-top: 12px !important;
+                            padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+                            overflow: hidden !important;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-layout {
+                            width: 100%;
+                            padding: 28px 14px 8px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 12px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-carousel {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 12px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card {
+                            width: 100%;
+                            position: relative;
+                            background: linear-gradient(165deg, rgba(22, 32, 55, 0.95) 0%, rgba(10, 14, 26, 0.98) 100%);
+                            border: 1px solid rgba(255, 255, 255, 0.12);
+                            border-radius: 14px;
+                            overflow: hidden;
+                            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-active.is-wrong {
+                            border-color: rgba(255, 71, 87, 0.45);
+                            box-shadow: 0 20px 55px rgba(255, 71, 87, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-active.is-right {
+                            border-color: rgba(46, 204, 113, 0.45);
+                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-accent {
+                            height: 4px;
+                            opacity: 0.9;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-accent {
+                            background: linear-gradient(90deg, transparent, #ff4757 40%, rgba(255, 71, 87, 0.5) 70%, transparent);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-accent {
+                            background: linear-gradient(90deg, transparent, var(--green-lt) 40%, rgba(46, 204, 113, 0.5) 70%, transparent);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-photo {
+                            width: 100%;
+                            min-height: 120px;
+                            max-height: 150px;
+                            background: #0a0a0a;
+                            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            overflow: hidden;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-photo {
+                            border-bottom-color: rgba(255, 71, 87, 0.35);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-photo {
+                            border-bottom-color: rgba(46, 204, 113, 0.35);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-photo img {
+                            width: 100%;
+                            height: 100%;
+                            min-height: 120px;
+                            max-height: 150px;
+                            object-fit: cover;
+                            display: block;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-inner {
+                            padding: 18px 18px 20px;
+                            text-align: center;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-label {
+                            display: inline-block;
+                            font-family: var(--font-h);
+                            font-size: 12px;
+                            font-weight: 800;
+                            letter-spacing: 0.14em;
+                            text-transform: uppercase;
+                            margin-bottom: 8px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-label {
+                            color: #ff6b7a;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-label {
+                            color: var(--green-lt);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-title {
+                            font-family: var(--font-h);
+                            font-size: 17px;
+                            font-weight: 800;
+                            color: var(--white);
+                            margin-bottom: 10px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-divider {
+                            width: 48px;
+                            height: 2px;
+                            margin: 0 auto 12px;
+                            border-radius: 2px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-divider {
+                            background: linear-gradient(90deg, transparent, rgba(255, 71, 87, 0.7), transparent);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-divider {
+                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-desc {
+                            font-size: 13px;
+                            line-height: 1.55;
+                            color: rgba(255, 255, 255, 0.78);
+                            margin: 0 auto;
+                            max-width: 300px;
+                            text-align: left;
+                            white-space: pre-line;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-progress {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-dot {
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            background: rgba(255, 255, 255, 0.2);
+                            border: 1px solid rgba(255, 255, 255, 0.15);
+                            transition: all 0.3s ease;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-dot.is-active {
+                            width: 22px;
+                            border-radius: 4px;
+                            background: rgba(46, 204, 113, 0.7);
+                            border-color: rgba(46, 204, 113, 0.9);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-dot.is-done {
+                            background: rgba(46, 204, 113, 0.35);
+                            border-color: rgba(46, 204, 113, 0.5);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-carousel-nav {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 14px;
+                            position: relative;
+                            z-index: 20;
+                            pointer-events: auto;
+                            padding-bottom: 4px;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-nav-btn {
+                            width: 42px;
+                            height: 42px;
+                            border-radius: 50%;
+                            border: 1px solid rgba(255, 255, 255, 0.45);
+                            background: rgba(10, 10, 10, 0.95);
+                            color: #fff;
+                            font-size: 22px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            pointer-events: auto;
+                            touch-action: manipulation;
+                            z-index: 21;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-counter {
+                            font-family: var(--font-h);
+                            font-size: 15px;
+                            font-weight: 700;
+                            color: #fff;
+                            min-width: 40px;
+                            text-align: center;
+                        }
+
+                        #s-mod6-comp-preventiva .wave {
+                            z-index: 0;
+                            pointer-events: none;
+                        }
+                    }
+
+                    #s-mod6-comp-preventiva .m6p-mobile-wrap {
+                        display: none;
+                    }
+                </style>
+
+                <div class="top-bar">
+                    <div class="section-tag" style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">🏁 MÓDULO 6</div>
+                    <h2 class="slide-title" style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">Atitudes Preventivas<br><span>Salvam Vidas</span></h2>
+                </div>
+
+                <div class="content-area" style="padding-top: 15px; max-width: 900px; margin: 0 auto; width: 100%;">
+                    <div id="prev-hint-wrapper" class="m6p-desktop-hint" style="margin-top: 0; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
+                        <div style="font-family: var(--font-h); font-size: 14px; color: var(--green); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(46, 204, 113, 0.5); animation: pulse-soft 2s infinite;">Toque nas imagens para comparar os comportamentos ✔</div>
+                        <div style="font-family: var(--font-h); font-size: 13px; color: rgba(46, 204, 113, 0.8); margin-top: 10px; letter-spacing: 1px; text-transform: uppercase;"><span id="prev-counter-text">Veja os dois lados para avançar</span></div>
+                    </div>
+                    <div class="comp-success" id="prev-success-msg" style="font-family: var(--font-h); font-size: 16px; color: var(--green); text-transform: uppercase; letter-spacing: 2px; margin-top: 0; margin-bottom: 25px; text-shadow: 0 0 15px rgba(46, 204, 113, 0.8); opacity: 0; transform: translateY(10px); transition: all 0.5s ease; display: none; text-align: center;">✅ Análise concluída</div>
+
+                    <div class="comp-cards-grid hud-anim-enter m6p-desktop-wrap">
+                        <!-- LADO ESQUERDO: INCORRETO -->
+                        <div class="comp-card-modern m6p-desktop-item" onclick="activatePreventiva(this)" style="cursor: pointer; position: relative;">
+                            <div class="comp-card-content">
+                                <div class="comp-card-img-wrap" style="height: 250px; border-bottom: 2px solid #ff4757; overflow: hidden;">
+                                    <img src="assets/imgur/gtuC8HP.png" alt="Operador Distraído" loading="eager" fetchpriority="high" decoding="async" style="object-fit: cover; width: 100%; height: 100%;">
+                                </div>
+                                <div class="comp-card-body" style="padding: 20px;">
+                                    <h4 class="comp-card-title" style="color: #ff4757; font-size: 20px; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px;">❌ INCORRETO</h4>
+                                    <ul style="color: rgba(255,255,255,0.7); font-size: 15px; margin: 0; padding-left: 0; text-align: left; line-height: 1.8; list-style-type: none;">
+                                        <li style="margin-bottom: 8px;">· Operador sem atenção</li>
+                                        <li style="margin-bottom: 8px;">▪ Comportamento inseguro</li>
+                                        <li>▪ Postura inadequada</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- LADO DIREITO: CORRETO -->
+                        <div class="comp-card-modern m6p-desktop-item" onclick="activatePreventiva(this)" style="cursor: pointer; position: relative;">
+                            <div class="comp-card-content">
+                                <div class="comp-card-img-wrap" style="height: 250px; border-bottom: 2px solid #2ecc71; overflow: hidden;">
+                                    <img src="assets/imgur/7BJLUgg.png" alt="Operador Atento" loading="eager" fetchpriority="high" decoding="async" style="object-fit: cover; width: 100%; height: 100%;">
+                                </div>
+                                <div class="comp-card-body" style="padding: 20px;">
+                                    <h4 class="comp-card-title" style="color: var(--green); font-size: 20px; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px;">✅ CORRETO</h4>
+                                    <ul style="color: rgba(255,255,255,0.7); font-size: 15px; margin: 0; padding-left: 0; text-align: left; line-height: 1.8; list-style-type: none;">
+                                        <li style="margin-bottom: 8px;">▪ Operador focado</li>
+                                        <li style="margin-bottom: 8px;">▪ Postura correta</li>
+                                        <li>· Operação segura</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m6p-mobile-wrap">
+                        <div class="m6p-layout">
+                            <div class="m6p-carousel">
+                                <div class="m6p-card is-active is-wrong" id="m6p-card">
+                                    <div class="m6p-card-accent" aria-hidden="true"></div>
+                                    <div class="m6p-card-photo" id="m6p-card-photo">
+                                        <img src="assets/imgur/gtuC8HP.png" alt="Operador sem atenção">
+                                    </div>
+                                    <div class="m6p-card-inner">
+                                        <span class="m6p-card-label" id="m6p-card-label">❌ Incorreto</span>
+                                        <h3 class="m6p-card-title" id="m6p-card-title">Operador sem atenção</h3>
+                                        <div class="m6p-card-divider" aria-hidden="true"></div>
+                                        <p class="m6p-card-desc" id="m6p-card-desc">· Operador sem atenção
+· Comportamento inseguro
+· Postura inadequada</p>
+                                    </div>
+                                </div>
+
+                                <div class="m6p-progress" id="m6p-progress" aria-hidden="true">
+                                    <span class="m6p-dot is-active"></span>
+                                    <span class="m6p-dot"></span>
+                                </div>
+
+                                <div class="m6p-carousel-nav">
+                                    <button type="button" class="m6p-nav-btn" id="m6p-prev" aria-label="Comportamento anterior">‹</button>
+                                    <span class="m6p-counter" id="m6p-counter">1/2</span>
+                                    <button type="button" class="m6p-nav-btn" id="m6p-next" aria-label="Próximo comportamento">›</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span id="m6p-tracker" class="req-item" style="display:none" aria-hidden="true"></span>
+                </div>
+
+                <script>
+                    function activatePreventiva(el) {
+                        if (el.classList.contains('req-done')) return;
+                        el.classList.add('req-done');
+                        if (typeof playTechClick === 'function') playTechClick();
+                        else if (window.soundClick) window.soundClick.play();
+
+                        const container = document.getElementById('s-mod6-comp-preventiva');
+                        const total = container.querySelectorAll('.m6p-desktop-item').length;
+                        const done = container.querySelectorAll('.m6p-desktop-item.req-done').length;
+
+                        if (done === total) {
+                            const wrapper = document.getElementById('prev-hint-wrapper');
+                            if (wrapper) wrapper.style.display = 'none';
+                            const successMsg = document.getElementById('prev-success-msg');
+                            if (successMsg) {
+                                successMsg.style.display = 'block';
+                                void successMsg.offsetWidth;
+                                successMsg.style.opacity = '1';
+                                successMsg.style.transform = 'translateY(0)';
+                            }
+                            m6pMarkTrackerDone();
+                        }
+                    }
+
+                    function m6pMarkTrackerDone() {
+                        const tracker = document.getElementById('m6p-tracker');
+                        if (!tracker || tracker.classList.contains('req-done')) return;
+                        tracker.classList.add('req-done');
+                        if (typeof updateNextButton === 'function') updateNextButton();
+                    }
+
+                    (function () {
+                        const M6P_CARDS = [
+                            {
+                                type: 'wrong',
+                                label: '❌ Incorreto',
+                                title: 'Operador sem atenção',
+                                desc: '· Operador sem atenção\n· Comportamento inseguro\n· Postura inadequada',
+                                photo: 'assets/imgur/gtuC8HP.png'
+                            },
+                            {
+                                type: 'right',
+                                label: '✅ Correto',
+                                title: 'Operador focado',
+                                desc: '· Operador focado\n· Postura correta\n· Operação segura',
+                                photo: 'assets/imgur/7BJLUgg.png'
+                            }
+                        ];
+
+                        let m6pIdx = 0;
+                        const viewed = new Set([0]);
+
+                        const cardEl = document.getElementById('m6p-card');
+                        const photoEl = document.getElementById('m6p-card-photo');
+                        const labelEl = document.getElementById('m6p-card-label');
+                        const titleEl = document.getElementById('m6p-card-title');
+                        const descEl = document.getElementById('m6p-card-desc');
+                        const counterEl = document.getElementById('m6p-counter');
+                        const progressEl = document.getElementById('m6p-progress');
+
+                        function updateM6pDots() {
+                            if (!progressEl) return;
+                            const dots = progressEl.querySelectorAll('.m6p-dot');
+                            dots.forEach(function (dot, i) {
+                                dot.classList.toggle('is-active', i === m6pIdx);
+                                dot.classList.toggle('is-done', viewed.has(i) && i !== m6pIdx);
+                            });
+                        }
+
+                        function markM6pProgress() {
+                            if (!window.matchMedia('(max-width: 768px)').matches) return;
+                            viewed.add(m6pIdx);
+                            if (viewed.size >= M6P_CARDS.length) {
+                                m6pMarkTrackerDone();
+                            }
+                        }
+
+                        function renderM6pCard() {
+                            const c = M6P_CARDS[m6pIdx];
+                            if (cardEl) {
+                                cardEl.classList.toggle('is-wrong', c.type === 'wrong');
+                                cardEl.classList.toggle('is-right', c.type === 'right');
+                                cardEl.classList.add('is-active');
+                            }
+                            if (labelEl) labelEl.textContent = c.label;
+                            if (titleEl) titleEl.textContent = c.title;
+                            if (descEl) descEl.textContent = c.desc;
+                            if (counterEl) counterEl.textContent = (m6pIdx + 1) + '/' + M6P_CARDS.length;
+
+                            if (photoEl) {
+                                let img = photoEl.querySelector('img');
+                                if (!img) {
+                                    img = document.createElement('img');
+                                    photoEl.appendChild(img);
+                                }
+                                img.src = c.photo;
+                                img.alt = c.title;
+                            }
+
+                            updateM6pDots();
+                            markM6pProgress();
+                            if (prevBtn) prevBtn.disabled = m6pIdx === 0;
+                            if (nextBtn) nextBtn.disabled = m6pIdx >= M6P_CARDS.length - 1;
+                        }
+
+                        function m6pGo(dir) {
+                            const next = m6pIdx + dir;
+                            if (next < 0 || next >= M6P_CARDS.length) return;
+                            m6pIdx = next;
+                            if (typeof playTechClick === 'function') playTechClick();
+                            renderM6pCard();
+                        }
+
+                        const prevBtn = document.getElementById('m6p-prev');
+                        const nextBtn = document.getElementById('m6p-next');
+                        if (prevBtn) prevBtn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); m6pGo(-1); });
+                        if (nextBtn) nextBtn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); m6pGo(1); });
+
+                        renderM6pCard();
+                    })();
+                </script>
+
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                    <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
+                </svg></div>
+            </div>
+            <div class="slide" id="s-mod6-mensagem-final"
+                style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; min-height: 100vh;">
+                <!-- Background Layer -->
+                <div class="bg-layer" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
+                    <img class="static-bg"
+                        src="assets/imgur/83kI3z0.png"
+                        alt="Operador em ambiente industrial"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85) contrast(1.15);">
+                    <!-- Gradient overlay -->
+                    <div class="grad-overlay"
+                        style="position: absolute; inset: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 25%, rgba(15, 23, 42, 0.95) 85%);">
+                    </div>
+                </div>
+
+                <!-- Content Layer -->
+                <div class="content-area"
+                    style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; width: 100%; margin-top: 5vh;">
+                    <div class="glow-bg"
+                        style="position: fixed; inset: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at center, rgba(46, 204, 113, 0.08) 0%, transparent 60%); z-index: -1;">
+                    </div>
+
+                    <div class="section-tag anim-tag"
+                        style="background: var(--red); color: var(--black); margin-bottom: 30px; position: relative;">🏁
+                        MÓDULO 6
+                    </div>
+                    <h2 class="anim-title"
+                        style="font-family: var(--font-h); font-size: clamp(36px, 6vw, 65px); font-weight: 800; color: var(--white); text-transform: uppercase; line-height: 1.25; margin-bottom: 15px; letter-spacing: 1px;">
+                        A SEGURANÇA É DIREITO<br><span style="color: var(--green);">E DEVER DE TODOS</span>
+                    </h2>
+                    <div class="anim-sub"
+                        style="font-family: var(--font-p); font-size: clamp(18px, 2.5vw, 24px); color: rgba(255,255,255,0.95); max-width: 1000px; line-height: 1.6; font-weight: 300; text-align: center; margin: 0 auto; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                        Operar com responsabilidade protege vidas, equipamentos e toda a operação.
+                    </div>
+                </div>
+
+                <style>
+                    /* Initial States */
+                    #s-mod6-mensagem-final .grad-overlay {
+                        opacity: 0;
+                        transition: opacity 1.5s ease 0.5s;
+                    }
+
+                    #s-mod6-mensagem-final .glow-bg {
+                        opacity: 0;
+                        transition: opacity 2s ease 1s;
+                    }
+
+                    #s-mod6-mensagem-final .anim-tag {
+                        opacity: 0;
+                        transform: translateY(-20px);
+                        transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+                    }
+
+                    #s-mod6-mensagem-final .anim-title {
+                        opacity: 0;
+                        transform: translateY(20px);
+                        text-shadow: 0 0 0 transparent;
+                        transition: opacity 1.5s ease 1s, transform 1.5s ease 1s, text-shadow 2s ease 1.5s;
+                    }
+
+                    #s-mod6-mensagem-final .anim-sub {
+                        opacity: 0;
+                        transform: translateY(20px);
+                        transition: opacity 1.5s ease 1.5s, transform 1.5s ease 1.5s;
+                    }
+
+                    /* Triggered States */
+                    #s-mod6-mensagem-final.is-active .grad-overlay {
+                        opacity: 1;
+                    }
+
+                    #s-mod6-mensagem-final.is-active .glow-bg {
+                        opacity: 1;
+                    }
+
+                    #s-mod6-mensagem-final.is-active .anim-tag {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+
+                    #s-mod6-mensagem-final.is-active .anim-title {
+                        opacity: 1;
+                        transform: translateY(0);
+                        text-shadow: 0 0 15px rgba(46, 204, 113, 0.4), 0 0 30px rgba(46, 204, 113, 0.2);
+                    }
+
+                    #s-mod6-mensagem-final.is-active .anim-sub {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                </style>
+
+                <script>
+                    function playCinematicAudio() {
+                        try {
+                            const AudioContext = window.AudioContext || window.webkitAudioContext;
+                            if (!AudioContext) return;
+                            const ctx = new AudioContext();
+                            const now = ctx.currentTime;
+
+                            // Low boom
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            osc.type = 'sine';
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            osc.frequency.setValueAtTime(120, now);
+                            osc.frequency.exponentialRampToValueAtTime(30, now + 1.5);
+                            gain.gain.setValueAtTime(0, now);
+                            gain.gain.linearRampToValueAtTime(0.25, now + 0.1);
+                            gain.gain.exponentialRampToValueAtTime(0.01, now + 3);
+                            osc.start(now);
+                            osc.stop(now + 3);
+
+                            // Shimmer/sweep
+                            const osc2 = ctx.createOscillator();
+                            const gain2 = ctx.createGain();
+                            osc2.type = 'sine';
+                            osc2.connect(gain2);
+                            gain2.connect(ctx.destination);
+                            osc2.frequency.setValueAtTime(400, now + 0.5);
+                            osc2.frequency.linearRampToValueAtTime(800, now + 3);
+                            gain2.gain.setValueAtTime(0, now + 0.5);
+                            gain2.gain.linearRampToValueAtTime(0.03, now + 2);
+                            gain2.gain.linearRampToValueAtTime(0, now + 4);
+                            osc2.start(now + 0.5);
+                            osc2.stop(now + 4);
+                        } catch (e) { }
+                    }
+
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const container = document.getElementById('s-mod6-mensagem-final');
+                        if (!container) return;
+
+                        function activateMensagemFinal() {
+                            if (!container.classList.contains('is-active')) {
+                                container.classList.add('is-active');
+                            }
+                        }
+
+                        const observer = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) activateMensagemFinal();
+                            });
+                        }, { threshold: 0.4 });
+
+                        observer.observe(container);
+
+                        const slideObserver = new MutationObserver(() => {
+                            if (container.classList.contains('active')) activateMensagemFinal();
+                        });
+                        slideObserver.observe(container, { attributes: true, attributeFilter: ['class'] });
+
+                        if (container.classList.contains('active')) activateMensagemFinal();
+                    });
+                </script>
+            </div>
+
+            <div class="slide" id="s-mod6-video-mensagem-final"
+                style="background: radial-gradient(circle at center, rgba(11, 31, 75, 1) 0%, rgba(5, 10, 20, 1) 100%); overflow: hidden;">
+                <!-- Fundo HUD Cinematográfico -->
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.12) 0%, transparent 65%); animation: s1b-glow 4s infinite alternate ease-in-out;">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.03) 3px, rgba(46, 204, 113, 0.03) 4px);">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 60px 60px; animation: s1b-smoke 30s infinite linear;">
+                </div>
+                <div class="top-bar" style="position: relative; z-index: 2;">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🏁 MÓDULO 6</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4); text-transform: none !important;">
+                        Encerramento</h2>
+
+                </div>
+                <div class="content-area"
+                    style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                        <iframe
+                            src="https://player.vimeo.com/video/1193333742?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="wave" style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;"><svg
+                        viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s-mod6-video-final"
+                style="background: radial-gradient(circle at center, rgba(11, 31, 75, 1) 0%, rgba(5, 10, 20, 1) 100%); overflow: hidden;">
+                <!-- Fundo HUD Cinematográfico -->
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.12) 0%, transparent 65%); animation: s1b-glow 4s infinite alternate ease-in-out;">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.03) 3px, rgba(46, 204, 113, 0.03) 4px);">
+                </div>
+                <div
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 60px 60px; animation: s1b-smoke 30s infinite linear;">
+                </div>
+                <div class="top-bar" style="position: relative; z-index: 2;">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🏁 MÓDULO 6</div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4); text-transform: none !important;">
+                        Mensagem final</h2>
+                </div>
+                <div class="content-area"
+                    style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                        <iframe
+                            src="https://player.vimeo.com/video/1193993024?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="wave" style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;"><svg
+                        viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
+            </div>
+
+            <div class="slide" id="s-quiz6">
+                <style>
+                    /* CSS Exclusivo Módulo 6 Final Quiz HUD */
+                    #s-quiz6 {
+                        background: radial-gradient(circle at center, rgba(15, 23, 42, 1) 0%, rgba(5, 10, 20, 1) 100%);
+                    }
+
+                    #s-quiz6 .hud-scanner {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 2px;
+                        background: var(--green);
+                        box-shadow: 0 0 20px 2px var(--green);
+                        opacity: 0.3;
+                        animation: scan-line 4s linear infinite;
+                        pointer-events: none;
+                        z-index: 0;
+                    }
+
+                    @keyframes scan-line {
+                        0% {
+                            top: 0;
+                            opacity: 0;
+                        }
+
+                        10% {
+                            opacity: 0.5;
+                        }
+
+                        90% {
+                            opacity: 0.5;
+                        }
+
+                        100% {
+                            top: 100%;
+                            opacity: 0;
+                        }
+                    }
+
+                    #s-quiz6 .hud-status {
+                        font-family: monospace;
+                        font-size: 14px;
+                        color: var(--green);
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        animation: pulse-tech 1.5s infinite;
+                        margin-bottom: 20px;
+                    }
+
+                    @keyframes pulse-tech {
+
+                        0%,
+                        100% {
+                            opacity: 1;
+                        }
+
+                        50% {
+                            opacity: 0.4;
+                        }
+                    }
+
+                    #s-quiz6 .q-text {
+                        background: rgba(10, 15, 30, 0.9) !important;
+                        border: 1px solid rgba(46, 204, 113, 0.3) !important;
+                        padding: 0 !important;
+                        border-radius: 8px !important;
+                        margin-bottom: 15px !important;
+                        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(46, 204, 113, 0.1) !important;
+                        text-align: center;
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    #s-quiz6 .q-text-inner {
+                        padding: 12px 20px;
+                    }
+
+                    #s-quiz6 .q-img-wrap {
+                        width: 100%;
+                        height: 160px;
+                        position: relative;
+                    }
+
+                    #s-quiz6 .q-img-wrap img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-bottom: 1px solid rgba(46, 204, 113, 0.3);
+                    }
+
+                    #s-quiz6 .q-img-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(to bottom, transparent 60%, rgba(10, 15, 30, 1) 100%);
+                    }
+
+                    #s-quiz6 .q-options {
+                        display: flex;
+                        gap: 15px;
+                        justify-content: center;
+                    }
+
+                    #s-quiz6 .q-opt {
+                        background: rgba(15, 23, 42, 0.8) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                        padding: 12px !important;
+                        border-radius: 8px !important;
+                        transition: all 0.3s ease !important;
+                        flex: 1;
+                        text-align: center;
+                        font-size: 18px !important;
+                        font-family: var(--font-h) !important;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                    }
+
+                    #s-quiz6 .q-opt:hover {
+                        transform: translateY(-5px) !important;
+                    }
+
+                    #s-quiz6 .q-opt.opt-approve:hover {
+                        border-color: rgba(46, 204, 113, 0.8) !important;
+                        background: rgba(46, 204, 113, 0.1) !important;
+                        box-shadow: 0 0 20px rgba(46, 204, 113, 0.4) !important;
+                    }
+
+                    #s-quiz6 .q-opt.opt-reject:hover {
+                        border-color: rgba(231, 76, 60, 0.8) !important;
+                        background: rgba(231, 76, 60, 0.1) !important;
+                        box-shadow: 0 0 20px rgba(231, 76, 60, 0.4) !important;
+                    }
+
+                    #s-quiz6 .q-opt.selected.opt-approve,
+                    #s-quiz6 .q-opt.selected.opt-reject {
+                        background: rgba(255, 255, 255, 0.18) !important;
+                        border-color: #ffffff !important;
+                        color: #ffffff !important;
+                        box-shadow: 0 0 22px rgba(255, 255, 255, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.08) !important;
+                        transform: translateY(-2px) !important;
+                    }
+
+                    #s-quiz6 #q6-btn-music-toggle {
+                        position: fixed;
+                        top: calc(15px + 28px + 8px);
+                        right: 15px;
+                        border-radius: 999px;
+                        padding: 8px 14px;
+                        font-family: var(--font-h);
+                        font-size: 11px;
+                        font-weight: 800;
+                        letter-spacing: 0.6px;
+                        cursor: pointer;
+                        z-index: 900;
+                        transition: all 0.25s ease;
+                        background: rgba(46, 204, 113, 0.22);
+                        border: 2px solid rgba(46, 204, 113, 0.85);
+                        color: #ffffff;
+                        box-shadow: 0 0 18px rgba(46, 204, 113, 0.55), 0 4px 14px rgba(0, 0, 0, 0.35);
+                    }
+
+                    #s-quiz6 #q6-btn-music-toggle.is-muted {
+                        background: rgba(231, 76, 60, 0.2);
+                        border-color: rgba(231, 76, 60, 0.85);
+                        box-shadow: 0 0 18px rgba(231, 76, 60, 0.45), 0 4px 14px rgba(0, 0, 0, 0.35);
+                        color: #ffffff;
+                    }
+
+                    #q6-verify-container {
+                        margin-top: 20px !important;
+                    }
+
+                    #s-quiz6 .btn-tf-verify {
+                        font-size: 18px !important;
+                        padding: 15px 40px !important;
+                        box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }
+
+                    #s-quiz6 .btn-tf-verify:hover {
+                        box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
+                    }
+
+                    /* Final Result Enhancements */
+                    #q6-result-panel.q-result-anim {
+                        animation: hud-enter 1s ease forwards;
+                    }
+
+                    @keyframes hud-enter {
+                        0% {
+                            opacity: 0;
+                            transform: scale(0.9) translateY(20px);
+                            filter: blur(10px);
+                        }
+
+                        100% {
+                            opacity: 1;
+                            transform: scale(1) translateY(0);
+                            filter: blur(0);
+                        }
+                    }
+
+                    @media (max-width: 768px) {
+                        #s-quiz6 .q-img-wrap {
+                            height: 95px;
+                        }
+
+                        #s-quiz6 .q-img-wrap img {
+                            height: 95px;
+                            min-height: 95px;
+                            max-height: 95px;
+                        }
+
+                        #s-quiz6 .q-opt {
+                            font-size: 13px !important;
+                            padding: 8px 6px !important;
+                        }
+
+                        #s-quiz6 .hud-status {
+                            margin-bottom: 8px;
+                        }
+
+                        #s-quiz6 #q6-btn-music-toggle {
+                            top: calc(50px + 28px + 8px);
+                            right: 10px;
+                            padding: 7px 12px;
+                            font-size: 10px;
+                        }
+                    }
+                </style>
+
+                <div class="hud-scanner"></div>
+
+                <div class="top-bar" style="position: relative; z-index: 2;">
+                    <div class="section-tag"
+                        style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
+                        🟩 CENTRAL<br>FINAL
+                    </div>
+                    <h2 class="slide-title"
+                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
+                        Liberação
+                        <span>Operacional</span>
+                    </h2>
+
+                </div>
+
+                <div class="content-area" style="position: relative; z-index: 2;">
+                    <div class="quiz-wrap" style="max-width: 800px; width: 100%;">
+
+                        <!-- ABERTURA -->
+                        <div id="q6-intro-panel" style="text-align: center; padding: 40px 20px;">
+                            <div class="hud-status" style="animation-delay: 0.1s;">[ SISTEMA ONLINE ]</div>
+
+                            <p class="hud-anim-enter"
+                                style="font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 10px; line-height: 1.6; animation-delay: 0.2s; opacity: 0;">
+                                Analise os procedimentos apresentados e decida se a operação pode ser liberada com
+                                segurança.
+                            </p>
+                            <p class="hud-anim-enter"
+                                style="font-size: clamp(14px, 1.5vw, 16px); color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; animation-delay: 0.3s; opacity: 0; font-family: monospace;">
+                                Somente operações seguras devem ser aprovadas.
+                            </p>
+
+                            <div class="hud-anim-enter"
+                                style="position: relative; z-index: 1; font-family: var(--font-h); font-size: 14px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; animation-delay: 0.3s; opacity: 0; display: inline-flex; align-items: center; gap: 8px; background: rgba(10, 30, 20, 0.9); padding: 10px 20px; border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 8px; box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);">
+                                <span
+                                    style="display:inline-block; width:6px; height:6px; background:var(--green); border-radius:50%; box-shadow:0 0 6px var(--green);"></span>
+                                5 AnáliseS &middot; Mínimo DE 70% DE ACERTOS
+                            </div><br>
+
+                            <button class="btn-tf-verify hud-anim-enter req-item"
+                                style="animation-delay: 0.4s; opacity: 0; display: inline-flex; align-items: center; gap: 10px;"
+                                onclick="startQuiz6Intro(); this.classList.add('req-done'); updateNextButton();">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14"></path>
+                                    <path d="M12 5l7 7-7 7"></path>
+                                </svg>
+                                INICIAR VALIDAÇÃO
+                            </button>
+                        </div>
+
+                        <!-- PERGUNTAS -->
+                        <div id="q6-question-panel"
+                            style="display:none; transition: opacity 0.5s ease; position: relative;">
+                            <audio id="q6-bg-music"
+                                src="https://res.cloudinary.com/dzqns0zpe/video/upload/v1779288781/musica.mp3_gxctw8.mp3"
+                                loop></audio>
+                            <button id="q6-btn-music-toggle" onclick="toggleQuiz6Music()"
+                            <div class="hud-status" id="q6-hud-status" style="text-align: center;">🟢 ANÁLISE EM
+                                EXECUÇÃO</div>
+                            <div class="q-meta" style="justify-content: center; margin-bottom: 15px;">
+                                <div class="q-lbl" id="q6-counter" style="font-family: monospace; letter-spacing: 2px;">
+                                    Análise 1/5
+                                </div>
+                            </div>
+
+                            <div class="q-text" id="q6-text">
+                                <!-- Dynamically filled by createQuiz6Engine -->
+                            </div>
+
+                            <div
+                                style="text-align: center; font-family: var(--font-h); font-size: 22px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--white); text-shadow: 0 0 10px rgba(255,255,255,0.3);">
+                                LIBERAR OPERAÇÃO?
+                            </div>
+
+                            <div class="q-options" id="q6-options"></div>
+
+                            <div id="q6-verify-container"
+                                style="text-align: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                <button class="btn-tf-verify" id="btn-tf-verify-q6" onclick="verifyAnswer6()">CONFIRMAR
+                                    Decisão</button>
+                            </div>
+
+                            <div class="q-feedback" id="q6-feedback" style="margin-top: 10px;"></div>
+
+                            <button class="btn-next-q" id="btn-next-q6" onclick="nextQuestion6()"
+                                style="margin-top: 10px; font-family: monospace; letter-spacing: 1px;">CARREGAR PRÓXIMO
+                                PROTOCOLO
+                            </button>
+                        </div>
+
+                        <!-- RESULTADO FINAL -->
+                        <div id="q6-result-panel" style="display:none;text-align:center;">
+                            <div class="result-pct green" id="q6-pct">--</div>
+                            <div class="r-stars" id="q6-stars" style="font-size: 50px; margin: 20px 0;">⭐⭐⭐</div>
+                            <div class="r-status" id="q6-status"></div>
+                            <div class="r-sub" id="q6-sub"></div>
+                            <div class="r-sub" id="q6-sub-additional"
+                                style="font-size: 14px; margin-top: 6px; font-family: monospace;"></div>
+                            <button class="btn-tf-verify" id="q6-btn-final" style="margin-top:40px; font-size:16px;"
+                                onclick="resetQuiz6()">Refazer</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" id="s-conclusion">
+                <style>
+                    #s-conclusion {
+                        background-color: #050a14;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                    }
+
+                    #s-conclusion .bg-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-image: url('https://i.imgur.com/IPbpmJv.png');
+                        background-size: cover;
+                        background-position: center;
+                        opacity: 0.3;
+                        z-index: 0;
+                        animation: bg-zoom 30s infinite alternate linear;
+                        filter: grayscale(20%) brightness(0.8);
+                    }
+
+                    @keyframes bg-zoom {
+                        0% {
+                            transform: scale(1);
+                        }
+
+                        100% {
+                            transform: scale(1.08);
+                        }
+                    }
+
+                    #s-conclusion .glow-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: radial-gradient(circle at center, rgba(46, 204, 113, 0.25) 0%, rgba(5, 10, 20, 0.85) 60%, rgba(0, 0, 0, 1) 100%);
+                        z-index: 1;
+                    }
+
+                    #s-conclusion .content-wrap {
+                        position: relative;
+                        z-index: 10;
+                        padding: 60px 50px;
+                        max-width: 850px;
+                        width: 90%;
+                        margin-top: 80px;
+                        background: linear-gradient(180deg, rgba(10, 15, 30, 0.8) 0%, rgba(5, 8, 15, 0.95) 100%);
+                        border: 1px solid rgba(46, 204, 113, 0.4);
+                        border-radius: 16px;
+                        box-shadow: 0 0 80px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(46, 204, 113, 0.1);
+                        backdrop-filter: blur(16px);
+                        animation: hud-enter-epic 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+
+                    @keyframes hud-enter-epic {
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    .seal-container {
+                        position: relative;
+                        width: 120px;
+                        height: 120px;
+                        margin: 0 auto 25px auto;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: seal-pop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+                        opacity: 0;
+                        transform: scale(0.5);
+                    }
+
+                    @keyframes seal-pop {
+                        to {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+                    }
+
+                    .seal-ring {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        border: 3px dashed rgba(46, 204, 113, 0.6);
+                        animation: rotate-ring 15s linear infinite;
+                    }
+
+                    @keyframes rotate-ring {
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+
+                    .seal-inner {
+                        width: 90px;
+                        height: 90px;
+                        background: rgba(46, 204, 113, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 45px;
+                        border: 2px solid var(--green);
+                        box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+                        text-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
+                    }
+
+                    #s-conclusion .title-epic {
+                        font-family: var(--font-h);
+                        font-size: clamp(36px, 5vw, 64px);
+                        color: var(--white);
+                        text-transform: uppercase;
+                        letter-spacing: 4px;
+                        margin-bottom: 15px;
+                        opacity: 0;
+                        animation: fade-up 0.8s ease forwards 1s;
+                    }
+
+                    #s-conclusion .title-epic span {
+                        color: var(--green);
+                        text-shadow: 0 0 30px rgba(46, 204, 113, 0.7), 0 0 60px rgba(46, 204, 113, 0.4);
+                        display: block;
+                    }
+
+                    #s-conclusion .subtext {
+                        font-size: clamp(18px, 2.5vw, 24px);
+                        color: rgba(255, 255, 255, 0.8);
+                        margin-bottom: 35px;
+                        line-height: 1.6;
+                        opacity: 0;
+                        animation: fade-up 0.8s ease forwards 1.3s;
+                    }
+
+                    #s-conclusion .msg-box {
+                        background: rgba(46, 204, 113, 0.05);
+                        border: 1px solid rgba(46, 204, 113, 0.2);
+                        border-left: 4px solid var(--green);
+                        padding: 25px;
+                        margin: 0 auto 45px;
+                        max-width: 650px;
+                        font-family: var(--font-b);
+                        font-size: 17px;
+                        color: rgba(255, 255, 255, 0.95);
+                        line-height: 1.6;
+                        box-shadow: 0 0 30px rgba(46, 204, 113, 0.05);
+                        opacity: 0;
+                        animation: fade-up 0.8s ease forwards 1.6s;
+                        border-radius: 4px;
+                    }
+
+                    #s-conclusion .btn-finish {
+                        background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(39, 174, 96, 0.4));
+                        border: 1px solid var(--green);
+                        color: #fff;
+                        font-family: var(--font-h);
+                        font-weight: 700;
+                        font-size: 20px;
+                        padding: 20px 60px;
+                        border-radius: 999px;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.1);
+                        opacity: 0;
+                        animation: fade-up 0.8s ease forwards 1.9s;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 15px;
+                    }
+
+                    #s-conclusion .btn-finish:hover {
+                        background: linear-gradient(135deg, rgba(46, 204, 113, 0.4), rgba(39, 174, 96, 0.6));
+                        box-shadow: 0 15px 40px rgba(46, 204, 113, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.2);
+                        transform: translateY(-5px) scale(1.02);
+                    }
+
+                    @keyframes fade-up {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    /* Particles */
+                    .particle-green {
+                        position: absolute;
+                        background: var(--green);
+                        box-shadow: 0 0 15px 3px var(--green);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 5;
+                        animation: float-up linear forwards;
+                        opacity: 0;
+                    }
+
+                    @keyframes float-up {
+                        0% {
+                            transform: translateY(10vh) scale(0.5);
+                            opacity: 0;
+                        }
+
+                        20% {
+                            opacity: 0.6;
+                        }
+
+                        80% {
+                            opacity: 0.6;
+                        }
+
+                        100% {
+                            transform: translateY(-100vh) scale(1.5);
+                            opacity: 0;
+                        }
+                    }
+
+                    /* Confetti */
+                    .confetti {
+                        position: absolute;
+                        width: 8px;
+                        height: 16px;
+                        background: var(--gold);
+                        opacity: 0;
+                        z-index: 4;
+                        animation: fall linear forwards;
+                    }
+
+                    @keyframes fall {
+                        0% {
+                            transform: translateY(-10vh) rotate(0deg);
+                            opacity: 1;
+                        }
+
+                        100% {
+                            transform: translateY(110vh) rotate(720deg);
+                            opacity: 0;
+                        }
+                    }
+                    /* Ajustes Mobile: Posicionamento mais equilibrado */
+                    @media (max-width: 768px) {
+                        #s-conclusion {
+                            justify-content: flex-start !important;
+                            align-items: center !important;
+                            padding-top: 2vh !important;
+                            margin-top: 0 !important;
+                        }
+                        #s-conclusion .content-wrap {
+                            margin: -40px auto 0 auto !important;
+                            padding: 30px 20px !important;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            text-align: center !important;
+                            width: 90% !important;
+                        }
+                        #s-conclusion .seal-container {
+                            margin: 0 auto 20px auto !important;
+                            transform: scale(0.9);
+                        }
+                        #s-conclusion .title-epic {
+                            font-size: clamp(26px, 7vw, 32px) !important;
+                            margin: 0 auto 10px auto !important;
+                            text-align: center !important;
+                        }
+                        #s-conclusion .subtext {
+                            font-size: 15px !important;
+                            margin: 0 auto 25px auto !important;
+                            text-align: center !important;
+                        }
+                        #s-conclusion .msg-box {
+                            padding: 15px !important;
+                            font-size: 14px !important;
+                            margin: 0 auto !important;
+                            text-align: center !important;
+                        }
+                    }
+                </style>
+
+                <div class="bg-overlay"></div>
+                <div class="glow-overlay"></div>
+                <div id="c-particles"></div>
+                <div id="c-confetti"></div>
+
+                <div class="content-wrap">
+                    
+
+                    <div class="seal-container">
+                        <div class="seal-ring"></div>
+                        <div class="seal-inner">🏆</div>
+                    </div>
+
+                    <h1 class="title-epic">
+                        TREINAMENTO <span>CONCLUÍDO</span>
+                    </h1>
+
+                    <p class="subtext">Você completou com sucesso a capacitação em NR-11 — Empilhadeira Patolada.</p>
+
+                    <div class="msg-box">
+                        Sua dedicação aos procedimentos de segurança é fundamental.
+                        A excelência operacional protege vidas e garante um ambiente de trabalho seguro.
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="nav">
+            <button class="nav-btn" id="btn-back" onclick="modulePrev()" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                ANTERIOR
+            </button>
+            <button class="nav-btn" id="btn-fwd" onclick="moduleNext()">
+                PRÓXIMO
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="img-modal-overlay" id="imgModal" onclick="closeImageModal(event)">
+            <div class="img-modal-content" onclick="event.stopPropagation()">
+                <button class="img-modal-close" onclick="closeImageModal()">×</button>
+                <img id="modalImg" alt="Imagem Ampliada">
+            </div>
+        </div>
+
+    </div>
+
+    <script src="audio-data.js"></script>
+    <script src="shared.js?v=8"></script>
+</body>
+
+</html>
