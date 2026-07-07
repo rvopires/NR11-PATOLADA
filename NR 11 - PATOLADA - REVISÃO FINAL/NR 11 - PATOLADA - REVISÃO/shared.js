@@ -40,9 +40,11 @@ function cleanSlideNavUrl() {
 }
 
 const _slideScrollBtns = {};
+const _SCROLL_BTN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
 
 window.scrollSlideDown = function (slideId) {
-    const area = document.querySelector('#' + slideId + ' .content-area');
+    const cfg = _slideScrollBtns[slideId];
+    const area = cfg ? cfg.area : document.querySelector('#' + slideId + ' .content-area');
     if (!area) return;
     area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
 };
@@ -54,26 +56,89 @@ window.scrollSumarioDown = function () {
 function updateSlideScrollBtn(slideId) {
     const cfg = _slideScrollBtns[slideId];
     if (!cfg) return;
+    if (!window.matchMedia('(max-width: 768px)').matches) {
+        cfg.btn.classList.add('is-hidden');
+        return;
+    }
     const needsScroll = cfg.area.scrollHeight > cfg.area.clientHeight + 8;
     const atBottom = cfg.area.scrollTop + cfg.area.clientHeight >= cfg.area.scrollHeight - 8;
     cfg.btn.classList.toggle('is-hidden', !needsScroll || atBottom);
+}
+
+window.updateSlideScrollBtn = updateSlideScrollBtn;
+
+function refreshActiveSlideScrollBtn() {
+    const active = document.querySelector('.slide.active');
+    if (active && active.id) updateSlideScrollBtn(active.id);
+}
+
+function scheduleScrollBtnRefresh() {
+    requestAnimationFrame(refreshActiveSlideScrollBtn);
+    setTimeout(refreshActiveSlideScrollBtn, 80);
+    setTimeout(refreshActiveSlideScrollBtn, 320);
+}
+
+window.refreshActiveSlideScrollBtn = refreshActiveSlideScrollBtn;
+window.scheduleScrollBtnRefresh = scheduleScrollBtnRefresh;
+
+function registerSlideScrollBtn(slideId, btn, area) {
+    if (_slideScrollBtns[slideId]) return;
+    _slideScrollBtns[slideId] = { btn, area };
+    if (!btn.onclick) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            scrollSlideDown(slideId);
+        });
+    }
+    area.addEventListener('scroll', function () { updateSlideScrollBtn(slideId); }, { passive: true });
+    if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(function () { updateSlideScrollBtn(slideId); });
+        ro.observe(area);
+    }
+    if (typeof MutationObserver !== 'undefined') {
+        const mo = new MutationObserver(function () { scheduleScrollBtnRefresh(); });
+        mo.observe(area, { childList: true, subtree: true, attributes: true, characterData: true });
+    }
+    updateSlideScrollBtn(slideId);
+}
+
+function ensureSlideScrollBtn(slide) {
+    const slideId = slide.id;
+    if (!slideId) return;
+    const area = slide.querySelector('.content-area');
+    if (!area) return;
+
+    let btn = slide.querySelector(':scope > .slide-scroll-btn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slide-scroll-btn is-hidden';
+        btn.setAttribute('aria-label', 'Rolar para baixo');
+        btn.innerHTML = _SCROLL_BTN_SVG;
+        slide.appendChild(btn);
+    }
+    registerSlideScrollBtn(slideId, btn, area);
 }
 
 function initSlideScrollBtn(slideId, btnId) {
     const btn = document.getElementById(btnId);
     const area = document.querySelector('#' + slideId + ' .content-area');
     if (!btn || !area) return;
-    _slideScrollBtns[slideId] = { btn, area };
-    area.addEventListener('scroll', function () { updateSlideScrollBtn(slideId); }, { passive: true });
-    window.addEventListener('resize', function () { updateSlideScrollBtn(slideId); });
-    updateSlideScrollBtn(slideId);
+    registerSlideScrollBtn(slideId, btn, area);
 }
 
-initSlideScrollBtn('s-sumario', 'sumario-scroll-down');
-initSlideScrollBtn('s2', 's2-scroll-down');
-initSlideScrollBtn('s7', 's7-scroll-down');
-initSlideScrollBtn('s10', 's10-scroll-down');
-initSlideScrollBtn('s9', 's9-scroll-down');
+function initAllSlideScrollBtns() {
+    document.querySelectorAll('.slide').forEach(ensureSlideScrollBtn);
+}
+
+initAllSlideScrollBtns();
+window.addEventListener('resize', refreshActiveSlideScrollBtn);
+const _scrollBtnMq = window.matchMedia('(max-width: 768px)');
+if (_scrollBtnMq.addEventListener) {
+    _scrollBtnMq.addEventListener('change', refreshActiveSlideScrollBtn);
+} else if (_scrollBtnMq.addListener) {
+    _scrollBtnMq.addListener(refreshActiveSlideScrollBtn);
+}
 
 function initS2Accordion() {
     const items = document.querySelectorAll('#s2 .s2-acc-item');
@@ -518,7 +583,7 @@ function goTo(idx, force = false, skipHistory = false) {
         startConclusionEpic();
     }
     if (_slideScrollBtns[newSlide.id] && typeof updateSlideScrollBtn === 'function') {
-        setTimeout(function () { updateSlideScrollBtn(newSlide.id); }, 50);
+        scheduleScrollBtnRefresh();
     }
     const pbar = document.getElementById('pbar');
     if (pbar) pbar.style.width = (nr11GlobalSlide() / NR11_TOTAL_SLIDES * 100) + '%';
@@ -885,6 +950,8 @@ function createQuizEngine(prefix, questions, numDots) {
         const btn = document.getElementById('btn-next-' + prefix);
         if (btn) btn.className = 'btn-next-q show';
 
+        scheduleScrollBtnRefresh();
+
         // persist quiz state after verification
         try { _saveState(); } catch (e) { }
     }
@@ -934,6 +1001,7 @@ function createQuizEngine(prefix, questions, numDots) {
         // removed persistence
         updateNextButton();
         try { window.updateQuizAudioHelper(); } catch (e) { }
+        scheduleScrollBtnRefresh();
     }
 
     function reset() {
@@ -1289,6 +1357,7 @@ function loadQuestion2(idx) {
         }
         updateNextButton();
         try { window.updateQuizAudioHelper(); } catch (e) { }
+        scheduleScrollBtnRefresh();
         return;
     }
 
@@ -1417,6 +1486,7 @@ window.verifyAnswer2 = function () {
                 fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             }, 120);
         }
+        scheduleScrollBtnRefresh();
     }
 };
 
@@ -1549,6 +1619,7 @@ window.answerConducao = function (isAllowBtn) {
             fbTitle.textContent = 'Correto!';
             fbText.innerHTML = data.explanation;
         }
+        scheduleScrollBtnRefresh();
 
         setTimeout(() => {
             currentConducao++;
@@ -1582,6 +1653,7 @@ window.answerConducao = function (isAllowBtn) {
             fbTitle.textContent = 'Incorreto';
             fbText.innerHTML = data.explanation + '<br><br><strong>Tente novamente.</strong>';
         }
+        scheduleScrollBtnRefresh();
 
         if (selectedBtn) {
             selectedBtn.style.animation = 'none';
@@ -1930,6 +2002,7 @@ function createQuiz6Engine(questions) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }, 80);
+        scheduleScrollBtnRefresh();
     }
 
     function next() {
@@ -2001,6 +2074,7 @@ function createQuiz6Engine(questions) {
         }
         updateNextButton();
         try { window.updateQuizAudioHelper(); } catch (e) { }
+        scheduleScrollBtnRefresh();
     }
 
     function reset() {

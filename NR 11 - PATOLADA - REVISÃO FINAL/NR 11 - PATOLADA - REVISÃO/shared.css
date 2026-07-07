@@ -1082,10 +1082,7 @@ img {
     }
 
     #s-sumario .slide-scroll-btn,
-    #s2 .slide-scroll-btn,
-    #s7 .slide-scroll-btn,
-    #s10 .slide-scroll-btn,
-    #s9 .slide-scroll-btn {
+    .slide > .slide-scroll-btn {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1106,19 +1103,13 @@ img {
     }
 
     #s-sumario .slide-scroll-btn svg,
-    #s2 .slide-scroll-btn svg,
-    #s7 .slide-scroll-btn svg,
-    #s10 .slide-scroll-btn svg,
-    #s9 .slide-scroll-btn svg {
+    .slide > .slide-scroll-btn svg {
         width: 22px;
         height: 22px;
     }
 
     #s-sumario .slide-scroll-btn.is-hidden,
-    #s2 .slide-scroll-btn.is-hidden,
-    #s7 .slide-scroll-btn.is-hidden,
-    #s10 .slide-scroll-btn.is-hidden,
-    #s9 .slide-scroll-btn.is-hidden {
+    .slide > .slide-scroll-btn.is-hidden {
         opacity: 0;
         pointer-events: none;
         animation: none;
