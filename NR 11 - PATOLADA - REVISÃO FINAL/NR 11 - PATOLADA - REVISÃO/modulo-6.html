@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=16">
+    <link rel="stylesheet" href="shared.css?v=23">
     <link rel="preload" as="image" href="https://i.imgur.com/gtuC8HP.png">
     <link rel="preload" as="image" href="https://i.imgur.com/7BJLUgg.png">
     <script>
@@ -1675,8 +1675,8 @@
 
                     #s-quiz6 #q6-btn-music-toggle {
                         position: fixed;
-                        top: calc(15px + 28px + 8px);
-                        right: 15px;
+                        top: calc(14px + 54px + 16px + 24px);
+                        right: 16px;
                         border-radius: 999px;
                         padding: 8px 14px;
                         font-family: var(--font-h);
@@ -1684,7 +1684,7 @@
                         font-weight: 800;
                         letter-spacing: 0.6px;
                         cursor: pointer;
-                        z-index: 900;
+                        z-index: 903;
                         transition: all 0.25s ease;
                         background: rgba(46, 204, 113, 0.22);
                         border: 2px solid rgba(46, 204, 113, 0.85);
@@ -1755,7 +1755,7 @@
                         }
 
                         #s-quiz6 #q6-btn-music-toggle {
-                            top: calc(50px + 28px + 8px);
+                            top: calc(8px + env(safe-area-inset-top, 0px) + 30px + 6px + 24px);
                             right: 10px;
                             padding: 7px 12px;
                             font-size: 10px;
@@ -1764,6 +1764,11 @@
                 </style>
 
                 <div class="hud-scanner"></div>
+
+                <audio id="q6-bg-music"
+                    src="https://res.cloudinary.com/dzqns0zpe/video/upload/v1779288781/musica.mp3_gxctw8.mp3"
+                    loop></audio>
+                <button type="button" id="q6-btn-music-toggle" onclick="toggleQuiz6Music()" hidden>🔊 MUSIC ON</button>
 
                 <div class="top-bar" style="position: relative; z-index: 2;">
                     <div class="section-tag"
@@ -1817,10 +1822,6 @@
                         <!-- PERGUNTAS -->
                         <div id="q6-question-panel"
                             style="display:none; transition: opacity 0.5s ease; position: relative;">
-                            <audio id="q6-bg-music"
-                                src="https://res.cloudinary.com/dzqns0zpe/video/upload/v1779288781/musica.mp3_gxctw8.mp3"
-                                loop></audio>
-                            <button type="button" id="q6-btn-music-toggle" onclick="toggleQuiz6Music()">🔊 MUSIC ON</button>
                             <div class="hud-status" id="q6-hud-status" style="text-align: center;">🟢 ANÁLISE EM
                                 EXECUÇÃO</div>
                             <div class="q-meta" style="justify-content: center; margin-bottom: 15px;">
@@ -2220,7 +2221,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=10"></script>
+    <script src="shared.js?v=14"></script>
 </body>
 
 </html>

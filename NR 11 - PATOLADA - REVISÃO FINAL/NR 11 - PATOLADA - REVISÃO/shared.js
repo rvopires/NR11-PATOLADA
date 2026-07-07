@@ -336,31 +336,30 @@ function applyDemoModeUI() {
     if (btn) {
         btn.classList.toggle('is-demo-on', !!window.demoMode);
         btn.classList.toggle('is-demo-off', !window.demoMode);
+        if (window.matchMedia('(min-width: 769px)').matches) {
+            btn.removeAttribute('onmouseover');
+            btn.removeAttribute('onmouseout');
+            btn.onmouseover = null;
+            btn.onmouseout = null;
+            btn.style.removeProperty('color');
+            btn.style.removeProperty('background');
+            btn.style.removeProperty('border-color');
+            btn.style.removeProperty('box-shadow');
+        }
     }
     if (window.demoMode) {
-        if (btn) {
-            btn.style.color = 'var(--black)';
-            btn.style.background = 'var(--gold)';
-            btn.style.borderColor = 'var(--gold)';
-            btn.style.boxShadow = '0 0 15px rgba(241,196,15,0.5)';
-        }
         if (ind) {
             ind.style.opacity = '1';
             ind.style.transform = 'translateY(0)';
         }
     } else {
-        if (btn) {
-            btn.style.color = '#f0f0f0';
-            btn.style.background = '#5a5a5a';
-            btn.style.borderColor = '#888888';
-            btn.style.boxShadow = '0 2px 10px rgba(0,0,0,0.35)';
-        }
         if (ind) {
             ind.style.opacity = '0';
             ind.style.transform = 'translateY(-20px)';
         }
     }
     updateNextButton();
+    if (typeof window.positionA11yBar === 'function') window.positionA11yBar();
 }
 
 function toggleDemoMode() {
@@ -584,6 +583,10 @@ function goTo(idx, force = false, skipHistory = false) {
     oldSlide.classList.add('exit-left');
     // Pause q6 background music when leaving quiz 6 slide
     try {
+        if (oldSlide.id === 's-quiz6') {
+            const musicBtn = document.getElementById('q6-btn-music-toggle');
+            if (musicBtn) musicBtn.hidden = true;
+        }
         const q6Music = oldSlide.querySelector('#q6-bg-music');
         if (q6Music) { q6Music.pause(); q6Music.currentTime = 0; }
     } catch (e) { }
@@ -1922,6 +1925,11 @@ function playQuiz6Audio(type) {
 function createQuiz6Engine(questions) {
     let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
 
+    function setQuiz6MusicVisible(visible) {
+        const musicBtn = document.getElementById('q6-btn-music-toggle');
+        if (musicBtn) musicBtn.hidden = !visible;
+    }
+
     function start() {
         const introPanel = document.getElementById('q6-intro-panel');
         const qPanel = document.getElementById('q6-question-panel');
@@ -1931,6 +1939,7 @@ function createQuiz6Engine(questions) {
             qPanel.style.opacity = '0';
             setTimeout(() => qPanel.style.opacity = '1', 50);
         }
+        setQuiz6MusicVisible(true);
         playQuiz6Audio('start');
         const m = document.getElementById('q6-bg-music');
         if (m) {
@@ -2056,6 +2065,7 @@ function createQuiz6Engine(questions) {
         const m = document.getElementById('q6-bg-music');
         if (m) m.pause();
 
+        setQuiz6MusicVisible(false);
         const qPanel = document.getElementById('q6-question-panel');
         if (qPanel) qPanel.style.display = 'none';
         const rPanel = document.getElementById('q6-result-panel');
@@ -2124,6 +2134,7 @@ function createQuiz6Engine(questions) {
         if (rPanel) rPanel.style.display = 'none';
         const m = document.getElementById('q6-bg-music');
         if (m) { m.pause(); m.currentTime = 0; }
+        setQuiz6MusicVisible(false);
 
         // Re-render immediately to clear visual selections
         render();
@@ -2282,16 +2293,38 @@ function resetQuiz6() { quiz6.reset(); }
         // ── Posiciona o launcher imediatamente à esquerda do logo ──
         function positionA11yBar() {
             const logo = document.getElementById('logo');
+            const launcher = document.getElementById('a11y-launcher');
+            const demoBtn = document.getElementById('btn-demo');
             if (!logo) return;
             const r = logo.getBoundingClientRect();
             const gap = 10;
-            const launcherSize = parseFloat(getComputedStyle(document.getElementById('a11y-launcher')).width) || 36;
-            // alinhamento vertical: centro do logo
+            const launcherSize = launcher
+                ? parseFloat(getComputedStyle(launcher).width) || 36
+                : 36;
             const topPx = Math.max(8, r.top + (r.height - launcherSize) / 2);
             const rightPx = Math.max(8, window.innerWidth - r.left + gap);
             bar.style.top = topPx + 'px';
             bar.style.right = rightPx + 'px';
+
+            if (demoBtn && window.matchMedia('(min-width: 769px)').matches) {
+                const demoGap = 10;
+                const demoHeight = demoBtn.offsetHeight || 36;
+                const demoTop = Math.max(8, r.top + (r.height - demoHeight) / 2);
+                demoBtn.style.position = 'fixed';
+                demoBtn.style.top = demoTop + 'px';
+                demoBtn.style.right = (rightPx + launcherSize + demoGap) + 'px';
+                demoBtn.style.left = 'auto';
+                demoBtn.style.bottom = 'auto';
+                demoBtn.style.zIndex = '901';
+            } else if (demoBtn) {
+                demoBtn.style.removeProperty('top');
+                demoBtn.style.removeProperty('right');
+                demoBtn.style.removeProperty('left');
+                demoBtn.style.removeProperty('bottom');
+                demoBtn.style.removeProperty('z-index');
+            }
         }
+        window.positionA11yBar = positionA11yBar;
         positionA11yBar();
         window.addEventListener('resize', positionA11yBar);
         window.addEventListener('load', positionA11yBar);
