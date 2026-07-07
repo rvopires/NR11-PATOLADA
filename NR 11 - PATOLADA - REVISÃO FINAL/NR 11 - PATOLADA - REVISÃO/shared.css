@@ -3911,12 +3911,10 @@ img {
 /* OtimizaÃ§Ãµes visuais e estruturais do Quiz 5 (Sem alterar HTML/JS) */
 /* 1 e 2. CARD SUPERIOR e BANNER HORIZONTAL */
 #s-quiz5 .q-text {
-    width: 104% !important;
-    margin-left: -2% !important;
-    padding: 0 0 10px 0 !important;
-    /* Top 0 para colar banner, padding inferior menor */
-    margin-bottom: 10px !important;
-    /* Menor margem */
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0 0 8px 0 !important;
+    margin-bottom: 8px !important;
     min-height: auto !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3931,7 +3929,7 @@ img {
 
 #s-quiz5 .q-text img {
     width: 100% !important;
-    height: 105px !important;
+    height: 82px !important;
     /* Altura um pouco menor */
     margin: 0 0 5px 0 !important;
     /* Aproximar do texto */
@@ -3943,21 +3941,10 @@ img {
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%) !important;
 }
 
-/* 3. TÃTULO DA PÃGINA (Top bar) */
-#s-quiz5 .top-bar {
-    padding-top: 10px !important;
-    margin-bottom: 5px !important;
-}
-
-#s-quiz5 .slide-title {
-    /* Tamanho e sombra removidos para usar o padrÃ£o inline (clamp(28px...)) de todas as pÃ¡ginas */
-    margin-top: 0 !important;
-}
-
 /* 4. TEXTOS DO CARD */
 #s-quiz5 .q-text div:nth-of-type(1) {
     display: block !important;
-    font-size: clamp(20px, 3vw, 24px) !important;
+    font-size: clamp(17px, 2.4vw, 20px) !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
     margin-top: 0 !important;
@@ -3971,7 +3958,7 @@ img {
 }
 
 #s-quiz5 .q-text p {
-    font-size: 13.5px !important;
+    font-size: 12px !important;
     line-height: 1.35 !important;
     margin-bottom: 5px !important;
     /* Menor espaÃ§o para a pergunta */
@@ -3982,7 +3969,7 @@ img {
 }
 
 #s-quiz5 .q-text div:nth-of-type(2) {
-    font-size: clamp(19px, 2.8vw, 23px) !important;
+    font-size: clamp(16px, 2.2vw, 19px) !important;
     line-height: 1.25 !important;
     font-weight: 600 !important;
     margin-top: 2px !important;
@@ -4005,11 +3992,9 @@ img {
 }
 
 #s-quiz5 .q-opt {
-    padding: 6px 18px !important;
-    /* Padding vertical bem menor */
+    padding: 5px 14px !important;
     margin-bottom: 0 !important;
-    min-height: 40px !important;
-    /* Altura muito mais enxuta */
+    min-height: 36px !important;
     display: flex !important;
     align-items: center !important;
     border-radius: 10px !important;
@@ -4037,10 +4022,10 @@ img {
 }
 
 #s-quiz5 .q-opt .opt-l {
-    width: 24px !important;
-    height: 24px !important;
-    font-size: 13px !important;
-    line-height: 24px !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 12px !important;
+    line-height: 22px !important;
     flex-shrink: 0;
     display: flex !important;
     align-items: center !important;
@@ -4051,7 +4036,7 @@ img {
 }
 
 #s-quiz5 .q-opt div:last-child {
-    font-size: 14.5px !important;
+    font-size: 13px !important;
     line-height: 1.25 !important;
     display: flex !important;
     align-items: center !important;
@@ -4094,7 +4079,7 @@ img {
 }
 
 #s-quiz5 .quiz-wrap {
-    max-width: 900px !important;
+    max-width: 760px !important;
     width: 100% !important;
     margin-top: 0 !important;
     position: relative;
@@ -4112,6 +4097,60 @@ img {
     background: radial-gradient(circle, rgba(46, 204, 113, 0.05) 0%, transparent 60%);
     z-index: -1;
     pointer-events: none;
+}
+
+/* Pagina 36 — quiz mais compacto (intro + perguntas) */
+#s-quiz5 #q5-intro-panel {
+    padding: 24px 16px !important;
+}
+
+#s-quiz5 #q5-intro-panel > .hud-anim-enter {
+    max-width: 680px !important;
+    padding: 28px 22px !important;
+    margin-bottom: 18px !important;
+}
+
+#s-quiz5 #q5-intro-panel h3 {
+    font-size: clamp(20px, 2.8vw, 28px) !important;
+    margin-bottom: 10px !important;
+}
+
+#s-quiz5 #q5-intro-panel > .hud-anim-enter > p {
+    font-size: clamp(14px, 1.8vw, 16px) !important;
+}
+
+#s-quiz5 #q5-intro-panel .hud-anim-enter .hud-anim-enter[style*="margin-top: 40px"] {
+    margin-top: 22px !important;
+    margin-bottom: 22px !important;
+    font-size: 12px !important;
+    padding: 8px 14px !important;
+}
+
+#s-quiz5 #q5-intro-panel .btn-tf-verify {
+    font-size: 15px !important;
+    padding: 11px 30px !important;
+}
+
+#s-quiz5 #q5-intro-panel .btn-tf-verify svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+#s-quiz5 #q5-text {
+    padding: 16px 14px !important;
+    margin-bottom: 14px !important;
+}
+
+#s-quiz5 #q5-question-panel .q-meta {
+    margin-bottom: 6px !important;
+}
+
+#s-quiz5 #q5-result-panel .result-pct {
+    font-size: clamp(48px, 8vw, 64px) !important;
+}
+
+#s-quiz5 #q5-result-panel .r-status {
+    font-size: clamp(20px, 3vw, 26px) !important;
 }
 
 /* OtimizaÃ§Ãµes visuais do Quiz 6 (mesmo padrÃ£o do Quiz 5 â€” sem rolar para ver feedback) */
@@ -5058,15 +5097,15 @@ body {
 
     #s-mod5-comp1 .m5c-carousel-nav {
         position: relative !important;
-        z-index: 20 !important;
+        z-index: 30 !important;
         pointer-events: auto !important;
-        padding-bottom: 4px !important;
+        padding-bottom: 8px !important;
     }
 
-    #s-mod5-comp1 .m5c-nav-btn {
+    #s-mod5-comp1 .m5c-nav-btn:not(:disabled) {
         pointer-events: auto !important;
         touch-action: manipulation !important;
-        z-index: 21 !important;
+        z-index: 31 !important;
     }
 
     #s-mod5-comp1 .m5c-card-inner {

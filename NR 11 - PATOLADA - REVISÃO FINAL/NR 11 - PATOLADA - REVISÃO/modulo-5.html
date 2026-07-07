@@ -117,28 +117,36 @@
                 <div class="content-area">
                     <div class="m5c-layout">
                         <div class="m5c-carousel">
-                            <div class="m5c-card is-active is-wrong" id="m5c-card">
-                                <div class="m5c-card-accent" id="m5c-card-accent" aria-hidden="true"></div>
-                                <div class="m5c-card-photo" id="m5c-card-photo" aria-hidden="true">
-                                    <span class="m5c-card-photo-placeholder" id="m5c-card-photo-ph">📷</span>
+                            <div class="m5c-card is-wrong" id="m5c-card-wrong">
+                                <div class="m5c-card-accent" aria-hidden="true"></div>
+                                <div class="m5c-card-photo has-image" aria-hidden="true">
+                                    <img src="assets/imgur/HbcoZie.png" alt="Armazenagem incorreta">
                                 </div>
                                 <div class="m5c-card-inner">
-                                    <span class="m5c-card-label" id="m5c-card-label">Incorreto</span>
-                                    <h3 class="m5c-card-title" id="m5c-card-title">Armazenagem incorreta</h3>
+                                    <span class="m5c-card-label">❌ Incorreto</span>
+                                    <h3 class="m5c-card-title">Armazenagem incorreta</h3>
                                     <div class="m5c-card-divider" aria-hidden="true"></div>
-                                    <p class="m5c-card-desc" id="m5c-card-desc">Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada</p>
+                                    <p class="m5c-card-desc">Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada</p>
                                 </div>
                             </div>
 
-                            <div class="m5c-progress" id="m5c-progress" aria-hidden="true">
-                                <span class="m5c-dot is-active"></span>
-                                <span class="m5c-dot"></span>
+                            <div class="m5c-arrow-down" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
                             </div>
 
-                            <div class="m5c-carousel-nav">
-                                <button type="button" class="m5c-nav-btn" id="m5c-prev" aria-label="Card anterior">‹</button>
-                                <span class="m5c-counter" id="m5c-counter">1/2</span>
-                                <button type="button" class="m5c-nav-btn" id="m5c-next" aria-label="Próximo card">›</button>
+                            <div class="m5c-card is-right" id="m5c-card-right">
+                                <div class="m5c-card-accent" aria-hidden="true"></div>
+                                <div class="m5c-card-photo has-image" aria-hidden="true">
+                                    <img src="assets/imgur/mAXUjMF.png" alt="Armazenagem correta">
+                                </div>
+                                <div class="m5c-card-inner">
+                                    <span class="m5c-card-label">✅ Correto</span>
+                                    <h3 class="m5c-card-title">Armazenagem correta</h3>
+                                    <div class="m5c-card-divider" aria-hidden="true"></div>
+                                    <p class="m5c-card-desc">Carga alinhada · Corredor livre · Armazenagem organizada</p>
+                                </div>
                             </div>
                         </div>
 
@@ -189,7 +197,7 @@
                             display: flex;
                             flex-direction: column;
                             align-items: center;
-                            gap: 18px;
+                            gap: 14px;
                             position: relative;
                             z-index: 3;
                         }
@@ -205,10 +213,6 @@
                             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
                             transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
                             overflow: hidden;
-                        }
-
-                        #s-mod5-comp1 .m5c-card.is-active {
-                            transform: translateY(-2px);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-wrong {
@@ -261,15 +265,6 @@
                             max-height: 230px;
                             object-fit: cover;
                             display: block;
-                        }
-
-                        #s-mod5-comp1 .m5c-card-photo-placeholder {
-                            font-size: 32px;
-                            opacity: 0.25;
-                        }
-
-                        #s-mod5-comp1 .m5c-card-photo.has-image .m5c-card-photo-placeholder {
-                            display: none;
                         }
 
                         #s-mod5-comp1 .m5c-card-inner {
@@ -328,80 +323,21 @@
                             margin: 0 auto;
                         }
 
-                        #s-mod5-comp1 .m5c-progress {
+                        #s-mod5-comp1 .m5c-arrow-down {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            gap: 10px;
+                            width: 36px;
+                            height: 36px;
+                            color: var(--green-lt);
+                            filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.45));
+                            pointer-events: none;
+                            flex-shrink: 0;
                         }
 
-                        #s-mod5-comp1 .m5c-dot {
-                            width: 8px;
-                            height: 8px;
-                            border-radius: 50%;
-                            background: rgba(255, 255, 255, 0.2);
-                            border: 1px solid rgba(255, 255, 255, 0.15);
-                            transition: all 0.3s ease;
-                        }
-
-                        #s-mod5-comp1 .m5c-dot.is-active {
-                            width: 24px;
-                            border-radius: 4px;
-                            background: rgba(46, 204, 113, 0.7);
-                            border-color: rgba(46, 204, 113, 0.9);
-                            box-shadow: 0 0 12px rgba(46, 204, 113, 0.5);
-                        }
-
-                        #s-mod5-comp1 .m5c-dot.is-done {
-                            background: rgba(46, 204, 113, 0.35);
-                            border-color: rgba(46, 204, 113, 0.5);
-                        }
-
-                        #s-mod5-comp1 .m5c-carousel-nav {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 18px;
-                            position: relative;
-                            z-index: 20;
-                            pointer-events: auto;
-                        }
-
-                        #s-mod5-comp1 .m5c-nav-btn {
-                            width: 44px;
-                            height: 44px;
-                            border-radius: 50%;
-                            border: 1px solid rgba(255, 255, 255, 0.45);
-                            background: rgba(10, 10, 10, 0.95);
-                            color: #ffffff;
-                            font-size: 24px;
-                            line-height: 1;
-                            cursor: pointer;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            transition: all 0.2s ease;
-                            padding: 0;
-                            position: relative;
-                            z-index: 21;
-                            pointer-events: auto;
-                            touch-action: manipulation;
-                            -webkit-tap-highlight-color: transparent;
-                        }
-
-                        #s-mod5-comp1 .m5c-nav-btn:hover {
-                            background: rgba(46, 204, 113, 0.25);
-                            border-color: rgba(46, 204, 113, 0.7);
-                            color: var(--white);
-                        }
-
-                        #s-mod5-comp1 .m5c-counter {
-                            font-family: var(--font-h);
-                            font-size: 16px;
-                            font-weight: 700;
-                            color: #ffffff;
-                            min-width: 42px;
-                            text-align: center;
+                        #s-mod5-comp1 .m5c-arrow-down svg {
+                            width: 28px;
+                            height: 28px;
                         }
 
                         #s-mod5-comp1 .wave {
@@ -413,6 +349,7 @@
                                 justify-content: flex-start;
                                 padding-top: 12px;
                                 padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
+                                overflow-y: auto !important;
                             }
 
                             #s-mod5-comp1 .m5c-layout {
@@ -423,7 +360,7 @@
 
                             #s-mod5-comp1 .m5c-carousel {
                                 max-width: 100%;
-                                gap: 12px;
+                                gap: 10px;
                             }
 
                             #s-mod5-comp1 .m5c-card {
@@ -459,16 +396,9 @@
                                 margin-bottom: 8px;
                             }
 
-                            #s-mod5-comp1 .m5c-carousel-nav {
-                                gap: 14px;
-                                margin-top: 2px;
-                                padding-bottom: 4px;
-                            }
-
-                            #s-mod5-comp1 .m5c-nav-btn {
-                                width: 42px;
-                                height: 42px;
-                                font-size: 22px;
+                            #s-mod5-comp1 .m5c-arrow-down svg {
+                                width: 24px;
+                                height: 24px;
                             }
 
                             #s-mod5-comp1 .wave {
@@ -479,100 +409,11 @@
 
                     <script>
                         (function () {
-                            const M5C_CARDS = [
-                                {
-                                    type: 'wrong',
-                                    label: '❌ Incorreto',
-                                    title: 'Armazenagem incorreta',
-                                    desc: 'Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada',
-                                    photo: 'assets/imgur/HbcoZie.png'
-                                },
-                                {
-                                    type: 'right',
-                                    label: '✅ Correto',
-                                    title: 'Armazenagem correta',
-                                    desc: 'Carga alinhada · Corredor livre · Armazenagem organizada',
-                                    photo: 'assets/imgur/mAXUjMF.png'
-                                }
-                            ];
-
-                            let m5cIdx = 0;
-                            const viewed = new Set([0]);
-
-                            const cardEl = document.getElementById('m5c-card');
-                            const photoEl = document.getElementById('m5c-card-photo');
-                            const photoPh = document.getElementById('m5c-card-photo-ph');
-                            const labelEl = document.getElementById('m5c-card-label');
-                            const titleEl = document.getElementById('m5c-card-title');
-                            const descEl = document.getElementById('m5c-card-desc');
-                            const counterEl = document.getElementById('m5c-counter');
                             const trackerEl = document.getElementById('m5c-tracker');
-                            const progressEl = document.getElementById('m5c-progress');
-
-                            function updateM5cDots() {
-                                if (!progressEl) return;
-                                const dots = progressEl.querySelectorAll('.m5c-dot');
-                                dots.forEach(function (dot, i) {
-                                    dot.classList.toggle('is-active', i === m5cIdx);
-                                    dot.classList.toggle('is-done', viewed.has(i) && i !== m5cIdx);
-                                });
+                            if (trackerEl && !trackerEl.classList.contains('req-done')) {
+                                trackerEl.classList.add('req-done');
+                                if (typeof updateNextButton === 'function') updateNextButton();
                             }
-
-                            function markM5cProgress() {
-                                viewed.add(m5cIdx);
-                                if (viewed.size >= M5C_CARDS.length && trackerEl && !trackerEl.classList.contains('req-done')) {
-                                    trackerEl.classList.add('req-done');
-                                    if (typeof playTechClick === 'function') playTechClick();
-                                    if (typeof updateNextButton === 'function') updateNextButton();
-                                }
-                            }
-
-                            function renderM5cCard() {
-                                const c = M5C_CARDS[m5cIdx];
-                                if (cardEl) {
-                                    cardEl.classList.toggle('is-wrong', c.type === 'wrong');
-                                    cardEl.classList.toggle('is-right', c.type === 'right');
-                                    cardEl.classList.add('is-active');
-                                }
-                                if (labelEl) labelEl.textContent = c.label;
-                                if (titleEl) titleEl.textContent = c.title;
-                                if (descEl) descEl.textContent = c.desc;
-                                if (counterEl) counterEl.textContent = (m5cIdx + 1) + '/' + M5C_CARDS.length;
-
-                                if (photoEl) {
-                                    const existing = photoEl.querySelector('img');
-                                    if (existing) existing.remove();
-                                    if (c.photo) {
-                                        photoEl.classList.add('has-image');
-                                        const img = document.createElement('img');
-                                        img.src = c.photo;
-                                        img.alt = c.title;
-                                        photoEl.appendChild(img);
-                                    } else {
-                                        photoEl.classList.remove('has-image');
-                                    }
-                                }
-
-                                updateM5cDots();
-                                markM5cProgress();
-                                if (prevBtn) prevBtn.disabled = m5cIdx === 0;
-                                if (nextBtn) nextBtn.disabled = m5cIdx >= M5C_CARDS.length - 1;
-                            }
-
-                            function m5cGo(dir) {
-                                const next = m5cIdx + dir;
-                                if (next < 0 || next >= M5C_CARDS.length) return;
-                                m5cIdx = next;
-                                if (typeof playTechClick === 'function') playTechClick();
-                                renderM5cCard();
-                            }
-
-                            const prevBtn = document.getElementById('m5c-prev');
-                            const nextBtn = document.getElementById('m5c-next');
-                            if (prevBtn) prevBtn.addEventListener('click', function () { m5cGo(-1); });
-                            if (nextBtn) nextBtn.addEventListener('click', function () { m5cGo(1); });
-
-                            renderM5cCard();
                         })();
                     </script>
                 </div>
