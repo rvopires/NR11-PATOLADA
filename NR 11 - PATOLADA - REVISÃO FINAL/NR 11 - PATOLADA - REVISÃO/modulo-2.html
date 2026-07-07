@@ -12,7 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=15">
+    <link rel="stylesheet" href="shared.css?v=16">
     <style>
         #s-equipamento .content-area > .video-wrap--std,
         #s8 .content-area > .video-wrap--std {
@@ -286,17 +286,19 @@
                             justify-content: center;
                             gap: 18px;
                             position: relative;
-                            z-index: 10;
+                            z-index: 30;
+                            pointer-events: auto;
+                            padding-bottom: 8px;
                         }
 
                         #s10 .s10-nav-btn {
-                            width: 44px;
-                            height: 44px;
+                            width: 48px;
+                            height: 48px;
                             border-radius: 50%;
                             border: 1px solid rgba(255, 255, 255, 0.45);
                             background: rgba(10, 10, 10, 0.95);
                             color: #ffffff;
-                            font-size: 24px;
+                            font-size: 26px;
                             line-height: 1;
                             cursor: pointer;
                             display: flex;
@@ -304,6 +306,11 @@
                             justify-content: center;
                             transition: all 0.2s ease;
                             padding: 0;
+                            position: relative;
+                            z-index: 31;
+                            pointer-events: auto;
+                            touch-action: manipulation;
+                            -webkit-tap-highlight-color: transparent;
                         }
 
                         #s10 .s10-nav-btn:hover {
@@ -323,6 +330,7 @@
 
                         #s10 .wave {
                             z-index: 0;
+                            pointer-events: none;
                         }
 
                         @media (max-width: 768px) {
@@ -1308,7 +1316,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=9"></script>
+    <script src="shared.js?v=10"></script>
 </body>
 
 </html>

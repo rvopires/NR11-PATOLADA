@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=15">
+    <link rel="stylesheet" href="shared.css?v=17">
     <script>
         window.MODULE_NAV = {
             id: "modulo-3",
@@ -211,23 +211,25 @@
                                     cursor: pointer;
                                 }
 
-                                /* Hover Premium */
-                                #conducao-question-panel .tf-btn.true:not([disabled]):hover {
-                                    background: rgba(46, 204, 113, 0.15) !important;
-                                    border-color: rgba(46, 204, 113, 0.6) !important;
-                                    color: var(--white) !important;
-                                    transform: translateY(-5px) !important;
-                                    box-shadow: 0 15px 30px rgba(46, 204, 113, 0.3) !important;
-                                    text-shadow: 0 0 10px rgba(46, 204, 113, 0.5) !important;
-                                }
+                                /* Hover Premium — só mouse real (evita hover preso no toque) */
+                                @media (hover: hover) and (pointer: fine) {
+                                    #conducao-question-panel .tf-btn.true:not([disabled]):hover {
+                                        background: rgba(46, 204, 113, 0.15) !important;
+                                        border-color: rgba(46, 204, 113, 0.6) !important;
+                                        color: var(--white) !important;
+                                        transform: translateY(-5px) !important;
+                                        box-shadow: 0 15px 30px rgba(46, 204, 113, 0.3) !important;
+                                        text-shadow: 0 0 10px rgba(46, 204, 113, 0.5) !important;
+                                    }
 
-                                #conducao-question-panel .tf-btn.false:not([disabled]):hover {
-                                    background: rgba(231, 76, 60, 0.15) !important;
-                                    border-color: rgba(231, 76, 60, 0.6) !important;
-                                    color: var(--white) !important;
-                                    transform: translateY(-5px) !important;
-                                    box-shadow: 0 15px 30px rgba(231, 76, 60, 0.3) !important;
-                                    text-shadow: 0 0 10px rgba(231, 76, 60, 0.5) !important;
+                                    #conducao-question-panel .tf-btn.false:not([disabled]):hover {
+                                        background: rgba(231, 76, 60, 0.15) !important;
+                                        border-color: rgba(231, 76, 60, 0.6) !important;
+                                        color: var(--white) !important;
+                                        transform: translateY(-5px) !important;
+                                        box-shadow: 0 15px 30px rgba(231, 76, 60, 0.3) !important;
+                                        text-shadow: 0 0 10px rgba(231, 76, 60, 0.5) !important;
+                                    }
                                 }
 
                                 /* Interação */
@@ -276,62 +278,63 @@
                                     }
                                 }
 
-                                /* Refinamento do Feedback (Compacto e Elegante) */
+                                /* Feedback compacto — sem animação/flash */
                                 #conducao-question-panel {
-                                    padding-bottom: 120px;
-                                    /* Reserva espaço para o feedback não empurrar a página */
+                                    padding-bottom: 0;
+                                    gap: 14px;
                                 }
 
                                 #conducao-feedback {
-                                    position: absolute;
-                                    bottom: 0;
-                                    left: 50%;
-                                    transform: translate(-50%, 20px);
+                                    position: relative;
+                                    left: auto;
+                                    bottom: auto;
+                                    transform: none !important;
                                     width: 100%;
-                                    max-width: 600px;
-                                    margin-top: 0 !important;
-                                    background: rgba(5, 15, 10, 0.85) !important;
-                                    backdrop-filter: blur(12px) !important;
-                                    border-radius: 12px !important;
-                                    padding: 15px 25px !important;
-                                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7) !important;
+                                    max-width: 520px;
+                                    margin: 8px auto 0 !important;
+                                    background: rgba(5, 15, 10, 0.9) !important;
+                                    backdrop-filter: blur(8px) !important;
+                                    border-radius: 10px !important;
+                                    padding: 10px 14px !important;
+                                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45) !important;
                                     text-align: center !important;
-                                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-                                    z-index: 10;
+                                    transition: none !important;
+                                    z-index: 2;
                                     border-left: none !important;
-                                    opacity: 0;
+                                    opacity: 1;
                                     pointer-events: none;
+                                    display: none;
                                 }
 
                                 #conducao-feedback.visible {
-                                    opacity: 1;
-                                    transform: translate(-50%, 0);
+                                    display: block;
                                     pointer-events: auto;
                                 }
 
                                 #conducao-feedback.success {
-                                    border: 1px solid rgba(46, 204, 113, 0.4) !important;
-                                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(46, 204, 113, 0.1) !important;
-                                    background: linear-gradient(180deg, rgba(46, 204, 113, 0.15) 0%, rgba(5, 15, 10, 0.85) 100%) !important;
+                                    border: 1px solid rgba(46, 204, 113, 0.35) !important;
+                                    background: rgba(5, 20, 12, 0.92) !important;
+                                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4) !important;
                                 }
 
                                 #conducao-feedback.error {
-                                    border: 1px solid rgba(231, 76, 60, 0.4) !important;
-                                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(231, 76, 60, 0.1) !important;
-                                    background: linear-gradient(180deg, rgba(231, 76, 60, 0.15) 0%, rgba(5, 15, 10, 0.85) 100%) !important;
+                                    border: 1px solid rgba(231, 76, 60, 0.35) !important;
+                                    background: rgba(20, 8, 8, 0.92) !important;
+                                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4) !important;
                                 }
 
                                 #conducao-feedback .tf-feedback-title {
-                                    font-size: 18px !important;
-                                    margin-bottom: 5px !important;
+                                    font-size: 14px !important;
+                                    margin-bottom: 4px !important;
                                     text-transform: uppercase;
-                                    letter-spacing: 1px;
+                                    letter-spacing: 0.5px;
                                 }
 
                                 #conducao-feedback .tf-feedback-text {
-                                    font-size: 15px !important;
-                                    line-height: 1.4 !important;
-                                    color: rgba(255, 255, 255, 0.8);
+                                    font-size: 12px !important;
+                                    line-height: 1.35 !important;
+                                    color: rgba(255, 255, 255, 0.82);
+                                    margin-bottom: 0 !important;
                                 }
                             </style>
 
@@ -348,7 +351,7 @@
                                 <button class="tf-btn false" id="btn-conducao-false" onclick="answerConducao(false)">❌ Proibido</button>
                             </div>
 
-                            <div class="tf-feedback" id="conducao-feedback" style="margin-top: 20px;">
+                            <div class="tf-feedback" id="conducao-feedback">
                                 <div class="tf-feedback-title" id="conducao-fb-title"></div>
                                 <div class="tf-feedback-text" id="conducao-fb-text"></div>
                             </div>
@@ -602,7 +605,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=9"></script>
+    <script src="shared.js?v=12"></script>
 </body>
 
 </html>

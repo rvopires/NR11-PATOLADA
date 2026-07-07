@@ -60,6 +60,11 @@ function updateSlideScrollBtn(slideId) {
         cfg.btn.classList.add('is-hidden');
         return;
     }
+    const slide = document.getElementById(slideId);
+    if (slide && slide.querySelector('[class*="-carousel-nav"]')) {
+        cfg.btn.classList.add('is-hidden');
+        return;
+    }
     const needsScroll = cfg.area.scrollHeight > cfg.area.clientHeight + 8;
     const atBottom = cfg.area.scrollTop + cfg.area.clientHeight >= cfg.area.scrollHeight - 8;
     cfg.btn.classList.toggle('is-hidden', !needsScroll || atBottom);
@@ -139,6 +144,21 @@ if (_scrollBtnMq.addEventListener) {
 } else if (_scrollBtnMq.addListener) {
     _scrollBtnMq.addListener(refreshActiveSlideScrollBtn);
 }
+
+const _CAROUSEL_NAV_BTN = '.s10-nav-btn, .m1o-nav-btn, .m4p-nav-btn, .m5c-nav-btn, .m5f-nav-btn, .m5e-nav-btn, .m6c-nav-btn, .m6p-nav-btn';
+
+function initCarouselNavTouchFix() {
+    document.addEventListener('touchend', function (e) {
+        if (!window.matchMedia('(max-width: 768px)').matches) return;
+        const btn = e.target.closest(_CAROUSEL_NAV_BTN);
+        if (!btn || btn.disabled) return;
+        e.preventDefault();
+        e.stopPropagation();
+        btn.click();
+    }, { passive: false, capture: true });
+}
+
+initCarouselNavTouchFix();
 
 function initS2Accordion() {
     const items = document.querySelectorAll('#s2 .s2-acc-item');
@@ -1544,14 +1564,43 @@ let currentConducao = 0;
 let conducaoAnswered = false;
 
 function resetConducaoBtnClasses() {
-    resetTfButtons(
-        document.getElementById('btn-conducao-true'),
-        document.getElementById('btn-conducao-false')
-    );
+    const btnTrue = document.getElementById('btn-conducao-true');
+    const btnFalse = document.getElementById('btn-conducao-false');
+
+    [btnTrue, btnFalse].forEach(function (btn) {
+        if (!btn) return;
+        ANSWER_STATE_CLASSES.forEach(function (cls) { btn.classList.remove(cls); });
+        btn.className = btn === btnTrue ? 'tf-btn true' : 'tf-btn false';
+        btn.removeAttribute('style');
+        btn.disabled = false;
+        btn.blur();
+    });
+
+    if (document.activeElement === btnTrue || document.activeElement === btnFalse) {
+        document.activeElement.blur();
+    }
+}
+
+function hideConducaoFeedback(fb) {
+    if (!fb) return;
+    fb.className = 'tf-feedback';
+    fb.style.display = 'none';
+    fb.style.opacity = '';
+    fb.style.transform = '';
+}
+
+function showConducaoFeedback(fb, type) {
+    if (!fb) return;
+    fb.className = 'tf-feedback show ' + type + ' visible';
+    fb.style.display = 'block';
+    fb.style.opacity = '1';
+    fb.style.transform = 'none';
 }
 
 function loadConducao(idx) {
     if (idx >= conducaoData.length) return;
+
+    resetConducaoBtnClasses();
     conducaoAnswered = false;
 
     const counter = document.getElementById('conducao-counter');
@@ -1560,18 +1609,8 @@ function loadConducao(idx) {
     const textElement = document.getElementById('conducao-text');
     if (textElement) textElement.textContent = conducaoData[idx].text;
 
-    resetConducaoBtnClasses();
-    const btnTrue = document.getElementById('btn-conducao-true');
-    const btnFalse = document.getElementById('btn-conducao-false');
-    if (btnTrue) btnTrue.disabled = false;
-    if (btnFalse) btnFalse.disabled = false;
-
     const fb = document.getElementById('conducao-feedback');
-    if (fb) {
-        fb.className = 'tf-feedback';
-        fb.style.display = 'none';
-        fb.style.opacity = '';
-    }
+    hideConducaoFeedback(fb);
     const fbTitle = document.getElementById('conducao-fb-title');
     const fbText = document.getElementById('conducao-fb-text');
     if (fbTitle) fbTitle.textContent = '';
@@ -1613,16 +1652,15 @@ window.answerConducao = function (isAllowBtn) {
         setTimeout(() => { playHUDBeep('correct'); }, 50);
 
         if (fb && fbTitle && fbText) {
-            fb.style.display = 'block';
-            fb.style.opacity = '1';
-            fb.className = 'tf-feedback show success visible';
             fbTitle.textContent = 'Correto!';
             fbText.innerHTML = data.explanation;
+            showConducaoFeedback(fb, 'success');
         }
         scheduleScrollBtnRefresh();
 
         setTimeout(() => {
             currentConducao++;
+            resetConducaoBtnClasses();
             if (currentConducao < conducaoData.length) {
                 loadConducao(currentConducao);
             } else {
@@ -1647,11 +1685,9 @@ window.answerConducao = function (isAllowBtn) {
         setTimeout(() => { playHUDBeep('incorrect'); }, 50);
 
         if (fb && fbTitle && fbText) {
-            fb.style.display = 'block';
-            fb.style.opacity = '1';
-            fb.className = 'tf-feedback show error visible';
             fbTitle.textContent = 'Incorreto';
             fbText.innerHTML = data.explanation + '<br><br><strong>Tente novamente.</strong>';
+            showConducaoFeedback(fb, 'error');
         }
         scheduleScrollBtnRefresh();
 
@@ -1666,7 +1702,7 @@ window.answerConducao = function (isAllowBtn) {
             resetConducaoBtnClasses();
             if (btnTrue) btnTrue.disabled = false;
             if (btnFalse) btnFalse.disabled = false;
-            if (fb) fb.className = 'tf-feedback';
+            if (fb) hideConducaoFeedback(fb);
         }, 2500);
     }
 };

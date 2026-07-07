@@ -4557,6 +4557,48 @@ body {
         pointer-events: none !important;
     }
 
+    /* Carrosséis: alvo de toque maior e acima de overlays (padrão página 5) */
+    [class*="-carousel-nav"] {
+        position: relative !important;
+        z-index: 30 !important;
+        pointer-events: auto !important;
+        padding: 8px 0 14px !important;
+        gap: 16px !important;
+    }
+
+    .s10-nav-btn:not(:disabled),
+    .m1o-nav-btn:not(:disabled),
+    .m4p-nav-btn:not(:disabled),
+    .m5c-nav-btn:not(:disabled),
+    .m5f-nav-btn:not(:disabled),
+    .m5e-nav-btn:not(:disabled),
+    .m6c-nav-btn:not(:disabled),
+    .m6p-nav-btn:not(:disabled) {
+        min-width: 48px !important;
+        min-height: 48px !important;
+        width: 48px !important;
+        height: 48px !important;
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent;
+        position: relative !important;
+        z-index: 31 !important;
+        font-size: 26px !important;
+        line-height: 1 !important;
+        padding: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    .slide:has([class*="-carousel-nav"]) > .slide-scroll-btn {
+        display: none !important;
+        pointer-events: none !important;
+    }
+
+    .slide:has([class*="-carousel-nav"]) .content-area {
+        position: relative !important;
+        z-index: 12 !important;
+    }
+
     /* â”€â”€â”€ NAV BOTTOM: padding e safe-area â”€â”€â”€ */
     #nav {
         position: fixed !important;
@@ -4795,19 +4837,20 @@ body {
         bottom: auto !important;
         left: auto !important;
         transform: none !important;
-        margin-top: 18px !important;
-        margin-bottom: 18px !important;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
         width: 100% !important;
-        max-width: 100% !important;
-        opacity: 0;
+        max-width: 520px !important;
+        padding: 10px 12px !important;
+        opacity: 1 !important;
         pointer-events: none;
         display: none !important;
+        transition: none !important;
     }
 
     #conducao-feedback.visible {
         display: block !important;
-        opacity: 1 !important;
-        transform: none !important;
+        pointer-events: auto;
     }
 
     #conducao-question-panel .tf-question-box {
@@ -4935,7 +4978,19 @@ body {
 
     #s10 .s10-carousel-nav {
         position: relative !important;
-        z-index: 10 !important;
+        z-index: 30 !important;
+        pointer-events: auto !important;
+        padding-bottom: 8px !important;
+    }
+
+    #s10 .s10-nav-btn:not(:disabled) {
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+        z-index: 31 !important;
+    }
+
+    #s10 .wave {
+        pointer-events: none !important;
     }
 
     #s-mod4-video-finalizacao .content-area {
@@ -4951,7 +5006,17 @@ body {
 
     #s-mod4-video-finalizacao .m4p-carousel-nav {
         position: relative !important;
-        z-index: 10 !important;
+        z-index: 30 !important;
+        pointer-events: auto !important;
+    }
+
+    #s-mod4-video-finalizacao .m4p-nav-btn:not(:disabled) {
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+    }
+
+    #s-mod4-video-finalizacao .wave {
+        pointer-events: none !important;
     }
 
 
@@ -5583,13 +5648,19 @@ body {
     }
 
     #conducao-feedback {
-        margin-bottom: 28px !important;
-        padding: 14px 16px !important;
+        margin-bottom: 12px !important;
+        padding: 8px 10px !important;
+        max-width: 100% !important;
+    }
+
+    #conducao-feedback .tf-feedback-title {
+        font-size: 13px !important;
+        margin-bottom: 3px !important;
     }
 
     #conducao-feedback .tf-feedback-text {
-        font-size: 14px !important;
-        line-height: 1.45 !important;
+        font-size: 12px !important;
+        line-height: 1.35 !important;
     }
 
 
@@ -6167,4 +6238,37 @@ body {
     #sq2 #sq2-feedback .tf-feedback-text {
         font-size: 12px !important;
     }
+}
+
+/* Página 19 — feedback condução sem flash */
+#s-conducao #conducao-feedback.tf-feedback {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    padding: 10px 12px !important;
+    margin-top: 8px !important;
+    text-align: center !important;
+    background: rgba(5, 15, 10, 0.9) !important;
+    border-left: none !important;
+    pointer-events: none;
+}
+
+#s-conducao #conducao-feedback.tf-feedback.visible {
+    display: block !important;
+    pointer-events: auto;
+}
+
+#s-conducao #conducao-feedback.tf-feedback:not(.visible) {
+    display: none !important;
+}
+
+#s-conducao #conducao-feedback .tf-feedback-title {
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+}
+
+#s-conducao #conducao-feedback .tf-feedback-text {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0 !important;
 }
