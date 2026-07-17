@@ -83,17 +83,48 @@
         @media (max-width: 768px) {
             #tutorialModal .img-modal-content {
                 width: 95vw !important;
-                padding: 16px 14px !important;
+                padding: 14px 14px 12px !important;
+                gap: 8px !important;
+            }
+
+            /* Aproxima badge + título + subtítulo */
+            #tutorialModal .img-modal-content > div[style*="flex-direction: column"] {
+                gap: 6px !important;
+            }
+
+            #tutorialModal h2 {
+                font-size: clamp(20px, 5.2vw, 26px) !important;
+                line-height: 1.25 !important;
+            }
+
+            #tutorialModal p {
+                font-size: clamp(14px, 3.8vw, 16px) !important;
+                line-height: 1.45 !important;
+            }
+
+            /* Remove o “vazio” entre texto e vídeo */
+            #tutorialModal [style*="56.25%"] {
+                height: clamp(190px, 34vh, 280px) !important;
+                margin: 0 !important;
+                flex-shrink: 0;
             }
 
             #tutorialModal [style*="justify-content: space-between"] {
                 flex-direction: column !important;
                 align-items: stretch !important;
+                gap: 10px !important;
+                margin-top: 2px !important;
+            }
+
+            #tutorialModal [style*="justify-content: space-between"] > div {
+                font-size: 13px !important;
             }
 
             #tutorialModal button {
                 width: 100%;
                 justify-content: center;
+                font-size: 16px !important;
+                padding: 14px 20px !important;
             }
         }
 
@@ -883,6 +914,10 @@
                 if (modal) modal.classList.remove('active');
             }
 
+            // Só no fluxo inicial: fechar tutorial → abrir aviso.
+            // Depois disso, cada botão abre só o próprio modal.
+            let chainWarningAfterTutorial = true;
+
             function closeTutorialModal(e) {
                 const modal = document.getElementById('tutorialModal');
                 if (modal) {
@@ -894,7 +929,10 @@
                         iframe.src = src;
                     }
                 }
-                openSessionWarningModal();
+                if (chainWarningAfterTutorial) {
+                    chainWarningAfterTutorial = false;
+                    openSessionWarningModal();
+                }
             }
 
             // Abrir TODA VEZ que a página carrega
@@ -907,6 +945,7 @@
                 setTimeout(() => {
                     const modal = document.getElementById('tutorialModal');
                     if (modal) {
+                        chainWarningAfterTutorial = true;
                         modal.classList.add('active');
                     }
                 }, 800);
