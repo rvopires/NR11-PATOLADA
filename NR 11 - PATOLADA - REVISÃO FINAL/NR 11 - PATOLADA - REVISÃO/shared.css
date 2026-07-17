@@ -5289,21 +5289,27 @@ body {
         position: relative !important;
         bottom: auto !important;
         left: auto !important;
-        transform: none !important;
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
         width: 100% !important;
-        max-width: 520px !important;
+        max-width: none !important;
         padding: 10px 12px !important;
-        opacity: 1 !important;
-        pointer-events: none;
-        display: none !important;
         transition: none !important;
+        animation: none !important;
+    }
+
+    #conducao-feedback.show {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
     }
 
     #conducao-feedback.visible {
-        display: block !important;
-        pointer-events: auto;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
     }
 
     #conducao-question-panel .tf-question-box {
@@ -6688,7 +6694,10 @@ body {
     #s-equipamento .content-area,
     #s8 .content-area,
     #s4 .content-area,
-    #s1b .content-area {
+    #s1b .content-area,
+    #s-bateria .content-area,
+    #s-rampas .content-area,
+    #s-bateria-troca .content-area {
         padding-top: 8px !important;
     }
 }
@@ -7062,37 +7071,356 @@ body {
     }
 }
 
-/* Página 19 — feedback condução sem flash */
-#s-conducao #conducao-feedback.tf-feedback {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    padding: 10px 12px !important;
-    margin-top: 8px !important;
-    text-align: center !important;
-    background: rgba(5, 15, 10, 0.9) !important;
-    border-left: none !important;
+/* Página 19 — condução: layout igual ao quiz do módulo 2 */
+#s-conducao .tf-container {
+    width: min(820px, 100%) !important;
+    margin: 0 auto !important;
+}
+
+#s-conducao #conducao-question-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: min(820px, 100%) !important;
+    max-width: 820px !important;
+    margin: 28px auto 0 !important;
+    padding: 34px 32px 30px !important;
+    gap: 22px !important;
+    border: 1px solid rgba(140, 180, 210, 0.25) !important;
+    border-radius: 24px !important;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(46, 204, 113, 0.09), transparent 42%),
+        linear-gradient(155deg, #142936 0%, #0c2130 100%) !important;
+    box-shadow:
+        0 24px 55px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    overflow: hidden;
+    position: relative;
+}
+
+#s-conducao #conducao-question-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #2ecc71 28%, #59f7ae 72%, transparent);
+    opacity: 0.9;
     pointer-events: none;
 }
 
-#s-conducao #conducao-feedback.tf-feedback.visible {
-    display: block !important;
-    pointer-events: auto;
+#s-conducao #conducao-question-panel .q-meta {
+    width: 100% !important;
+    justify-content: center !important;
+    margin: 0 0 10px !important;
 }
 
-#s-conducao #conducao-feedback.tf-feedback:not(.visible) {
+#s-conducao #conducao-counter {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 150px;
+    padding: 7px 16px !important;
+    border: 1px solid rgba(46, 204, 113, 0.45) !important;
+    border-radius: 999px !important;
+    background: rgba(46, 204, 113, 0.12) !important;
+    color: #7dffa8 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    box-shadow: 0 0 16px rgba(46, 204, 113, 0.16) !important;
+}
+
+#s-conducao #conducao-question-panel .tf-question-box {
+    width: 100% !important;
+    min-height: 94px !important;
+    padding: 22px 24px !important;
+    margin: 0 !important;
+    border: 1px solid rgba(140, 180, 210, 0.25) !important;
+    border-radius: 14px !important;
+    background: #182d39 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#s-conducao #conducao-question-panel .tf-question-box::before {
     display: none !important;
 }
 
-#s-conducao #conducao-feedback .tf-feedback-title {
+#s-conducao #conducao-question-panel .tf-question-text {
+    color: #f4f7f9 !important;
+    font-size: clamp(17px, 2.1vw, 22px) !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    text-shadow: none !important;
+    text-align: center !important;
+}
+
+#s-conducao #conducao-question-panel .tf-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#s-conducao #conducao-question-panel .tf-btn {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 58px !important;
+    padding: 12px 18px !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 14px !important;
+    color: #fff !important;
+    font-family: var(--font-h) !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24) !important;
+    backdrop-filter: none !important;
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+}
+
+#s-conducao #conducao-question-panel .tf-btn.true,
+#s-conducao #conducao-question-panel .tf-btn.true:hover,
+#s-conducao #conducao-question-panel .tf-btn.true:active,
+#s-conducao #conducao-question-panel .tf-btn.true:focus,
+#s-conducao #conducao-question-panel .tf-btn.true:focus-visible {
+    background: linear-gradient(135deg, #168756, #2ecc71) !important;
+    transform: none !important;
+    filter: none !important;
+}
+
+#s-conducao #conducao-question-panel .tf-btn.false,
+#s-conducao #conducao-question-panel .tf-btn.false:hover,
+#s-conducao #conducao-question-panel .tf-btn.false:active,
+#s-conducao #conducao-question-panel .tf-btn.false:focus,
+#s-conducao #conducao-question-panel .tf-btn.false:focus-visible {
+    background: linear-gradient(135deg, #c62828, #e74c3c) !important;
+    transform: none !important;
+    filter: none !important;
+}
+
+#s-conducao #conducao-question-panel .tf-btn:disabled {
+    opacity: 1 !important;
+    cursor: default !important;
+}
+
+#s-conducao #conducao-question-panel .tf-btn.selected-visual,
+#s-conducao #conducao-question-panel .tf-btn.selected-true,
+#s-conducao #conducao-question-panel .tf-btn.selected-false {
+    border-color: #fff !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.2),
+        0 12px 30px rgba(0, 0, 0, 0.35) !important;
+    z-index: 2;
+}
+
+#s-conducao #conducao-question-panel .tf-buttons:has(.selected-visual) .tf-btn:not(.selected-visual),
+#s-conducao #conducao-question-panel .tf-buttons:has(.selected-true, .selected-false) .tf-btn:not(.selected-true):not(.selected-false) {
+    opacity: 0.6 !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+#s-conducao .conducao-action-slot {
+    width: 100% !important;
+    margin: -6px 0 0 !important;
+    min-height: 56px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+}
+
+#s-conducao #conducao-verify-container {
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+
+#s-conducao #conducao-verify-container .btn-tf-verify,
+#s-conducao #conducao-verify-container .btn-tf-verify:hover,
+#s-conducao #conducao-verify-container .btn-tf-verify:active,
+#s-conducao #conducao-verify-container .btn-tf-verify:focus {
+    min-width: 210px;
+    padding: 11px 24px !important;
+    border: 1px solid rgba(89, 247, 174, 0.65) !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #59f7ae, #2ecc71) !important;
+    color: #07170f !important;
+    font-family: var(--font-h) !important;
     font-size: 14px !important;
-    margin-bottom: 4px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.04em !important;
+    box-shadow: 0 8px 22px rgba(46, 204, 113, 0.28) !important;
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+#s-conducao #conducao-feedback.tf-feedback {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    border-left: none !important;
+    border-radius: 10px !important;
+    text-align: left !important;
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition: none !important;
+    animation: none !important;
+    display: none !important;
+}
+
+#s-conducao #conducao-feedback.tf-feedback.show,
+#s-conducao #conducao-feedback.tf-feedback.show.visible {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
+#s-conducao #conducao-feedback.success {
+    border: 1px solid #2ecc71 !important;
+    background: rgba(20, 40, 32, 0.95) !important;
+    box-shadow: 0 0 12px rgba(46, 204, 113, 0.2) !important;
+}
+
+#s-conducao #conducao-feedback.error {
+    border: 1px solid #ff7a18 !important;
+    background: rgba(40, 28, 18, 0.95) !important;
+    box-shadow: 0 0 12px rgba(255, 122, 24, 0.18) !important;
+}
+
+#s-conducao #conducao-feedback .tf-feedback-title {
+    font-family: var(--font-h) !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    margin-bottom: 2px !important;
+}
+
+#s-conducao #conducao-feedback.success .tf-feedback-title {
+    color: #7dffa8 !important;
+}
+
+#s-conducao #conducao-feedback.error .tf-feedback-title {
+    color: #ffb074 !important;
 }
 
 #s-conducao #conducao-feedback .tf-feedback-text {
+    color: rgba(255, 255, 255, 0.9) !important;
     font-size: 12px !important;
     line-height: 1.35 !important;
     margin-bottom: 0 !important;
+}
+
+#s-conducao #conducao-feedback .btn-tf-next,
+#s-conducao #conducao-feedback .btn-tf-next:hover,
+#s-conducao #conducao-feedback .btn-tf-next:active,
+#s-conducao #conducao-feedback .btn-tf-next:focus {
+    display: block !important;
+    width: fit-content !important;
+    margin: 6px auto 0 !important;
+    padding: 6px 16px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #ff7a18, #ff5500) !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.25) !important;
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+@media (max-width: 768px) {
+    #s-conducao #conducao-question-panel {
+        padding: 24px 16px 24px !important;
+        gap: 16px !important;
+        margin-top: 22px !important;
+        border-radius: 20px !important;
+    }
+
+    #s-conducao #conducao-question-panel .tf-question-box {
+        min-height: 0 !important;
+        padding: 16px !important;
+        border-radius: 12px !important;
+    }
+
+    #s-conducao #conducao-question-panel .tf-question-text {
+        font-size: 16px !important;
+    }
+
+    #s-conducao #conducao-question-panel .tf-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+    }
+
+    #s-conducao #conducao-question-panel .tf-btn {
+        min-height: 50px !important;
+        padding: 10px 8px !important;
+        font-size: 14px !important;
+    }
+
+    #s-conducao .conducao-action-slot {
+        margin-top: -2px !important;
+        min-height: 52px !important;
+    }
+
+    #s-conducao #conducao-feedback.tf-feedback,
+    #s-conducao #conducao-feedback.tf-feedback.show {
+        padding: 7px 10px !important;
+        margin: 0 !important;
+    }
+
+    #s-conducao #conducao-feedback .tf-feedback-title {
+        font-size: 12px !important;
+    }
+
+    #s-conducao #conducao-feedback .tf-feedback-text {
+        font-size: 11px !important;
+    }
+
+    #s-conducao #conducao-feedback .btn-tf-next {
+        padding: 5px 14px !important;
+        font-size: 11px !important;
+        margin-top: 5px !important;
+    }
 }
 
 /* Quiz do módulo 1 — painel escuro com alternativas coloridas */

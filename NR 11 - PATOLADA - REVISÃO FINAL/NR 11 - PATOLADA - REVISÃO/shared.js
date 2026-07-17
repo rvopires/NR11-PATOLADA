@@ -1485,10 +1485,48 @@ styleHUD.textContent = `
           border-radius: 12px;
         }
         .tf-btn {
-          transition: transform 0.1s ease, box-shadow 0.3s ease, background 0.3s ease !important;
+          transition: transform 0.1s ease, box-shadow 0.3s ease !important;
         }
         .tf-btn:active {
           transform: scale(0.95) !important;
+        }
+        /* Página 19: sem scale/filter no clique (causa flash branco no Windows) */
+        #s-conducao .tf-btn,
+        #s-conducao .btn-tf-verify,
+        #s-conducao .btn-tf-next {
+          transition: none !important;
+          transform: none !important;
+          filter: none !important;
+          -webkit-appearance: none !important;
+          appearance: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+        }
+        #s-conducao .tf-btn:hover,
+        #s-conducao .tf-btn:active,
+        #s-conducao .tf-btn:focus,
+        #s-conducao .tf-btn.selected-visual,
+        #s-conducao .tf-btn.selected-true,
+        #s-conducao .tf-btn.selected-false,
+        #s-conducao .btn-tf-verify:hover,
+        #s-conducao .btn-tf-verify:active,
+        #s-conducao .btn-tf-verify:focus,
+        #s-conducao .btn-tf-next:hover,
+        #s-conducao .btn-tf-next:active,
+        #s-conducao .btn-tf-next:focus {
+          transform: none !important;
+          filter: none !important;
+        }
+        #s-conducao .tf-btn.true,
+        #s-conducao .tf-btn.true:hover,
+        #s-conducao .tf-btn.true:active,
+        #s-conducao .tf-btn.true:focus {
+          background: linear-gradient(135deg, #168756, #2ecc71) !important;
+        }
+        #s-conducao .tf-btn.false,
+        #s-conducao .tf-btn.false:hover,
+        #s-conducao .tf-btn.false:active,
+        #s-conducao .tf-btn.false:focus {
+          background: linear-gradient(135deg, #c62828, #e74c3c) !important;
         }
         .btn-tf-verify {
           background: var(--gold);
@@ -1514,6 +1552,10 @@ styleHUD.textContent = `
           transform: scale(0.98);
           border-color: var(--gold) !important;
           box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+        }
+        #s-conducao .tf-btn.selected-visual {
+          transform: none !important;
+          border-color: #fff !important;
         }
         .hud-anim-enter {
           animation: hudFadeIn 0.4s ease forwards;
@@ -1877,6 +1919,8 @@ const conducaoData = [
 ];
 let currentConducao = 0;
 let conducaoAnswered = false;
+let conducaoLastCorrect = false;
+let selectedConducaoAns = null;
 
 function resetConducaoBtnClasses() {
     const btnTrue = document.getElementById('btn-conducao-true');
@@ -1885,31 +1929,42 @@ function resetConducaoBtnClasses() {
     [btnTrue, btnFalse].forEach(function (btn) {
         if (!btn) return;
         ANSWER_STATE_CLASSES.forEach(function (cls) { btn.classList.remove(cls); });
-        btn.className = btn === btnTrue ? 'tf-btn true' : 'tf-btn false';
-        btn.removeAttribute('style');
+        btn.classList.remove('selected-visual', 'selected-true', 'selected-false');
         btn.disabled = false;
-        btn.blur();
     });
-
-    if (document.activeElement === btnTrue || document.activeElement === btnFalse) {
-        document.activeElement.blur();
-    }
 }
 
 function hideConducaoFeedback(fb) {
     if (!fb) return;
     fb.className = 'tf-feedback';
     fb.style.display = 'none';
-    fb.style.opacity = '';
-    fb.style.transform = '';
 }
 
-function showConducaoFeedback(fb, type) {
+function hideConducaoVerify() {
+    const vContainer = document.getElementById('conducao-verify-container');
+    if (!vContainer) return;
+    vContainer.style.display = 'none';
+}
+
+function showConducaoVerify() {
+    const vContainer = document.getElementById('conducao-verify-container');
+    if (!vContainer) return;
+    hideConducaoFeedback(document.getElementById('conducao-feedback'));
+    vContainer.style.display = 'block';
+}
+
+function showConducaoFeedback(fb, type, title, text) {
     if (!fb) return;
-    fb.className = 'tf-feedback show ' + type + ' visible';
+    const fbTitle = document.getElementById('conducao-fb-title');
+    const fbText = document.getElementById('conducao-fb-text');
+
+    hideConducaoVerify();
+
+    if (fbTitle) fbTitle.textContent = title || '';
+    if (fbText) fbText.innerHTML = text || '';
+
+    fb.className = 'tf-feedback show visible ' + (type === 'success' ? 'success' : 'error');
     fb.style.display = 'block';
-    fb.style.opacity = '1';
-    fb.style.transform = 'none';
 }
 
 function loadConducao(idx) {
@@ -1917,6 +1972,9 @@ function loadConducao(idx) {
 
     resetConducaoBtnClasses();
     conducaoAnswered = false;
+    conducaoLastCorrect = false;
+    selectedConducaoAns = null;
+    hideConducaoVerify();
 
     const counter = document.getElementById('conducao-counter');
     if (counter) counter.textContent = 'Ação ' + (idx + 1) + ' de ' + conducaoData.length;
@@ -1941,82 +1999,97 @@ function loadConducao(idx) {
 
 window.answerConducao = function (isAllowBtn) {
     if (conducaoAnswered) return;
-    conducaoAnswered = true;
 
     playHUDBeep('click');
-
-    const data = conducaoData[currentConducao];
-    const isCorrect = (data.isAllowed === isAllowBtn);
+    selectedConducaoAns = isAllowBtn;
 
     const btnTrue = document.getElementById('btn-conducao-true');
     const btnFalse = document.getElementById('btn-conducao-false');
-    resetConducaoBtnClasses();
-    if (btnTrue) { btnTrue.disabled = true; btnTrue.blur(); }
-    if (btnFalse) { btnFalse.disabled = true; btnFalse.blur(); }
+    if (btnTrue) btnTrue.classList.remove('selected-visual', 'selected-true', 'selected-false');
+    if (btnFalse) btnFalse.classList.remove('selected-visual', 'selected-true', 'selected-false');
 
     const selectedBtn = isAllowBtn ? btnTrue : btnFalse;
+    if (selectedBtn) selectedBtn.classList.add('selected-visual');
+
+    showConducaoVerify();
+};
+
+window.verifyConducao = function () {
+    if (conducaoAnswered || selectedConducaoAns === null) return;
+    conducaoAnswered = true;
+
+    const data = conducaoData[currentConducao];
+    const isCorrect = (data.isAllowed === selectedConducaoAns);
+    conducaoLastCorrect = isCorrect;
+
+    try { playBeep(isCorrect ? 'ok' : 'nok'); } catch (e) { }
+
+    const btnTrue = document.getElementById('btn-conducao-true');
+    const btnFalse = document.getElementById('btn-conducao-false');
+    if (btnTrue) {
+        btnTrue.classList.remove('selected-visual', 'selected-true', 'selected-false');
+        btnTrue.disabled = true;
+    }
+    if (btnFalse) {
+        btnFalse.classList.remove('selected-visual', 'selected-true', 'selected-false');
+        btnFalse.disabled = true;
+    }
+    const selectedBtn = selectedConducaoAns ? btnTrue : btnFalse;
+    if (selectedBtn) selectedBtn.classList.add(isCorrect ? 'selected-true' : 'selected-false');
 
     const fb = document.getElementById('conducao-feedback');
-    const fbTitle = document.getElementById('conducao-fb-title');
-    const fbText = document.getElementById('conducao-fb-text');
-
-    if (isCorrect) {
-        if (selectedBtn) selectedBtn.classList.add('selected-true');
-        try { playBeep('ok'); } catch (e) { }
-
-        if (fb && fbTitle && fbText) {
-            fbTitle.textContent = 'Correto!';
-            fbText.innerHTML = data.explanation;
-            showConducaoFeedback(fb, 'success');
+    if (fb) {
+        if (isCorrect) {
+            showConducaoFeedback(fb, 'success', 'Correto!', data.explanation);
+        } else {
+            showConducaoFeedback(
+                fb,
+                'error',
+                'Incorreto!',
+                data.explanation + '<br><br><strong>Tente novamente.</strong>'
+            );
         }
         scheduleScrollBtnRefresh();
-
-        setTimeout(() => {
-            currentConducao++;
-            resetConducaoBtnClasses();
-            if (currentConducao < conducaoData.length) {
-                loadConducao(currentConducao);
-            } else {
-                const qPanel = document.getElementById('conducao-question-panel');
-                const rPanel = document.getElementById('conducao-result-panel');
-                if (qPanel) qPanel.style.display = 'none';
-                if (rPanel) rPanel.style.display = 'block';
-
-                const container = document.getElementById('conducao-container');
-                if (container) {
-                    container.classList.add('req-done');
-                    updateNextButton();
-                }
-                playHUDBeep('conclusion');
-            }
-            try { window.updateQuizAudioHelper(); } catch (e) { }
-        }, 3500);
-
-    } else {
-        if (selectedBtn) selectedBtn.classList.add('selected-false');
-        try { playBeep('nok'); } catch (e) { }
-
-        if (fb && fbTitle && fbText) {
-            fbTitle.textContent = 'Incorreto';
-            fbText.innerHTML = data.explanation + '<br><br><strong>Tente novamente.</strong>';
-            showConducaoFeedback(fb, 'error');
-        }
-        scheduleScrollBtnRefresh();
-
-        if (selectedBtn) {
-            selectedBtn.style.animation = 'none';
-            void selectedBtn.offsetWidth;
-            selectedBtn.style.animation = 'shake 0.5s ease-in-out';
-        }
-
-        setTimeout(() => {
-            conducaoAnswered = false;
-            resetConducaoBtnClasses();
-            if (btnTrue) btnTrue.disabled = false;
-            if (btnFalse) btnFalse.disabled = false;
-            if (fb) hideConducaoFeedback(fb);
-        }, 2500);
     }
+};
+
+window.nextConducao = function () {
+    if (!conducaoAnswered) return;
+
+    const fb = document.getElementById('conducao-feedback');
+
+    if (!conducaoLastCorrect) {
+        conducaoAnswered = false;
+        conducaoLastCorrect = false;
+        selectedConducaoAns = null;
+        resetConducaoBtnClasses();
+        hideConducaoVerify();
+        hideConducaoFeedback(fb);
+        return;
+    }
+
+    currentConducao++;
+    selectedConducaoAns = null;
+    resetConducaoBtnClasses();
+
+    if (currentConducao < conducaoData.length) {
+        loadConducao(currentConducao);
+    } else {
+        const qPanel = document.getElementById('conducao-question-panel');
+        const rPanel = document.getElementById('conducao-result-panel');
+        if (qPanel) qPanel.style.display = 'none';
+        if (rPanel) rPanel.style.display = 'block';
+
+        const container = document.getElementById('conducao-container');
+        if (container) {
+            container.classList.add('req-done');
+            updateNextButton();
+        }
+        playHUDBeep('conclusion');
+    }
+
+    try { window.updateQuizAudioHelper(); } catch (e) { }
+    scheduleScrollBtnRefresh();
 };
 
 // Initialize on load

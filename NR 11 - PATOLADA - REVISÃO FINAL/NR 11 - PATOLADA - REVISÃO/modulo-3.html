@@ -11,7 +11,22 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=46">
+    <link rel="stylesheet" href="shared.css?v=64">
+    <style>
+        #s-bateria .content-area > .video-wrap--std,
+        #s-rampas .content-area > .video-wrap--std,
+        #s-bateria-troca .content-area > .video-wrap--std {
+            margin-top: 56px !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            #s-bateria .content-area > .video-wrap--std,
+            #s-rampas .content-area > .video-wrap--std,
+            #s-bateria-troca .content-area > .video-wrap--std {
+                margin-top: 28px !important;
+            }
+        }
+    </style>
     <script>
         window.MODULE_NAV = {
             id: "modulo-3",
@@ -79,10 +94,10 @@
                 </div>
                 <div class="content-area"
                     style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
-                    <div class="video-wrap"
-                        style="max-width: 1240px; margin-top: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
                         <iframe
-                            src="https://player.vimeo.com/video/1194754018?controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            src="https://player.vimeo.com/video/1194754018?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
                             frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -110,234 +125,6 @@
                 <div class="content-area">
                     <div class="tf-container req-item" id="conducao-container">
                         <div id="conducao-question-panel" style="position: relative;">
-                            <style>
-                                #conducao-question-panel {
-                                    display: flex;
-                                    flex-direction: column;
-                                    align-items: center;
-                                    max-width: 800px;
-                                    margin: 0 auto;
-                                    gap: 25px;
-                                }
-
-                                /* Badge Premium */
-                                #conducao-counter {
-                                    color: var(--green-lt) !important;
-                                    background: rgba(46, 204, 113, 0.1) !important;
-                                    border: 1px solid rgba(46, 204, 113, 0.3) !important;
-                                    box-shadow: 0 0 15px rgba(46, 204, 113, 0.2) !important;
-                                    letter-spacing: 2px !important;
-                                    text-transform: uppercase !important;
-                                    border-radius: 6px !important;
-                                    font-size: 14px !important;
-                                    padding: 8px 20px !important;
-                                    backdrop-filter: blur(5px);
-                                    display: inline-block;
-                                }
-
-                                /* Painel da Pergunta Premium */
-                                #conducao-question-panel .tf-question-box {
-                                    position: relative;
-                                    background: rgba(5, 15, 10, 0.6) !important;
-                                    border: 1px solid rgba(46, 204, 113, 0.15) !important;
-                                    border-top: 1px solid rgba(46, 204, 113, 0.4) !important;
-                                    border-radius: 16px !important;
-                                    padding: 50px 40px !important;
-                                    min-height: 160px;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(46, 204, 113, 0.05) !important;
-                                    backdrop-filter: blur(16px) !important;
-                                    width: 100%;
-                                    overflow: hidden;
-                                    margin: 0 !important;
-                                }
-
-                                #conducao-question-panel .tf-question-box::before {
-                                    content: '';
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    right: 0;
-                                    bottom: 0;
-                                    background: radial-gradient(circle at 50% -20%, rgba(46, 204, 113, 0.15) 0%, transparent 70%);
-                                    pointer-events: none;
-                                }
-
-                                #conducao-question-panel .tf-question-text {
-                                    font-size: clamp(22px, 3.5vw, 28px) !important;
-                                    font-weight: 700 !important;
-                                    color: var(--white) !important;
-                                    text-align: center !important;
-                                    line-height: 1.5 !important;
-                                    text-shadow: 0 0 15px rgba(46, 204, 113, 0.3) !important;
-                                    position: relative;
-                                    z-index: 1;
-                                }
-
-                                /* Botões Verdadeiro / Falso */
-                                #conducao-question-panel .tf-buttons {
-                                    display: flex;
-                                    gap: 20px;
-                                    width: 100%;
-                                    justify-content: center;
-                                    margin-top: 5px;
-                                }
-
-                                #conducao-question-panel .tf-btn {
-                                    position: relative;
-                                    flex: 1;
-                                    max-width: 300px;
-                                    padding: 15px 20px !important;
-                                    font-size: 18px !important;
-                                    display: flex !important;
-                                    align-items: center !important;
-                                    justify-content: center !important;
-                                    gap: 10px !important;
-                                    white-space: nowrap !important;
-                                    font-family: var(--font-h) !important;
-                                    font-weight: 800 !important;
-                                    text-transform: uppercase !important;
-                                    letter-spacing: 2px !important;
-                                    border-radius: 12px !important;
-                                    background: rgba(15, 20, 25, 0.7) !important;
-                                    color: rgba(255, 255, 255, 0.7) !important;
-                                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                                    backdrop-filter: blur(8px) !important;
-                                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-                                    overflow: hidden;
-                                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4) !important;
-                                    cursor: pointer;
-                                }
-
-                                /* Hover Premium — só mouse real (evita hover preso no toque) */
-                                @media (hover: hover) and (pointer: fine) {
-                                    #conducao-question-panel .tf-btn.true:not([disabled]):hover {
-                                        background: rgba(46, 204, 113, 0.15) !important;
-                                        border-color: rgba(46, 204, 113, 0.6) !important;
-                                        color: var(--white) !important;
-                                        transform: translateY(-5px) !important;
-                                        box-shadow: 0 15px 30px rgba(46, 204, 113, 0.3) !important;
-                                        text-shadow: 0 0 10px rgba(46, 204, 113, 0.5) !important;
-                                    }
-
-                                    #conducao-question-panel .tf-btn.false:not([disabled]):hover {
-                                        background: rgba(231, 76, 60, 0.15) !important;
-                                        border-color: rgba(231, 76, 60, 0.6) !important;
-                                        color: var(--white) !important;
-                                        transform: translateY(-5px) !important;
-                                        box-shadow: 0 15px 30px rgba(231, 76, 60, 0.3) !important;
-                                        text-shadow: 0 0 10px rgba(231, 76, 60, 0.5) !important;
-                                    }
-                                }
-
-                                /* Interação */
-                                #conducao-question-panel .tf-btn.selected-true {
-                                    background: rgba(46, 204, 113, 0.25) !important;
-                                    border-color: rgba(46, 204, 113, 0.8) !important;
-                                    color: var(--white) !important;
-                                    transform: scale(1.05) translateY(-2px) !important;
-                                    box-shadow: 0 0 40px rgba(46, 204, 113, 0.5), inset 0 0 20px rgba(46, 204, 113, 0.2) !important;
-                                    text-shadow: 0 0 15px rgba(46, 204, 113, 0.8) !important;
-                                    z-index: 2;
-                                }
-
-                                #conducao-question-panel .tf-btn.selected-false {
-                                    background: rgba(231, 76, 60, 0.25) !important;
-                                    border-color: rgba(231, 76, 60, 0.8) !important;
-                                    color: var(--white) !important;
-                                    transform: scale(1.05) translateY(-2px) !important;
-                                    box-shadow: 0 0 40px rgba(231, 76, 60, 0.5), inset 0 0 20px rgba(231, 76, 60, 0.2) !important;
-                                    text-shadow: 0 0 15px rgba(231, 76, 60, 0.8) !important;
-                                    z-index: 2;
-                                    animation: shake 0.5s;
-                                }
-
-                                /* Escurecer botão não selecionado */
-                                #conducao-question-panel .tf-buttons:has(.selected-true, .selected-false) .tf-btn:not(.selected-true):not(.selected-false) {
-                                    opacity: 0.4 !important;
-                                    transform: scale(0.95) !important;
-                                    filter: grayscale(1) !important;
-                                }
-
-                                @media (max-width: 768px) {
-                                    #conducao-question-panel .tf-buttons {
-                                        flex-direction: column;
-                                    }
-
-                                    #conducao-question-panel .tf-btn {
-                                        max-width: 100% !important;
-                                        font-size: 14px !important;
-                                        letter-spacing: 1px !important;
-                                        padding: 12px 10px !important;
-                                    }
-
-                                    #conducao-question-panel .tf-question-box {
-                                        padding: 30px 20px !important;
-                                    }
-                                }
-
-                                /* Feedback compacto — sem animação/flash */
-                                #conducao-question-panel {
-                                    padding-bottom: 0;
-                                    gap: 14px;
-                                }
-
-                                #conducao-feedback {
-                                    position: relative;
-                                    left: auto;
-                                    bottom: auto;
-                                    transform: none !important;
-                                    width: 100%;
-                                    max-width: 520px;
-                                    margin: 8px auto 0 !important;
-                                    background: rgba(5, 15, 10, 0.9) !important;
-                                    backdrop-filter: blur(8px) !important;
-                                    border-radius: 10px !important;
-                                    padding: 10px 14px !important;
-                                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45) !important;
-                                    text-align: center !important;
-                                    transition: none !important;
-                                    z-index: 2;
-                                    border-left: none !important;
-                                    opacity: 1;
-                                    pointer-events: none;
-                                    display: none;
-                                }
-
-                                #conducao-feedback.visible {
-                                    display: block;
-                                    pointer-events: auto;
-                                }
-
-                                #conducao-feedback.success {
-                                    border: 1px solid rgba(46, 204, 113, 0.35) !important;
-                                    background: rgba(5, 20, 12, 0.92) !important;
-                                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4) !important;
-                                }
-
-                                #conducao-feedback.error {
-                                    border: 1px solid rgba(231, 76, 60, 0.35) !important;
-                                    background: rgba(20, 8, 8, 0.92) !important;
-                                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4) !important;
-                                }
-
-                                #conducao-feedback .tf-feedback-title {
-                                    font-size: 14px !important;
-                                    margin-bottom: 4px !important;
-                                    text-transform: uppercase;
-                                    letter-spacing: 0.5px;
-                                }
-
-                                #conducao-feedback .tf-feedback-text {
-                                    font-size: 12px !important;
-                                    line-height: 1.35 !important;
-                                    color: rgba(255, 255, 255, 0.82);
-                                    margin-bottom: 0 !important;
-                                }
-                            </style>
-
                             <div class="q-meta" style="justify-content: center; margin-bottom: 10px;">
                                 <div class="q-lbl" id="conducao-counter">Ação 1 de 6</div>
                             </div>
@@ -351,9 +138,17 @@
                                 <button class="tf-btn false" id="btn-conducao-false" onclick="answerConducao(false)">❌ Proibido</button>
                             </div>
 
-                            <div class="tf-feedback" id="conducao-feedback">
-                                <div class="tf-feedback-title" id="conducao-fb-title"></div>
-                                <div class="tf-feedback-text" id="conducao-fb-text"></div>
+                            <div class="conducao-action-slot" id="conducao-action-slot">
+                                <div id="conducao-verify-container" style="display: none;">
+                                    <button class="btn-tf-verify" id="btn-conducao-verify" onclick="verifyConducao()">Verificar
+                                        Resposta</button>
+                                </div>
+
+                                <div class="tf-feedback" id="conducao-feedback" style="display: none;">
+                                    <div class="tf-feedback-title" id="conducao-fb-title"></div>
+                                    <div class="tf-feedback-text" id="conducao-fb-text"></div>
+                                    <button class="btn-tf-next" id="btn-conducao-next" onclick="nextConducao()">Continuar</button>
+                                </div>
                             </div>
                         </div>
 
@@ -391,10 +186,10 @@
                 </div>
                 <div class="content-area"
                     style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
-                    <div class="video-wrap"
-                        style="max-width: 1240px; margin-top: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
                         <iframe
-                            src="https://player.vimeo.com/video/1194489622?controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            src="https://player.vimeo.com/video/1194489622?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
                             frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -427,10 +222,10 @@
                 </div>
                 <div class="content-area"
                     style="align-items: center; text-align: center; justify-content: flex-start; position: relative; z-index: 2;">
-                    <div class="video-wrap"
-                        style="max-width: 1240px; margin-top: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
+                    <div class="video-wrap video-wrap--std"
+                        style="max-width: 1240px; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(46,204,113,0.3); border: 1px solid rgba(46,204,113,0.4); border-radius: 12px; transform: translateZ(0);">
                         <iframe
-                            src="https://player.vimeo.com/video/1194489620?controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
+                            src="https://player.vimeo.com/video/1194489620?h=0&controls=1&title=0&byline=0&portrait=0&badge=0&autopause=0&transparent=0&dnt=1"
                             frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -528,7 +323,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=24"></script>
+    <script src="shared.js?v=31"></script>
 </body>
 
 </html>
