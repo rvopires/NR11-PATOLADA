@@ -1014,7 +1014,7 @@ function resetTfButtons(btnTrue, btnFalse) {
 function createQuizEngine(prefix, questions, numDots) {
     let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
     let wrongTopics = [];
-    const isM1Quiz = () => prefix === 'q1' || prefix === 'q3' || prefix === 'q4';
+    const isM1Quiz = () => prefix === 'q1' || prefix === 'q3' || prefix === 'q4' || prefix === 'q5';
 
     const _stateKey = () => 'nr11_' + getPageKey() + '_' + prefix + '_state';
     function _saveState() {
@@ -1063,7 +1063,33 @@ function createQuizEngine(prefix, questions, numDots) {
         const c = document.getElementById(prefix + '-counter');
         if (c) c.textContent = `Pergunta ${idx + 1} de ${questions.length}`;
         const txt = document.getElementById(prefix + '-text');
-        if (txt) txt.innerHTML = q.q;
+        if (txt) {
+            txt.innerHTML = q.q;
+            if (prefix === 'q5') {
+                const img = txt.querySelector('img');
+                if (img && !txt.querySelector('.q5-img-expand')) {
+                    let wrap = img.closest('.q5-img-wrap');
+                    if (!wrap) {
+                        wrap = document.createElement('div');
+                        wrap.className = 'q5-img-wrap';
+                        img.parentNode.insertBefore(wrap, img);
+                        wrap.appendChild(img);
+                    }
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'q5-img-expand';
+                    btn.setAttribute('aria-label', 'Ampliar imagem');
+                    btn.title = 'Ampliar imagem';
+                    btn.textContent = '🔍';
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (typeof openImageModal === 'function') openImageModal(img.getAttribute('src') || img.src);
+                    });
+                    wrap.appendChild(btn);
+                }
+            }
+        }
         const opts = document.getElementById(prefix + '-options');
         if (opts) {
             opts.innerHTML = '';
@@ -1181,7 +1207,7 @@ function createQuizEngine(prefix, questions, numDots) {
         if (prefix === 'q1') return 2;
         if (prefix === 'q3') return 4;
         if (prefix === 'q4') return 3;
-        if (prefix === 'q5') return Math.ceil(questions.length * 0.70);
+        if (prefix === 'q5') return 3;
         return Math.ceil(questions.length * 0.60);
     }
 
@@ -1308,7 +1334,7 @@ function createQuizEngine(prefix, questions, numDots) {
 
         // Volta o scroll para o card inicial (sem ficar “embaixo”)
         try {
-            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : prefix === 'q3' ? 's-quiz3' : prefix === 'q4' ? 's-quiz4' : null) ||
+            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : prefix === 'q3' ? 's-quiz3' : prefix === 'q4' ? 's-quiz4' : prefix === 'q5' ? 's-quiz5' : null) ||
                 (introPanel && introPanel.closest('.slide'));
             const area = slide && slide.querySelector('.content-area');
             if (area) area.scrollTop = 0;
@@ -2166,29 +2192,44 @@ function resetQuiz4() { quiz4.reset(); }
 
 const q5_questions = [
     {
-        q: '<img src="assets/imgur/YZ03elm.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Corredor Obstruído</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">O operador encontrou um corredor parcialmente bloqueado durante a movimentação da carga.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual deve ser o procedimento correto?</div>',
+        q: '<img src="assets/imgur/YZ03elm.png" alt="Corredor obstruído"><span class="q5-topic">Corredor Obstruído</span><p class="q5-desc">O operador encontrou um corredor parcialmente bloqueado durante a movimentação da carga.</p><strong class="q5-ask">Qual deve ser o procedimento correto?</strong>',
         opts: ['Continuar normalmente', 'Sinalizar e liberar o corredor antes da operação', 'Passar rapidamente pelo bloqueio', 'Ignorar o obstáculo'],
-        correct: 1, feedback_ok: '✅ Correto! O corredor deve ser sinalizado e liberado antes de qualquer movimentação.', feedback_nok: '❌ Incorreto. É necessário sinalizar e liberar o corredor antes da operação.'
+        correct: 1,
+        topic: 'Corredor Obstruído',
+        feedback_ok: '✅ Correto! O corredor deve ser sinalizado e liberado antes de qualquer movimentação.',
+        feedback_nok: '❌ Incorreto. É necessário sinalizar e liberar o corredor antes da operação.'
     },
     {
-        q: '<img src="assets/imgur/jxIK2Rh.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Carga Elevada</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">A carga está sendo transportada acima da altura recomendada.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual é o principal risco desta operação?</div>',
+        q: '<img src="assets/imgur/jxIK2Rh.png" alt="Carga elevada"><span class="q5-topic">Carga Elevada</span><p class="q5-desc">A carga está sendo transportada acima da altura recomendada.</p><strong class="q5-ask">Qual é o principal risco desta operação?</strong>',
         opts: ['Melhor visibilidade', 'Maior estabilidade', 'Maior velocidade', 'Comprometimento da visibilidade e risco de colisão'],
-        correct: 3, feedback_ok: '✅ Correto! Transportar cargas elevadas compromete a visibilidade e aumenta gravemente os riscos de colisão.', feedback_nok: '❌ Incorreto. O principal risco é o comprometimento da visibilidade e a colisão.'
+        correct: 3,
+        topic: 'Carga Elevada',
+        feedback_ok: '✅ Correto! Transportar cargas elevadas compromete a visibilidade e aumenta gravemente os riscos de colisão.',
+        feedback_nok: '❌ Incorreto. O principal risco é o comprometimento da visibilidade e a colisão.'
     },
     {
-        q: '<img src="assets/imgur/EwLaKkj.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">EPI Ausente</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">O operador iniciou a movimentação sem todos os EPIs obrigatórios.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual procedimento está correto?</div>',
+        q: '<img src="assets/imgur/EwLaKkj.png" alt="EPI ausente"><span class="q5-topic">EPI Ausente</span><p class="q5-desc">O operador iniciou a movimentação sem todos os EPIs obrigatórios.</p><strong class="q5-ask">Qual procedimento está correto?</strong>',
         opts: ['Interromper a operação até regularizar os EPIs', 'Operar apenas em áreas vazias', 'Continuar se a operação for rápida', 'Solicitar ajuda apenas em caso de risco'],
-        correct: 0, feedback_ok: '✅ Correto! Nenhuma operação deve prosseguir sem os EPIs regularizados e em conformidade.', feedback_nok: '❌ Incorreto. O procedimento correto é interromper a operação até regularizar os EPIs.'
+        correct: 0,
+        topic: 'EPI Ausente',
+        feedback_ok: '✅ Correto! Nenhuma operação deve prosseguir sem os EPIs regularizados e em conformidade.',
+        feedback_nok: '❌ Incorreto. O procedimento correto é interromper a operação até regularizar os EPIs.'
     },
     {
-        q: '<img src="assets/imgur/V9SVveG.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Emergência Operacional</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">Foi identificado um princípio de incêndio próximo à área de movimentação.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual deve ser a primeira ação?</div>',
+        q: '<img src="assets/imgur/V9SVveG.png" alt="Emergência operacional"><span class="q5-topic">Emergência Operacional</span><p class="q5-desc">Foi identificado um princípio de incêndio próximo à área de movimentação.</p><strong class="q5-ask">Qual deve ser a primeira ação?</strong>',
         opts: ['Continuar a operação', 'Improvisar sozinho o combate', 'Parar a operação e afastar as pessoas', 'Mover a carga rapidamente'],
-        correct: 2, feedback_ok: '✅ Correto! Parar a operação imediatamente e priorizar a vida afastando as pessoas é essencial.', feedback_nok: '❌ Incorreto. A primeira ação deve ser parar a operação e afastar as pessoas.'
+        correct: 2,
+        topic: 'Emergência Operacional',
+        feedback_ok: '✅ Correto! Parar a operação imediatamente e priorizar a vida afastando as pessoas é essencial.',
+        feedback_nok: '❌ Incorreto. A primeira ação deve ser parar a operação e afastar as pessoas.'
     },
     {
-        q: '<img src="assets/imgur/mAXUjMF.png" style="width:100%; height:180px; object-fit:cover; object-position:center; border-radius:8px; margin-bottom:10px; box-shadow:0 10px 20px rgba(0,0,0,0.5);"><div style="font-size:15px;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-h);font-weight:700;">Distanciamento Seguro</div><p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;line-height:1.4;">Durante a movimentação, o operador reduziu excessivamente a distância da estrutura lateral.</p><div style="font-size:clamp(16px, 2.2vw, 20px);color:var(--cream);font-family:var(--font-h);line-height:1.3;text-align:center;">Qual distância mínima deve ser mantida?</div>',
+        q: '<img src="assets/imgur/mAXUjMF.png" alt="Distanciamento seguro"><span class="q5-topic">Distanciamento Seguro</span><p class="q5-desc">Durante a movimentação, o operador reduziu excessivamente a distância da estrutura lateral.</p><strong class="q5-ask">Qual distância mínima deve ser mantida?</strong>',
         opts: ['20 cm', '50 cm', '30 cm', 'Não existe distância mínima'],
-        correct: 1, feedback_ok: '✅ Correto! Deve-se manter no mínimo 50 cm de distância segura das estruturas.', feedback_nok: '❌ Incorreto. A distância mínima que deve ser mantida é de 50 cm.'
+        correct: 1,
+        topic: 'Distanciamento Seguro',
+        feedback_ok: '✅ Correto! Deve-se manter no mínimo 50 cm de distância segura das estruturas.',
+        feedback_nok: '❌ Incorreto. A distância mínima que deve ser mantida é de 50 cm.'
     }
 ];
 const quiz5 = createQuizEngine('q5', q5_questions, 5);

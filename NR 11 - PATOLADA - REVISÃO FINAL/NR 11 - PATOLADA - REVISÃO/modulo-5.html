@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=46">
+    <link rel="stylesheet" href="shared.css?v=59">
     <script>
         window.MODULE_NAV = {
             id: "modulo-5",
@@ -116,36 +116,74 @@
 
                 <div class="content-area">
                     <div class="m5c-layout">
-                        <div class="m5c-carousel">
-                            <div class="m5c-card is-wrong" id="m5c-card-wrong">
-                                <div class="m5c-card-accent" aria-hidden="true"></div>
-                                <div class="m5c-card-photo has-image" aria-hidden="true">
-                                    <img src="assets/imgur/HbcoZie.png" alt="Armazenagem incorreta">
+                        <div class="m5c-desktop-wrap">
+                            <div class="m5c-carousel m5c-desktop-stack">
+                                <div class="m5c-card is-wrong" id="m5c-card-wrong">
+                                    <div class="m5c-card-accent" aria-hidden="true"></div>
+                                    <div class="m5c-card-photo has-image">
+                                        <img src="assets/imgur/HbcoZie.png" alt="Armazenagem incorreta">
+                                        <button type="button" class="m5c-card-expand"
+                                            aria-label="Ampliar imagem" title="Ampliar imagem"
+                                            onclick="event.stopPropagation(); openImageModal('assets/imgur/HbcoZie.png')">🔍</button>
+                                    </div>
+                                    <div class="m5c-card-inner">
+                                        <span class="m5c-card-label">❌ Incorreto</span>
+                                        <h3 class="m5c-card-title">Armazenagem incorreta</h3>
+                                        <div class="m5c-card-divider" aria-hidden="true"></div>
+                                        <p class="m5c-card-desc">Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada</p>
+                                    </div>
                                 </div>
-                                <div class="m5c-card-inner">
-                                    <span class="m5c-card-label">❌ Incorreto</span>
-                                    <h3 class="m5c-card-title">Armazenagem incorreta</h3>
-                                    <div class="m5c-card-divider" aria-hidden="true"></div>
-                                    <p class="m5c-card-desc">Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada</p>
+
+                                <div class="m5c-arrow-down" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+
+                                <div class="m5c-card is-right" id="m5c-card-right">
+                                    <div class="m5c-card-accent" aria-hidden="true"></div>
+                                    <div class="m5c-card-photo has-image">
+                                        <img src="assets/imgur/mAXUjMF.png" alt="Armazenagem correta">
+                                        <button type="button" class="m5c-card-expand"
+                                            aria-label="Ampliar imagem" title="Ampliar imagem"
+                                            onclick="event.stopPropagation(); openImageModal('assets/imgur/mAXUjMF.png')">🔍</button>
+                                    </div>
+                                    <div class="m5c-card-inner">
+                                        <span class="m5c-card-label">✅ Correto</span>
+                                        <h3 class="m5c-card-title">Armazenagem correta</h3>
+                                        <div class="m5c-card-divider" aria-hidden="true"></div>
+                                        <p class="m5c-card-desc">Carga alinhada · Corredor livre · Armazenagem organizada</p>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="m5c-arrow-down" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-
-                            <div class="m5c-card is-right" id="m5c-card-right">
-                                <div class="m5c-card-accent" aria-hidden="true"></div>
-                                <div class="m5c-card-photo has-image" aria-hidden="true">
-                                    <img src="assets/imgur/mAXUjMF.png" alt="Armazenagem correta">
+                        <div class="m5c-mobile-wrap">
+                            <div class="m5c-carousel">
+                                <div class="m5c-card is-active is-wrong" id="m5c-card">
+                                    <div class="m5c-card-accent" aria-hidden="true"></div>
+                                    <div class="m5c-card-photo has-image" id="m5c-card-photo">
+                                        <img src="assets/imgur/HbcoZie.png" alt="Armazenagem incorreta">
+                                        <button type="button" class="m5c-card-expand" id="m5c-card-expand"
+                                            aria-label="Ampliar imagem" title="Ampliar imagem">🔍</button>
+                                    </div>
+                                    <div class="m5c-card-inner">
+                                        <span class="m5c-card-label" id="m5c-card-label">❌ Incorreto</span>
+                                        <h3 class="m5c-card-title" id="m5c-card-title">Armazenagem incorreta</h3>
+                                        <div class="m5c-card-divider" aria-hidden="true"></div>
+                                        <p class="m5c-card-desc" id="m5c-card-desc">Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada</p>
+                                    </div>
                                 </div>
-                                <div class="m5c-card-inner">
-                                    <span class="m5c-card-label">✅ Correto</span>
-                                    <h3 class="m5c-card-title">Armazenagem correta</h3>
-                                    <div class="m5c-card-divider" aria-hidden="true"></div>
-                                    <p class="m5c-card-desc">Carga alinhada · Corredor livre · Armazenagem organizada</p>
+
+                                <div class="m5c-progress" id="m5c-progress" aria-hidden="true">
+                                    <span class="m5c-dot is-active"></span>
+                                    <span class="m5c-dot"></span>
+                                </div>
+
+                                <div class="m5c-carousel-nav">
+                                    <button type="button" class="m5c-nav-btn" id="m5c-prev" aria-label="Card anterior">‹</button>
+                                    <span class="m5c-counter" id="m5c-counter">1/2</span>
+                                    <button type="button" class="m5c-nav-btn" id="m5c-next" aria-label="Próximo card">›</button>
                                 </div>
                             </div>
                         </div>
@@ -191,6 +229,15 @@
                             padding: 56px 20px 16px;
                         }
 
+                        #s-mod5-comp1 .m5c-mobile-wrap {
+                            display: block;
+                            width: 100%;
+                        }
+
+                        #s-mod5-comp1 .m5c-desktop-wrap {
+                            display: none;
+                        }
+
                         #s-mod5-comp1 .m5c-carousel {
                             width: 100%;
                             max-width: 620px;
@@ -203,90 +250,179 @@
                         }
 
                         #s-mod5-comp1 .m5c-card {
+                            --m5c-accent: #2ECC71;
+                            --m5c-accent-soft: rgba(46, 204, 113, 0.16);
+                            --m5c-accent-glow: rgba(46, 204, 113, 0.32);
                             width: 100%;
                             position: relative;
-                            background: linear-gradient(165deg, rgba(22, 32, 55, 0.95) 0%, rgba(10, 14, 26, 0.98) 100%);
-                            border: 1px solid rgba(255, 255, 255, 0.12);
+                            background:
+                                radial-gradient(circle at 50% 0%, var(--m5c-accent-soft), transparent 55%),
+                                linear-gradient(165deg, rgba(22, 32, 55, 0.96) 0%, rgba(10, 14, 26, 0.98) 100%);
+                            border: 1px solid color-mix(in srgb, var(--m5c-accent) 38%, transparent);
                             border-radius: 18px;
                             padding: 0;
                             text-align: center;
-                            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+                            box-shadow:
+                                0 20px 55px rgba(0, 0, 0, 0.55),
+                                0 0 28px var(--m5c-accent-glow),
+                                0 0 0 1px rgba(255, 255, 255, 0.04) inset;
                             transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
                             overflow: hidden;
                         }
 
+                        #s-mod5-comp1 .m5c-card::before {
+                            content: '';
+                            position: absolute;
+                            inset: 0;
+                            border-radius: inherit;
+                            pointer-events: none;
+                            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+                            z-index: 2;
+                        }
+
                         #s-mod5-comp1 .m5c-card.is-wrong {
-                            border-color: rgba(255, 71, 87, 0.45);
-                            box-shadow: 0 20px 55px rgba(255, 71, 87, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                            --m5c-accent: #ff5a4d;
+                            --m5c-accent-soft: rgba(255, 90, 77, 0.16);
+                            --m5c-accent-glow: rgba(255, 90, 77, 0.32);
+                            border-color: rgba(255, 90, 77, 0.48);
+                            box-shadow:
+                                0 20px 55px rgba(0, 0, 0, 0.55),
+                                0 0 28px rgba(255, 90, 77, 0.22),
+                                0 0 0 1px rgba(255, 255, 255, 0.04) inset;
                         }
 
                         #s-mod5-comp1 .m5c-card.is-right {
-                            border-color: rgba(46, 204, 113, 0.45);
-                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                            --m5c-accent: #2ECC71;
+                            --m5c-accent-soft: rgba(46, 204, 113, 0.16);
+                            --m5c-accent-glow: rgba(46, 204, 113, 0.32);
+                            border-color: rgba(46, 204, 113, 0.48);
+                            box-shadow:
+                                0 20px 55px rgba(0, 0, 0, 0.55),
+                                0 0 28px rgba(46, 204, 113, 0.22),
+                                0 0 0 1px rgba(255, 255, 255, 0.04) inset;
                         }
 
                         #s-mod5-comp1 .m5c-card-accent {
                             height: 4px;
-                            opacity: 0.9;
+                            opacity: 0.95;
+                            background: linear-gradient(90deg, transparent, var(--m5c-accent) 30%, var(--m5c-accent) 70%, transparent);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-wrong .m5c-card-accent {
-                            background: linear-gradient(90deg, transparent, #ff4757 40%, rgba(255, 71, 87, 0.5) 70%, transparent);
+                            background: linear-gradient(90deg, transparent, #ff5a4d 30%, #ff7b70 70%, transparent);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-right .m5c-card-accent {
-                            background: linear-gradient(90deg, transparent, var(--green-lt) 40%, rgba(46, 204, 113, 0.5) 70%, transparent);
+                            background: linear-gradient(90deg, transparent, #58D68D 30%, #2ECC71 70%, transparent);
                         }
 
                         #s-mod5-comp1 .m5c-card-photo {
                             width: 100%;
-                            min-height: 190px;
-                            max-height: 230px;
-                            background: #0a0a0a;
-                            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                            min-height: 210px;
+                            max-height: 250px;
+                            background: #070b14;
+                            border-bottom: 1px solid color-mix(in srgb, var(--m5c-accent) 35%, transparent);
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             overflow: hidden;
+                            position: relative;
+                        }
+
+                        #s-mod5-comp1 .m5c-card-photo::after {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            height: 42%;
+                            background: linear-gradient(to top, rgba(8, 12, 22, 0.82), transparent);
+                            pointer-events: none;
+                            z-index: 1;
                         }
 
                         #s-mod5-comp1 .m5c-card.is-wrong .m5c-card-photo {
-                            border-bottom-color: rgba(255, 71, 87, 0.35);
+                            border-bottom-color: rgba(255, 90, 77, 0.4);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-right .m5c-card-photo {
-                            border-bottom-color: rgba(46, 204, 113, 0.35);
+                            border-bottom-color: rgba(46, 204, 113, 0.4);
                         }
 
                         #s-mod5-comp1 .m5c-card-photo img {
                             width: 100%;
                             height: 100%;
-                            min-height: 190px;
-                            max-height: 230px;
+                            min-height: 210px;
+                            max-height: 250px;
                             object-fit: cover;
                             display: block;
+                            transition: transform 0.45s ease;
+                        }
+
+                        #s-mod5-comp1 .m5c-card:hover .m5c-card-photo img {
+                            transform: scale(1.03);
+                        }
+
+                        #s-mod5-comp1 .m5c-card-expand {
+                            position: absolute;
+                            bottom: 12px;
+                            right: 12px;
+                            z-index: 3;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 40px;
+                            height: 40px;
+                            padding: 0;
+                            border-radius: 50%;
+                            border: 1.5px solid rgba(255, 255, 255, 0.85);
+                            background: linear-gradient(145deg, #58D68D 0%, #2ECC71 50%, #1ea85a 100%);
+                            box-shadow: 0 6px 18px rgba(46, 204, 113, 0.5), 0 0 0 3px rgba(46, 204, 113, 0.15);
+                            color: #041526;
+                            font-size: 17px;
+                            line-height: 1;
+                            cursor: pointer;
+                            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+                        }
+
+                        #s-mod5-comp1 .m5c-card-expand:hover {
+                            background: linear-gradient(145deg, #6aef9d 0%, #3dde82 50%, #2ECC71 100%);
+                            border-color: #fff;
+                            box-shadow: 0 8px 22px rgba(46, 204, 113, 0.65), 0 0 0 4px rgba(46, 204, 113, 0.2);
+                            transform: translateY(-2px) scale(1.04);
                         }
 
                         #s-mod5-comp1 .m5c-card-inner {
-                            padding: 24px 28px 28px;
+                            padding: 22px 26px 26px;
+                            position: relative;
+                            z-index: 1;
                         }
 
                         #s-mod5-comp1 .m5c-card-label {
-                            display: inline-block;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 6px;
                             font-family: var(--font-h);
                             font-size: 12px;
                             font-weight: 800;
-                            letter-spacing: 0.14em;
+                            letter-spacing: 0.12em;
                             text-transform: uppercase;
-                            margin-bottom: 10px;
+                            margin-bottom: 12px;
+                            padding: 5px 14px;
+                            border-radius: 999px;
+                            color: var(--m5c-accent);
+                            background: var(--m5c-accent-soft);
+                            border: 1px solid color-mix(in srgb, var(--m5c-accent) 45%, transparent);
+                            box-shadow: 0 0 16px var(--m5c-accent-glow);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-wrong .m5c-card-label {
-                            color: #ff6b7a;
+                            color: #ff7b70;
                         }
 
                         #s-mod5-comp1 .m5c-card.is-right .m5c-card-label {
-                            color: var(--green-lt);
+                            color: #58D68D;
                         }
 
                         #s-mod5-comp1 .m5c-card-title {
@@ -294,31 +430,32 @@
                             font-size: clamp(20px, 3vw, 26px);
                             font-weight: 800;
                             color: var(--white);
-                            margin-bottom: 14px;
+                            margin-bottom: 12px;
                             letter-spacing: -0.01em;
-                            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+                            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
                         }
 
                         #s-mod5-comp1 .m5c-card-divider {
-                            width: 48px;
-                            height: 2px;
-                            margin: 0 auto 16px;
-                            border-radius: 2px;
+                            width: 52px;
+                            height: 3px;
+                            margin: 0 auto 14px;
+                            border-radius: 3px;
+                            background: linear-gradient(90deg, transparent, var(--m5c-accent), transparent);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-wrong .m5c-card-divider {
-                            background: linear-gradient(90deg, transparent, rgba(255, 71, 87, 0.7), transparent);
+                            background: linear-gradient(90deg, transparent, rgba(255, 90, 77, 0.85), transparent);
                         }
 
                         #s-mod5-comp1 .m5c-card.is-right .m5c-card-divider {
-                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.85), transparent);
                         }
 
                         #s-mod5-comp1 .m5c-card-desc {
                             font-family: var(--font-b);
-                            font-size: clamp(14px, 2.2vw, 17px);
-                            line-height: 1.6;
-                            color: rgba(255, 255, 255, 0.78);
+                            font-size: clamp(14px, 2.2vw, 16px);
+                            line-height: 1.55;
+                            color: rgba(255, 255, 255, 0.8);
                             max-width: 460px;
                             margin: 0 auto;
                         }
@@ -340,6 +477,53 @@
                             height: 28px;
                         }
 
+                        #s-mod5-comp1 .m5c-progress {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                        }
+
+                        #s-mod5-comp1 .m5c-dot {
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            background: rgba(255, 255, 255, 0.2);
+                            border: 1px solid rgba(255, 255, 255, 0.15);
+                            transition: all 0.3s ease;
+                        }
+
+                        #s-mod5-comp1 .m5c-dot.is-active {
+                            width: 24px;
+                            border-radius: 4px;
+                            background: rgba(46, 204, 113, 0.7);
+                            border-color: rgba(46, 204, 113, 0.9);
+                            box-shadow: 0 0 12px rgba(46, 204, 113, 0.5);
+                        }
+
+                        #s-mod5-comp1 .m5c-dot.is-done {
+                            background: rgba(46, 204, 113, 0.35);
+                            border-color: rgba(46, 204, 113, 0.5);
+                        }
+
+                        #s-mod5-comp1 .m5c-carousel-nav {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 18px;
+                            position: relative;
+                            z-index: 10;
+                        }
+
+                        #s-mod5-comp1 .m5c-counter {
+                            font-family: var(--font-h);
+                            font-size: 16px;
+                            font-weight: 700;
+                            color: #ffffff;
+                            min-width: 42px;
+                            text-align: center;
+                        }
+
                         #s-mod5-comp1 .wave {
                             z-index: 0;
                         }
@@ -349,7 +533,8 @@
                                 justify-content: flex-start;
                                 padding-top: 12px;
                                 padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
-                                overflow-y: auto !important;
+                                overflow: hidden !important;
+                                overflow-y: hidden !important;
                             }
 
                             #s-mod5-comp1 .m5c-layout {
@@ -360,25 +545,25 @@
 
                             #s-mod5-comp1 .m5c-carousel {
                                 max-width: 100%;
-                                gap: 10px;
+                                gap: 12px;
                             }
 
                             #s-mod5-comp1 .m5c-card {
-                                border-radius: 14px;
+                                border-radius: 16px;
                             }
 
                             #s-mod5-comp1 .m5c-card-inner {
-                                padding: 14px 16px 16px;
+                                padding: 16px 16px 18px;
                             }
 
                             #s-mod5-comp1 .m5c-card-photo {
-                                min-height: 105px;
-                                max-height: 120px;
+                                min-height: 160px;
+                                max-height: 190px;
                             }
 
                             #s-mod5-comp1 .m5c-card-photo img {
-                                min-height: 105px;
-                                max-height: 120px;
+                                min-height: 160px;
+                                max-height: 190px;
                             }
 
                             #s-mod5-comp1 .m5c-card-title {
@@ -393,12 +578,22 @@
 
                             #s-mod5-comp1 .m5c-card-label {
                                 font-size: 11px;
-                                margin-bottom: 8px;
+                                margin-bottom: 10px;
+                                padding: 4px 12px;
                             }
 
-                            #s-mod5-comp1 .m5c-arrow-down svg {
-                                width: 24px;
-                                height: 24px;
+                            #s-mod5-comp1 .m5c-card-expand {
+                                width: 36px;
+                                height: 36px;
+                                font-size: 15px;
+                                bottom: 10px;
+                                right: 10px;
+                            }
+
+                            #s-mod5-comp1 .m5c-carousel-nav {
+                                z-index: 960;
+                                pointer-events: auto;
+                                padding-bottom: 8px;
                             }
 
                             #s-mod5-comp1 .wave {
@@ -409,11 +604,103 @@
 
                     <script>
                         (function () {
+                            const M5C_CARDS = [
+                                {
+                                    type: 'wrong',
+                                    label: '❌ Incorreto',
+                                    title: 'Armazenagem incorreta',
+                                    desc: 'Carga desalinhada · Corredor bloqueado · Armazenagem desorganizada',
+                                    photo: 'assets/imgur/HbcoZie.png'
+                                },
+                                {
+                                    type: 'right',
+                                    label: '✅ Correto',
+                                    title: 'Armazenagem correta',
+                                    desc: 'Carga alinhada · Corredor livre · Armazenagem organizada',
+                                    photo: 'assets/imgur/mAXUjMF.png'
+                                }
+                            ];
+
+                            let m5cIdx = 0;
+                            const viewed = new Set([0]);
+
+                            const cardEl = document.getElementById('m5c-card');
+                            const photoEl = document.getElementById('m5c-card-photo');
+                            const expandBtn = document.getElementById('m5c-card-expand');
+                            const labelEl = document.getElementById('m5c-card-label');
+                            const titleEl = document.getElementById('m5c-card-title');
+                            const descEl = document.getElementById('m5c-card-desc');
+                            const counterEl = document.getElementById('m5c-counter');
+                            const progressEl = document.getElementById('m5c-progress');
                             const trackerEl = document.getElementById('m5c-tracker');
-                            if (trackerEl && !trackerEl.classList.contains('req-done')) {
-                                trackerEl.classList.add('req-done');
-                                if (typeof updateNextButton === 'function') updateNextButton();
+                            const prevBtn = document.getElementById('m5c-prev');
+                            const nextBtn = document.getElementById('m5c-next');
+
+                            function updateM5cDots() {
+                                if (!progressEl) return;
+                                const dots = progressEl.querySelectorAll('.m5c-dot');
+                                dots.forEach(function (dot, i) {
+                                    dot.classList.toggle('is-active', i === m5cIdx);
+                                    dot.classList.toggle('is-done', viewed.has(i) && i !== m5cIdx);
+                                });
                             }
+
+                            function markM5cProgress() {
+                                viewed.add(m5cIdx);
+                                if (viewed.size >= M5C_CARDS.length && trackerEl && !trackerEl.classList.contains('req-done')) {
+                                    trackerEl.classList.add('req-done');
+                                    if (typeof playTechClick === 'function') playTechClick();
+                                    if (typeof updateNextButton === 'function') updateNextButton();
+                                }
+                            }
+
+                            function renderM5cCard() {
+                                const c = M5C_CARDS[m5cIdx];
+                                if (cardEl) {
+                                    cardEl.classList.toggle('is-wrong', c.type === 'wrong');
+                                    cardEl.classList.toggle('is-right', c.type === 'right');
+                                    cardEl.classList.add('is-active');
+                                }
+                                if (labelEl) labelEl.textContent = c.label;
+                                if (titleEl) titleEl.textContent = c.title;
+                                if (descEl) descEl.textContent = c.desc;
+                                if (counterEl) counterEl.textContent = (m5cIdx + 1) + '/' + M5C_CARDS.length;
+
+                                if (photoEl) {
+                                    let img = photoEl.querySelector('img');
+                                    if (!img) {
+                                        img = document.createElement('img');
+                                        photoEl.appendChild(img);
+                                    }
+                                    img.src = c.photo;
+                                    img.alt = c.title;
+                                }
+
+                                updateM5cDots();
+                                markM5cProgress();
+                                if (prevBtn) prevBtn.disabled = m5cIdx === 0;
+                                if (nextBtn) nextBtn.disabled = m5cIdx >= M5C_CARDS.length - 1;
+                            }
+
+                            function m5cGo(dir) {
+                                const next = m5cIdx + dir;
+                                if (next < 0 || next >= M5C_CARDS.length) return;
+                                m5cIdx = next;
+                                if (typeof playTechClick === 'function') playTechClick();
+                                renderM5cCard();
+                            }
+
+                            if (prevBtn) prevBtn.addEventListener('click', function () { m5cGo(-1); });
+                            if (nextBtn) nextBtn.addEventListener('click', function () { m5cGo(1); });
+                            if (expandBtn) {
+                                expandBtn.addEventListener('click', function (e) {
+                                    e.stopPropagation();
+                                    const c = M5C_CARDS[m5cIdx];
+                                    if (c && typeof openImageModal === 'function') openImageModal(c.photo);
+                                });
+                            }
+
+                            renderM5cCard();
                         })();
                     </script>
                 </div>
@@ -539,39 +826,144 @@
                 <style>
                     .mod5-card {
                         flex: 1;
-                        min-width: 180px;
-                        max-width: 240px;
+                        min-width: 190px;
+                        max-width: 250px;
                         width: auto;
-                        height: 280px;
+                        height: 300px;
+                    }
+
+                    /* cor de destaque por tipo de emergência */
+                    #s-mod5-flip .mod5-card {
+                        --m5-accent: #ff5a4d;
+                        --m5-accent-soft: rgba(255, 90, 77, 0.16);
+                        --m5-accent-glow: rgba(255, 90, 77, 0.35);
+                    }
+
+                    #s-mod5-flip .mod5-card:nth-child(2) {
+                        --m5-accent: #3fb6ff;
+                        --m5-accent-soft: rgba(63, 182, 255, 0.16);
+                        --m5-accent-glow: rgba(63, 182, 255, 0.35);
+                    }
+
+                    #s-mod5-flip .mod5-card:nth-child(3) {
+                        --m5-accent: #ffc63f;
+                        --m5-accent-soft: rgba(255, 198, 63, 0.16);
+                        --m5-accent-glow: rgba(255, 198, 63, 0.35);
+                    }
+
+                    #s-mod5-flip .mod5-card:nth-child(4) {
+                        --m5-accent: #ff9e3f;
+                        --m5-accent-soft: rgba(255, 158, 63, 0.16);
+                        --m5-accent-glow: rgba(255, 158, 63, 0.35);
                     }
 
                     .mod5-card .flip-inner {
-                        background: linear-gradient(145deg, #0b1120, #060a13);
-                        border: 1px solid rgba(255, 255, 255, 0.06);
+                        background: linear-gradient(160deg, #101d33 0%, #0a1524 55%, #060c17 100%);
+                        border: 1px solid rgba(255, 255, 255, 0.08);
+                        border-radius: 22px;
+                        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
                         transition: all 0.5s ease, transform 0.75s cubic-bezier(0.18, 1, 0.26, 1);
                     }
 
+                    .mod5-card .flip-front,
+                    .mod5-card .flip-back {
+                        border-radius: 22px;
+                        border: 1px solid rgba(255, 255, 255, 0.07);
+                        background:
+                            radial-gradient(circle at 50% 0%, var(--m5-accent-soft), transparent 55%),
+                            linear-gradient(165deg, #142338 0%, #0b1626 60%, #070e1b 100%);
+                    }
+
+                    /* barra de destaque no topo do card */
+                    .mod5-card .flip-front::after,
+                    .mod5-card .flip-back::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 4px;
+                        background: linear-gradient(90deg, transparent, var(--m5-accent) 30%, var(--m5-accent) 70%, transparent);
+                        opacity: 0.9;
+                    }
+
+                    /* ícone dentro de um círculo com brilho */
+                    .mod5-card .m5-icon {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 74px;
+                        height: 74px;
+                        border-radius: 50%;
+                        font-size: 36px;
+                        background:
+                            radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 45%),
+                            var(--m5-accent-soft);
+                        border: 1.5px solid var(--m5-accent);
+                        box-shadow: 0 0 26px var(--m5-accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+                    }
+
+                    .mod5-card .flip-back .m5-icon {
+                        width: 54px;
+                        height: 54px;
+                        font-size: 26px;
+                    }
+
+                    .mod5-card .m5-hint {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        margin-top: 4px;
+                        padding: 4px 12px;
+                        border-radius: 999px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        letter-spacing: 0.06em;
+                        text-transform: uppercase;
+                        color: var(--m5-accent);
+                        background: var(--m5-accent-soft);
+                        border: 1px solid var(--m5-accent);
+                    }
+
+                    .mod5-card .flip-front h3 {
+                        font-family: var(--font-h);
+                        font-size: 18px;
+                        font-weight: 800;
+                        color: #fff;
+                        margin: 0;
+                        letter-spacing: -0.01em;
+                    }
+
+                    .mod5-card .flip-back h4 {
+                        color: var(--m5-accent) !important;
+                    }
+
                     .mod5-card::before {
-                        background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 38%);
+                        background: radial-gradient(circle at 50% 15%, var(--m5-accent-glow), transparent 45%);
+                    }
+
+                    .mod5-card:hover .flip-inner {
+                        border-color: var(--m5-accent);
+                        box-shadow: 0 28px 64px rgba(0, 0, 0, 0.55), 0 0 34px var(--m5-accent-glow);
                     }
 
                     .mod5-card.req-done .flip-inner {
                         border-color: rgba(46, 204, 113, 0.6);
-                        box-shadow: 0 0 20px rgba(46, 204, 113, 0.2), inset 0 0 15px rgba(46, 204, 113, 0.1);
+                        box-shadow: 0 0 24px rgba(46, 204, 113, 0.24), inset 0 0 15px rgba(46, 204, 113, 0.1);
                     }
 
                     .mod5-card.req-done::before {
-                        background: radial-gradient(circle at 20% 20%, rgba(46, 204, 113, 0.15), transparent 38%);
+                        background: radial-gradient(circle at 50% 15%, rgba(46, 204, 113, 0.18), transparent 45%);
                     }
 
                     .mod5-hud-num {
                         position: absolute;
                         top: 15px;
-                        left: 15px;
+                        left: 16px;
                         font-family: var(--font-h);
                         font-size: 13px;
                         font-weight: 800;
-                        color: rgba(255, 255, 255, 0.3);
+                        color: rgba(255, 255, 255, 0.32);
                         letter-spacing: 2px;
                         transition: color 0.3s, text-shadow 0.3s;
                     }
@@ -618,7 +1010,7 @@
                             justify-content: flex-start !important;
                             align-items: center !important;
                             padding-top: 12px !important;
-                            padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+                            padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px)) !important;
                             overflow: hidden !important;
                         }
 
@@ -641,32 +1033,36 @@
                             align-items: center;
                             gap: 12px;
                             position: relative;
-                            z-index: 3;
+                            z-index: 960;
                         }
 
                         #s-mod5-flip .m5f-card {
+                            --m5-accent: #ff5a4d;
                             width: 100%;
                             position: relative;
-                            background: linear-gradient(165deg, rgba(22, 32, 55, 0.95) 0%, rgba(10, 14, 26, 0.98) 100%);
-                            border: 1px solid rgba(46, 204, 113, 0.22);
-                            border-radius: 14px;
+                            background:
+                                radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--m5-accent) 16%, transparent), transparent 55%),
+                                linear-gradient(165deg, rgba(22, 32, 55, 0.96) 0%, rgba(10, 14, 26, 0.98) 100%);
+                            border: 1px solid color-mix(in srgb, var(--m5-accent) 32%, transparent);
+                            border-radius: 16px;
                             overflow: hidden;
                             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+                            transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
                         }
 
                         #s-mod5-flip .m5f-card.is-active {
-                            border-color: rgba(46, 204, 113, 0.45);
-                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                            border-color: color-mix(in srgb, var(--m5-accent) 55%, transparent);
+                            box-shadow: 0 20px 55px color-mix(in srgb, var(--m5-accent) 20%, transparent), 0 12px 40px rgba(0, 0, 0, 0.55);
                         }
 
                         #s-mod5-flip .m5f-card-accent {
                             height: 4px;
-                            background: linear-gradient(90deg, transparent, var(--red) 30%, var(--green-lt) 70%, transparent);
-                            opacity: 0.85;
+                            background: linear-gradient(90deg, transparent, var(--m5-accent) 30%, var(--m5-accent) 70%, transparent);
+                            opacity: 0.9;
                         }
 
                         #s-mod5-flip .m5f-card-inner {
-                            padding: 18px 18px 20px;
+                            padding: 20px 18px 22px;
                             text-align: center;
                         }
 
@@ -677,20 +1073,34 @@
                             font-weight: 700;
                             letter-spacing: 0.14em;
                             text-transform: uppercase;
-                            color: rgba(46, 204, 113, 0.85);
-                            margin-bottom: 10px;
+                            color: var(--m5-accent);
+                            padding: 3px 12px;
+                            border-radius: 999px;
+                            background: color-mix(in srgb, var(--m5-accent) 15%, transparent);
+                            border: 1px solid color-mix(in srgb, var(--m5-accent) 40%, transparent);
+                            margin-bottom: 14px;
                         }
 
                         #s-mod5-flip .m5f-card-icon {
-                            font-size: 40px;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 66px;
+                            height: 66px;
+                            border-radius: 50%;
+                            font-size: 32px;
                             line-height: 1;
-                            margin-bottom: 12px;
-                            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+                            margin-bottom: 14px;
+                            background:
+                                radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 45%),
+                                color-mix(in srgb, var(--m5-accent) 16%, transparent);
+                            border: 1.5px solid var(--m5-accent);
+                            box-shadow: 0 0 24px color-mix(in srgb, var(--m5-accent) 35%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
                         }
 
                         #s-mod5-flip .m5f-card-title {
                             font-family: var(--font-h);
-                            font-size: 17px;
+                            font-size: 18px;
                             font-weight: 800;
                             color: var(--white);
                             margin-bottom: 10px;
@@ -701,7 +1111,7 @@
                             height: 2px;
                             margin: 0 auto 12px;
                             border-radius: 2px;
-                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                            background: linear-gradient(90deg, transparent, var(--m5-accent), transparent);
                         }
 
                         #s-mod5-flip .m5f-card-desc {
@@ -747,9 +1157,53 @@
                             justify-content: center;
                             gap: 14px;
                             position: relative;
-                            z-index: 20;
+                            z-index: 30;
                             pointer-events: auto;
-                            padding-bottom: 4px;
+                            padding: 4px 0 8px;
+                            margin-top: 4px;
+                            background: none;
+                            border: none;
+                            box-shadow: none;
+                            transform: none;
+                            left: auto;
+                            bottom: auto;
+                            width: 100%;
+                        }
+
+                        #s-mod5-flip .m5f-card-row {
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            position: relative;
+                            z-index: 30;
+                        }
+
+                        #s-mod5-flip .m5f-card-row .m5f-card {
+                            flex: 1;
+                            min-width: 0;
+                        }
+
+                        #s-mod5-flip .m5f-card-row .m5f-nav-btn {
+                            flex-shrink: 0;
+                            position: relative;
+                            z-index: 40;
+                            pointer-events: auto !important;
+                            touch-action: manipulation;
+                            -webkit-tap-highlight-color: transparent;
+                            min-width: 48px;
+                            min-height: 48px;
+                            width: 48px;
+                            height: 48px;
+                        }
+
+                        #s-mod5-flip .m5f-nav-btn {
+                            position: relative;
+                            z-index: 40;
+                            pointer-events: auto !important;
+                            touch-action: manipulation;
+                            -webkit-tap-highlight-color: transparent;
                         }
 
                         #s-mod5-flip .m5f-counter {
@@ -785,19 +1239,15 @@
                             <div class="flip-inner">
                                 <div class="flip-front">
                                     <div class="mod5-hud-num">01</div>
-                                    <div style="font-size:46px;margin-bottom:12px;">🔥</div>
-                                    <div
-                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
-                                        Incêndio
-                                    </div>
-                                    <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;">Toque para
-                                        ver</div>
+                                    <div class="m5-icon">🔥</div>
+                                    <h3>Incêndio</h3>
+                                    <span class="m5-hint">👆 Toque para ver</span>
                                 </div>
                                 <div class="flip-back">
                                     <div class="mod5-hud-num">01</div>
-                                    <div style="font-size:28px;margin-bottom:10px;">🔥</div>
+                                    <div class="m5-icon">🔥</div>
                                     <h4
-                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--green);margin-bottom:10px;">
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">
                                         Incêndio</h4>
                                     <p
                                         style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.85);margin:0 10px;">
@@ -813,19 +1263,15 @@
                             <div class="flip-inner">
                                 <div class="flip-front">
                                     <div class="mod5-hud-num">02</div>
-                                    <div style="font-size:46px;margin-bottom:12px;">🔥</div>
-                                    <div
-                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
-                                        Vazamento
-                                    </div>
-                                    <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;">Toque para
-                                        ver</div>
+                                    <div class="m5-icon">💧</div>
+                                    <h3>Vazamento</h3>
+                                    <span class="m5-hint">👆 Toque para ver</span>
                                 </div>
                                 <div class="flip-back">
                                     <div class="mod5-hud-num">02</div>
-                                    <div style="font-size:28px;margin-bottom:10px;">🔥</div>
+                                    <div class="m5-icon">💧</div>
                                     <h4
-                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--green);margin-bottom:10px;">
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">
                                         Vazamento</h4>
                                     <p
                                         style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.85);margin:0 10px;">
@@ -841,19 +1287,15 @@
                             <div class="flip-inner">
                                 <div class="flip-front">
                                     <div class="mod5-hud-num">03</div>
-                                    <div style="font-size:46px;margin-bottom:12px;">🔥</div>
-                                    <div
-                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
-                                        Tombamento
-                                    </div>
-                                    <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;">Toque para
-                                        ver</div>
+                                    <div class="m5-icon">⚠️</div>
+                                    <h3>Tombamento</h3>
+                                    <span class="m5-hint">👆 Toque para ver</span>
                                 </div>
                                 <div class="flip-back">
                                     <div class="mod5-hud-num">03</div>
-                                    <div style="font-size:28px;margin-bottom:10px;">🔥</div>
+                                    <div class="m5-icon">⚠️</div>
                                     <h4
-                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--green);margin-bottom:10px;">
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">
                                         Tombamento</h4>
                                     <p
                                         style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.85);margin:0 10px;">
@@ -869,19 +1311,15 @@
                             <div class="flip-inner">
                                 <div class="flip-front">
                                     <div class="mod5-hud-num">04</div>
-                                    <div style="font-size:46px;margin-bottom:12px;">🔥</div>
-                                    <div
-                                        style="font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--white);">
-                                        Queda de
-                                        carga</div>
-                                    <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;">Toque para
-                                        ver</div>
+                                    <div class="m5-icon">📦</div>
+                                    <h3>Queda de carga</h3>
+                                    <span class="m5-hint">👆 Toque para ver</span>
                                 </div>
                                 <div class="flip-back">
                                     <div class="mod5-hud-num">04</div>
-                                    <div style="font-size:28px;margin-bottom:10px;">🔥</div>
+                                    <div class="m5-icon">📦</div>
                                     <h4
-                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--green);margin-bottom:10px;">
+                                        style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">
                                         Queda de carga</h4>
                                     <p
                                         style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.85);margin:0 10px;">
@@ -896,15 +1334,19 @@
                     <div class="m5f-mobile-wrap">
                         <div class="m5f-layout">
                             <div class="m5f-carousel">
-                                <div class="m5f-card is-active" id="m5f-card">
-                                    <div class="m5f-card-accent" aria-hidden="true"></div>
-                                    <div class="m5f-card-inner">
-                                        <span class="m5f-card-label" id="m5f-card-label">Emergência 01</span>
-                                        <div class="m5f-card-icon" id="m5f-card-icon">🔥</div>
-                                        <h3 class="m5f-card-title" id="m5f-card-title">Incêndio</h3>
-                                        <div class="m5f-card-divider" aria-hidden="true"></div>
-                                        <p class="m5f-card-desc" id="m5f-card-desc">Parar a operação, afastar pessoas e acionar a brigada de emergência.</p>
+                                <div class="m5f-card-row">
+                                    <button type="button" class="m5f-nav-btn" id="m5f-prev" aria-label="Emergência anterior" onclick="event.preventDefault(); event.stopPropagation(); window.m5fGo && window.m5fGo(-1);">‹</button>
+                                    <div class="m5f-card is-active" id="m5f-card">
+                                        <div class="m5f-card-accent" aria-hidden="true"></div>
+                                        <div class="m5f-card-inner">
+                                            <span class="m5f-card-label" id="m5f-card-label">Emergência 01</span>
+                                            <div class="m5f-card-icon" id="m5f-card-icon">🔥</div>
+                                            <h3 class="m5f-card-title" id="m5f-card-title">Incêndio</h3>
+                                            <div class="m5f-card-divider" aria-hidden="true"></div>
+                                            <p class="m5f-card-desc" id="m5f-card-desc">Parar a operação, afastar pessoas e acionar a brigada de emergência.</p>
+                                        </div>
                                     </div>
+                                    <button type="button" class="m5f-nav-btn" id="m5f-next" aria-label="Próxima emergência" onclick="event.preventDefault(); event.stopPropagation(); window.m5fGo && window.m5fGo(1);">›</button>
                                 </div>
 
                                 <div class="m5f-progress" id="m5f-progress" aria-hidden="true">
@@ -915,9 +1357,7 @@
                                 </div>
 
                                 <div class="m5f-carousel-nav">
-                                    <button type="button" class="m5f-nav-btn" id="m5f-prev" aria-label="Emergência anterior">‹</button>
                                     <span class="m5f-counter" id="m5f-counter">1/4</span>
-                                    <button type="button" class="m5f-nav-btn" id="m5f-next" aria-label="Próxima emergência">›</button>
                                 </div>
                             </div>
                         </div>
@@ -948,10 +1388,10 @@
 
                         (function () {
                             const M5F_CARDS = [
-                                { step: '01', icon: '🔥', title: 'Incêndio', desc: 'Parar a operação, afastar pessoas e acionar a brigada de emergência.' },
-                                { step: '02', icon: '💧', title: 'Vazamento', desc: 'Isolar a área e comunicar imediatamente a supervisão responsável.' },
-                                { step: '03', icon: '⚠️', title: 'Tombamento', desc: 'Não tentar estabilizar manualmente o equipamento e manter distância segura.' },
-                                { step: '04', icon: '📦', title: 'Queda de carga', desc: 'Interromper a operação e sinalizar a área imediatamente.' }
+                                { step: '01', icon: '🔥', title: 'Incêndio', desc: 'Parar a operação, afastar pessoas e acionar a brigada de emergência.', accent: '#ff5a4d' },
+                                { step: '02', icon: '💧', title: 'Vazamento', desc: 'Isolar a área e comunicar imediatamente a supervisão responsável.', accent: '#3fb6ff' },
+                                { step: '03', icon: '⚠️', title: 'Tombamento', desc: 'Não tentar estabilizar manualmente o equipamento e manter distância segura.', accent: '#ffc63f' },
+                                { step: '04', icon: '📦', title: 'Queda de carga', desc: 'Interromper a operação e sinalizar a área imediatamente.', accent: '#ff9e3f' }
                             ];
 
                             let m5fIdx = 0;
@@ -985,8 +1425,13 @@
                                 }
                             }
 
+                            const prevBtn = document.getElementById('m5f-prev');
+                            const nextBtn = document.getElementById('m5f-next');
+
                             function renderM5fCard() {
                                 const c = M5F_CARDS[m5fIdx];
+                                if (!c) return;
+                                if (cardEl && c.accent) cardEl.style.setProperty('--m5-accent', c.accent);
                                 if (labelEl) labelEl.textContent = 'Emergência ' + c.step;
                                 if (iconEl) iconEl.textContent = c.icon;
                                 if (titleEl) titleEl.textContent = c.title;
@@ -995,23 +1440,28 @@
                                 if (cardEl) cardEl.classList.add('is-active');
                                 updateM5fDots();
                                 markM5fProgress();
-                                if (prevBtn) prevBtn.disabled = m5fIdx === 0;
-                                if (nextBtn) nextBtn.disabled = m5fIdx >= M5F_CARDS.length - 1;
+                                if (prevBtn) {
+                                    prevBtn.disabled = m5fIdx === 0;
+                                    prevBtn.setAttribute('aria-disabled', m5fIdx === 0 ? 'true' : 'false');
+                                }
+                                if (nextBtn) {
+                                    nextBtn.disabled = m5fIdx >= M5F_CARDS.length - 1;
+                                    nextBtn.setAttribute('aria-disabled', m5fIdx >= M5F_CARDS.length - 1 ? 'true' : 'false');
+                                }
                             }
 
                             function m5fGo(dir) {
                                 const next = m5fIdx + dir;
-                                if (next < 0 || next >= M5F_CARDS.length) return;
+                                if (next < 0 || next >= M5F_CARDS.length) return false;
                                 m5fIdx = next;
                                 if (typeof playTechClick === 'function') playTechClick();
                                 renderM5fCard();
+                                return true;
                             }
 
-                            const prevBtn = document.getElementById('m5f-prev');
-                            const nextBtn = document.getElementById('m5f-next');
-                            if (prevBtn) prevBtn.addEventListener('click', function () { m5fGo(-1); });
-                            if (nextBtn) nextBtn.addEventListener('click', function () { m5fGo(1); });
+                            window.m5fGo = m5fGo;
 
+                            /* Clique via onclick no HTML; evita listener duplicado */
                             renderM5fCard();
                         })();
                     </script>
@@ -1285,20 +1735,53 @@
                         }
 
                         #s-mod5-epi .m5e-card-photo {
-                            width: 110px;
-                            height: 110px;
-                            margin: 0 auto 12px;
+                            width: 140px;
+                            height: 140px;
+                            margin: 0 auto 14px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            cursor: pointer;
+                            position: relative;
+                            border-radius: 16px;
+                            background: radial-gradient(circle at 50% 40%, rgba(46, 204, 113, 0.12), rgba(8, 12, 22, 0.6));
+                            border: 1px solid rgba(46, 204, 113, 0.22);
+                            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
                         }
 
                         #s-mod5-epi .m5e-card-photo img {
-                            max-width: 100%;
-                            max-height: 100%;
+                            max-width: 88%;
+                            max-height: 88%;
                             object-fit: contain;
                             filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.8));
+                        }
+
+                        #s-mod5-epi .m5e-card-expand {
+                            position: absolute;
+                            bottom: 8px;
+                            right: 8px;
+                            z-index: 3;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 36px;
+                            height: 36px;
+                            padding: 0;
+                            border-radius: 50%;
+                            border: 1.5px solid rgba(255, 255, 255, 0.85);
+                            background: linear-gradient(145deg, #58D68D 0%, #2ECC71 50%, #1ea85a 100%);
+                            box-shadow: 0 4px 14px rgba(46, 204, 113, 0.5), 0 0 0 3px rgba(46, 204, 113, 0.15);
+                            color: #041526;
+                            font-size: 15px;
+                            line-height: 1;
+                            cursor: pointer;
+                            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+                        }
+
+                        #s-mod5-epi .m5e-card-expand:hover,
+                        #s-mod5-epi .m5e-card-expand:active {
+                            background: linear-gradient(145deg, #6aef9d 0%, #3dde82 50%, #2ECC71 100%);
+                            box-shadow: 0 6px 18px rgba(46, 204, 113, 0.65);
+                            transform: translateY(-1px) scale(1.04);
                         }
 
                         #s-mod5-epi .m5e-card-title {
@@ -1477,9 +1960,10 @@
                                 <div class="m5e-card is-active" id="m5e-card">
                                     <div class="m5e-card-accent" aria-hidden="true"></div>
                                     <div class="m5e-card-inner">
-                                        <div class="m5e-card-photo" id="m5e-card-photo"
-                                            onclick="var img=this.querySelector('img'); if(img) openImageModal(img.src);">
+                                        <div class="m5e-card-photo" id="m5e-card-photo">
                                             <img id="m5e-card-img" src="assets/imgur/pcs9dp2.png" alt="Botina">
+                                            <button type="button" class="m5e-card-expand" id="m5e-card-expand"
+                                                aria-label="Ampliar imagem" title="Ampliar imagem">🔍</button>
                                         </div>
                                         <h3 class="m5e-card-title" id="m5e-card-title">Botina</h3>
                                         <p class="m5e-card-desc" id="m5e-card-desc">Proteção dos pés</p>
@@ -1585,8 +2069,17 @@
 
                             const prevBtn = document.getElementById('m5e-prev');
                             const nextBtn = document.getElementById('m5e-next');
+                            const expandBtn = document.getElementById('m5e-card-expand');
                             if (prevBtn) prevBtn.addEventListener('click', function () { m5eGo(-1); });
                             if (nextBtn) nextBtn.addEventListener('click', function () { m5eGo(1); });
+                            if (expandBtn) {
+                                expandBtn.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    const c = M5E_CARDS[m5eIdx];
+                                    if (c && typeof openImageModal === 'function') openImageModal(c.photo);
+                                });
+                            }
 
                             renderM5eCard();
                         })();
@@ -1603,54 +2096,53 @@
                         style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
                         🎯 Quiz · Módulo 5</div>
                     <h2 class="slide-title"
-                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4); text-transform: none !important;">
-                        Zona de <span>Risco</span></h2>
-
+                        style="font-size: clamp(32px, 5vw, 48px); letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(46, 204, 113, 0.6); position: relative; display: inline-block;">
+                        <div
+                            style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%); z-index: -1; filter: blur(10px);">
+                        </div>
+                        Hora do <span>Desafio</span>
+                    </h2>
                 </div>
                 <div class="content-area">
                     <div class="quiz-wrap">
-
-                        <!-- ABERTURA -->
-                                                <div id="q5-intro-panel" class="quiz-intro-panel">
+                        <div id="q5-intro-panel" class="quiz-intro-panel">
                             <div class="quiz-intro-card">
                                 <div class="quiz-intro-icon" aria-hidden="true">📋</div>
                                 <h3 class="quiz-intro-title">Desafio NR-11 — Módulo 5</h3>
-                                <p class="quiz-intro-desc">Analise <strong>6</strong> situações. Você precisa acertar no mínimo <strong>5</strong> para avançar.</p>
-                                <button type="button" class="quiz-intro-btn req-item" onclick="startQuiz5Intro(); this.classList.add('req-done'); updateNextButton();">INICIAR DESAFIO</button>
+                                <p class="quiz-intro-desc">Analise <strong>5</strong> situações. Você precisa acertar no mínimo <strong>3</strong> para avançar.</p>
+                                <button type="button" class="quiz-intro-btn" onclick="startQuiz5Intro()">INICIAR DESAFIO</button>
                             </div>
                         </div>
 
-                        <!-- PERGUNTAS -->
                         <div id="q5-question-panel" style="display:none; transition: opacity 0.5s ease;">
                             <div class="q-meta">
                                 <div class="q-dots"></div>
-                                <div class="q-lbl" id="q5-counter">Pergunta 1 de 6</div>
+                                <div class="q-lbl" id="q5-counter">Pergunta 1 de 5</div>
                             </div>
-                            <div class="q-text" id="q5-text"
-                                style="background:rgba(13, 20, 40, 0.8); border:1px solid rgba(46, 204, 113, 0.2); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(46, 204, 113, 0.05); text-align: center;">
-                            </div>
+                            <div class="q-text" id="q5-text"></div>
                             <div class="q-options" id="q5-options"></div>
                             <div id="q5-verify-container"
-                                style="text-align: center; margin-top: 25px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                style="text-align: center; margin-top: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
                                 <button class="btn-tf-verify" id="btn-tf-verify-q5" onclick="verifyAnswer5()">✔
                                     Verificar
                                     Resposta</button>
                             </div>
                             <div class="q-feedback" id="q5-feedback"></div>
-                            <button class="btn-next-q" id="btn-next-q5" onclick="nextQuestion5()">Próxima Situação
-                                    </button>
+                            <button class="btn-next-q" id="btn-next-q5" onclick="nextQuestion5()">Continuar →</button>
                         </div>
 
-                        <!-- RESULTADO FINAL -->
-                        <div id="q5-result-panel" style="display:none;text-align:center;">
-                            <div class="result-pct green" id="q5-pct">--</div>
-                            <div class="r-stars" id="q5-stars">⭐⭐⭐</div>
-                            <div class="r-status" id="q5-status"></div>
-                            <div class="r-sub" id="q5-sub"></div>
-                            <button class="btn-tf-verify" style="margin-top:40px; font-size:16px;"
-                                onclick="resetQuiz5()">Refazer</button>
+                        <div id="q5-result-panel" class="quiz-result-panel" style="display:none;">
+                            <div class="quiz-result-card">
+                                <div class="quiz-result-icon" id="q5-result-icon" aria-hidden="true">🏅</div>
+                                <h3 class="quiz-result-title" id="q5-status">Desafio Concluído!</h3>
+                                <p class="quiz-result-desc" id="q5-sub"></p>
+                                <div class="quiz-result-review" id="q5-review" hidden></div>
+                                <button type="button" class="quiz-result-btn" id="q5-retry-btn"
+                                    onclick="resetQuiz5()">JOGAR NOVAMENTE</button>
+                            </div>
+                            <div id="q5-pct" class="result-pct" style="display:none" aria-hidden="true"></div>
+                            <div id="q5-stars" class="r-stars" style="display:none" aria-hidden="true"></div>
                         </div>
-
                     </div>
                 </div>
                 <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
@@ -1688,7 +2180,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=24"></script>
+    <script src="shared.js?v=41"></script>
 </body>
 
 </html>
