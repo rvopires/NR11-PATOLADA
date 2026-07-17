@@ -9004,3 +9004,58 @@ body {
         margin-bottom: 10px !important;
     }
 }
+
+/* Página 36 — card interno do quiz um pouco menor no desktop */
+@media (min-width: 769px) {
+    #s-quiz5 #q5-question-panel {
+        width: min(700px, 100%) !important;
+        padding: 16px 22px 18px !important;
+        border-radius: 20px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-meta {
+        margin-bottom: 8px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-text {
+        gap: 6px !important;
+        padding: 0 0 10px 0 !important;
+        margin-bottom: 10px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-text img {
+        height: 128px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-text .q5-topic {
+        font-size: 12px !important;
+        padding: 0 14px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-text .q5-desc {
+        font-size: 12px !important;
+        padding: 0 14px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-text .q5-ask {
+        font-size: clamp(15px, 1.7vw, 18px) !important;
+        padding: 0 14px 2px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-options {
+        gap: 9px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-opt {
+        min-height: 46px !important;
+        padding: 8px 14px !important;
+        font-size: clamp(14px, 1.5vw, 16px) !important;
+        gap: 12px !important;
+    }
+
+    #s-quiz5 #q5-question-panel .q-opt .opt-l {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 13px !important;
+    }
+}
