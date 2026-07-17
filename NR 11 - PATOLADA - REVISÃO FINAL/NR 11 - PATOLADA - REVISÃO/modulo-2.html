@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -12,7 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=47">
+    <link rel="stylesheet" href="shared.css?v=48">
     <style>
         #s-equipamento .content-area > .video-wrap--std,
         #s8 .content-area > .video-wrap--std {
@@ -205,38 +205,85 @@
 
                         #s10 .s10-card {
                             width: 100%;
-                            background: linear-gradient(160deg, #1e1e1e 0%, #141414 100%);
-                            border: 1px solid rgba(255, 255, 255, 0.08);
-                            border-radius: 16px;
-                            padding: 24px 28px 26px;
+                            position: relative;
+                            isolation: isolate;
+                            overflow: hidden;
+                            background:
+                                linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 42%),
+                                linear-gradient(145deg, #1c3d78 0%, #14295c 55%, #0e1f47 100%);
+                            border: 1px solid rgba(120, 170, 240, 0.28);
+                            border-top-color: rgba(150, 195, 255, 0.5);
+                            border-radius: 18px;
+                            padding: 22px 24px 24px;
                             text-align: center;
-                            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
-                            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+                            box-shadow:
+                                inset 4px 0 0 0 #2ecc71,
+                                inset 8px 0 18px -6px rgba(46, 204, 113, 0.45),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                                inset 0 -18px 30px -18px rgba(0, 0, 0, 0.55),
+                                0 18px 40px rgba(0, 0, 0, 0.5),
+                                0 0 32px rgba(46, 204, 113, 0.16);
+                            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+                        }
+
+                        #s10 .s10-card::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 3px;
+                            background: linear-gradient(90deg, transparent, #2ecc71 28%, #59f7ae 72%, transparent);
+                            opacity: 0.9;
+                            pointer-events: none;
+                        }
+
+                        #s10 .s10-card::after {
+                            content: '';
+                            position: absolute;
+                            inset: -14px -8px;
+                            border-radius: 26px;
+                            background: radial-gradient(ellipse at 30% 25%,
+                                    rgba(46, 204, 113, 0.28) 0%,
+                                    rgba(56, 148, 255, 0.12) 45%,
+                                    transparent 72%);
+                            z-index: -1;
+                            pointer-events: none;
+                            filter: blur(2px);
                         }
 
                         #s10 .s10-card.is-active {
-                            border-color: rgba(46, 204, 113, 0.35);
-                            box-shadow: 0 12px 40px rgba(46, 204, 113, 0.15), 0 10px 35px rgba(0, 0, 0, 0.5);
+                            border-color: rgba(120, 190, 255, 0.42);
+                            box-shadow:
+                                inset 4px 0 0 0 #2ecc71,
+                                inset 8px 0 18px -6px rgba(46, 204, 113, 0.55),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                                0 20px 44px rgba(0, 0, 0, 0.55),
+                                0 0 40px rgba(46, 204, 113, 0.28);
                         }
 
                         #s10 .s10-card-photo {
                             width: 100%;
                             min-height: 190px;
                             max-height: 230px;
-                            margin-bottom: 16px;
-                            border-radius: 12px;
-                            background: #0a0a0a;
-                            border: 1px dashed rgba(255, 255, 255, 0.15);
+                            margin-bottom: 18px;
+                            border-radius: 14px;
+                            background:
+                                radial-gradient(circle at 50% 30%, rgba(46, 204, 113, 0.12), transparent 55%),
+                                #081428;
+                            border: 1px solid rgba(120, 170, 240, 0.28);
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             overflow: hidden;
                             position: relative;
+                            box-shadow:
+                                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                                0 10px 24px rgba(0, 0, 0, 0.35);
                         }
 
                         #s10 .s10-card-photo.has-image {
-                            border-style: solid;
-                            border-color: rgba(46, 204, 113, 0.25);
+                            border-color: rgba(46, 204, 113, 0.4);
                         }
 
                         #s10 .s10-card-photo img {
@@ -292,18 +339,29 @@
                         }
 
                         #s10 .s10-card-icon {
-                            font-size: 30px;
-                            margin-bottom: 10px;
+                            width: 52px;
+                            height: 52px;
+                            margin: 0 auto 12px;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 26px;
                             line-height: 1;
-                            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+                            background: radial-gradient(circle at 35% 30%, rgba(46, 204, 113, 0.28), rgba(11, 31, 75, 0.9));
+                            border: 1.5px solid rgba(46, 204, 113, 0.55);
+                            box-shadow:
+                                0 0 16px rgba(46, 204, 113, 0.35),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+                            filter: none;
                         }
 
                         #s10 .s10-card-title {
                             font-family: var(--font-h);
                             font-size: clamp(20px, 3vw, 26px);
                             font-weight: 800;
-                            color: var(--white);
-                            margin-bottom: 12px;
+                            color: #ffffff;
+                            margin-bottom: 8px;
                             letter-spacing: -0.01em;
                         }
 
@@ -311,9 +369,19 @@
                             font-family: var(--font-b);
                             font-size: clamp(14px, 2.2vw, 17px);
                             line-height: 1.55;
-                            color: rgba(255, 255, 255, 0.72);
+                            color: rgba(255, 255, 255, 0.82);
                             max-width: 480px;
                             margin: 0 auto;
+                        }
+
+                        #s10 .s10-card-desc::before {
+                            content: '';
+                            display: block;
+                            width: 42px;
+                            height: 2px;
+                            margin: 0 auto 12px;
+                            border-radius: 2px;
+                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.75), transparent);
                         }
 
                         #s10 .s10-carousel-nav {
@@ -343,22 +411,47 @@
 
                         @media (max-width: 768px) {
                             #s10 .s10-layout {
-                                gap: 16px;
-                                padding-bottom: 20px;
+                                gap: 12px;
+                                padding-bottom: 16px;
                             }
 
                             #s10 .s10-card {
-                                padding: 18px 20px 20px;
+                                padding: 14px 16px 16px;
+                                border-radius: 16px;
                             }
 
                             #s10 .s10-card-photo {
-                                min-height: 150px;
-                                max-height: 180px;
+                                min-height: 132px;
+                                max-height: 155px;
+                                margin-bottom: 12px;
+                                border-radius: 12px;
                             }
 
                             #s10 .s10-card-photo img {
-                                min-height: 150px;
-                                max-height: 180px;
+                                min-height: 132px;
+                                max-height: 155px;
+                            }
+
+                            #s10 .s10-card-icon {
+                                width: 44px;
+                                height: 44px;
+                                font-size: 22px;
+                                margin-bottom: 8px;
+                            }
+
+                            #s10 .s10-card-title {
+                                font-size: 18px;
+                                margin-bottom: 6px;
+                            }
+
+                            #s10 .s10-card-desc {
+                                font-size: 13.5px;
+                                line-height: 1.4;
+                            }
+
+                            #s10 .s10-card-desc::before {
+                                margin-bottom: 8px;
+                                width: 36px;
                             }
                         }
                     </style>

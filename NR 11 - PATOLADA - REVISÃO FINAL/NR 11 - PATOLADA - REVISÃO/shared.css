@@ -5424,13 +5424,14 @@ body {
 
     #s10 .s10-card {
         padding: 14px 16px 16px !important;
-        border-radius: 14px !important;
+        border-radius: 16px !important;
     }
 
     #s10 .s10-card-photo {
         min-height: 132px !important;
         max-height: 155px !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 12px !important;
+        border-radius: 12px !important;
     }
 
     #s10 .s10-card-photo img {
@@ -5439,17 +5440,19 @@ body {
     }
 
     #s10 .s10-card-icon {
-        font-size: 26px !important;
-        margin-bottom: 6px !important;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 22px !important;
+        margin-bottom: 8px !important;
     }
 
     #s10 .s10-card-title {
-        font-size: 19px !important;
-        margin-bottom: 7px !important;
+        font-size: 18px !important;
+        margin-bottom: 6px !important;
     }
 
     #s10 .s10-card-desc {
-        font-size: 14px !important;
+        font-size: 13.5px !important;
         line-height: 1.4 !important;
     }
 
