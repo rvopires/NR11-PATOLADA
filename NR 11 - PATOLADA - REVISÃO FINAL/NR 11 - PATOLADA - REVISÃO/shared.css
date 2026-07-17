@@ -5687,14 +5687,14 @@ body {
         justify-content: flex-start !important;
         align-items: center !important;
         padding-top: 0 !important;
-        padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
         overflow: hidden !important;
         overflow-y: hidden !important;
     }
 
     #s-mod6-comp-preventiva .m6p-layout {
-        padding: 6px 14px 4px !important;
-        gap: 10px !important;
+        padding: 2px 14px 0 !important;
+        gap: 6px !important;
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
@@ -5706,7 +5706,7 @@ body {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 10px !important;
+        gap: 6px !important;
     }
 
     #s-mod6-comp-preventiva .m6p-carousel-nav {
@@ -5714,7 +5714,7 @@ body {
         z-index: 20 !important;
         pointer-events: auto !important;
         margin-top: 0 !important;
-        padding-bottom: 4px !important;
+        padding-bottom: 0 !important;
     }
 
     #s-mod6-comp-preventiva .m6p-nav-btn {
@@ -5723,38 +5723,54 @@ body {
         z-index: 21 !important;
     }
 
+    #s-mod6-comp-preventiva .m6p-card-inner {
+        padding: 10px 14px 12px !important;
+    }
+
+    #s-mod6-comp-preventiva .m6p-card-title {
+        font-size: 15px !important;
+        margin-bottom: 6px !important;
+    }
+
     #s-mod6-comp-preventiva .m6p-card-desc {
         white-space: pre-line !important;
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+    }
+
+    #s-mod6-comp-preventiva .m6p-progress {
+        gap: 6px !important;
+        margin: 0 !important;
     }
 
     #s-mod6-comp-preventiva .m6p-card-photo {
-        min-height: 150px !important;
-        max-height: 180px !important;
+        min-height: 110px !important;
+        max-height: 128px !important;
         position: relative !important;
     }
 
     #s-mod6-comp-preventiva .m6p-card-photo img {
-        min-height: 150px !important;
-        max-height: 180px !important;
+        min-height: 110px !important;
+        max-height: 128px !important;
     }
 
     #s-mod6-comp-preventiva .m6p-card-expand {
         position: absolute !important;
-        bottom: 10px !important;
-        right: 10px !important;
+        bottom: 8px !important;
+        right: 8px !important;
         z-index: 3 !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        width: 34px !important;
-        height: 34px !important;
+        width: 30px !important;
+        height: 30px !important;
         padding: 0 !important;
         border-radius: 50% !important;
         border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
         background: linear-gradient(145deg, #58D68D 0%, #2ECC71 50%, #1ea85a 100%) !important;
         box-shadow: 0 4px 14px rgba(46, 204, 113, 0.5), 0 0 0 3px rgba(46, 204, 113, 0.14) !important;
         color: #041526 !important;
-        font-size: 14px !important;
+        font-size: 13px !important;
         line-height: 1 !important;
         cursor: pointer !important;
     }
