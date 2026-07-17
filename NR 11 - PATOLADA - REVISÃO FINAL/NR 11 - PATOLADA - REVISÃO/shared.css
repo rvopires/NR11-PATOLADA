@@ -5477,8 +5477,8 @@ body {
     #s-mod5-comp1 .content-area {
         overflow: hidden !important;
         overflow-y: hidden !important;
-        padding-top: 12px !important;
-        padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-top: 0 !important;
+        padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
         justify-content: flex-start !important;
     }
 
@@ -5492,21 +5492,22 @@ body {
     }
 
     #s-mod5-comp1 .m5c-layout {
-        padding: 28px 14px 8px !important;
-        gap: 12px !important;
+        padding: 4px 14px 4px !important;
+        gap: 10px !important;
         max-width: 100% !important;
     }
 
     #s-mod5-comp1 .m5c-carousel {
         max-width: 100% !important;
-        gap: 12px !important;
+        gap: 10px !important;
     }
 
     #s-mod5-comp1 .m5c-carousel-nav {
         position: relative !important;
         z-index: 30 !important;
         pointer-events: auto !important;
-        padding-bottom: 8px !important;
+        padding-bottom: 4px !important;
+        margin-top: 0 !important;
     }
 
     #s-mod5-comp1 .m5c-nav-btn:not(:disabled) {
@@ -5666,6 +5667,16 @@ body {
 
     #s-mod5-epi .m5e-card-photo img {
         mix-blend-mode: normal !important;
+    }
+
+    #s-mod5-epi .m5e-card-expand {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 12px !important;
+        bottom: 6px !important;
+        right: 6px !important;
+        border-width: 1px !important;
+        box-shadow: 0 3px 10px rgba(46, 204, 113, 0.45), 0 0 0 2px rgba(46, 204, 113, 0.12) !important;
     }
 
     #s-mod5-epi .wave {
