@@ -6065,6 +6065,20 @@ body {
         left:0;
     }
 
+    #s1 .s1-secondary-actions {
+        align-self: center !important;
+        justify-content: center !important;
+        width: 100%;
+        margin-left: 0 !important;
+    }
+
+    #s1 .s1-secondary-actions .btn-tutorial {
+        align-self: center !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        left: 0 !important;
+    }
+
     .slide:not(#s1) .visual-placeholder::after {
         display: none;
     }

@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=34">
+    <link rel="stylesheet" href="shared.css?v=37">
     <script>
         window.MODULE_NAV = {
             id: "index",
@@ -459,12 +459,12 @@
             padding: 0;
             margin-top: 0;
             border-radius: 15px;
-            border: 1px solid rgba(46, 204, 113, 0.32);
+            border: 1px solid rgba(241, 196, 15, 0.45);
             background: rgba(8, 20, 38, 0.22);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            color: #59f7ae;
-            font-size: 16px;
+            color: #f1c40f;
+            font-size: 0;
             font-weight: 700;
             line-height: 1;
             font-family: var(--font-h), Montserrat, sans-serif;
@@ -474,21 +474,27 @@
             cursor: pointer;
             box-shadow:
                 0 4px 14px rgba(0, 0, 0, 0.18),
-                inset 0 0 0 1px rgba(46, 204, 113, 0.04);
+                inset 0 0 0 1px rgba(241, 196, 15, 0.06);
             transition: all 0.22s ease;
+        }
+
+        #s1 .s1-session-info svg {
+            width: 20px;
+            height: 20px;
+            display: block;
         }
 
         #s1 .s1-session-info:hover {
             transform: translateY(-1px);
-            border-color: rgba(46, 204, 113, 0.52);
-            background: rgba(8, 20, 38, 0.32);
+            border-color: rgba(241, 196, 15, 0.7);
+            background: rgba(241, 196, 15, 0.12);
             box-shadow:
                 0 8px 20px rgba(0, 0, 0, 0.24),
-                inset 0 0 0 1px rgba(46, 204, 113, 0.08);
+                inset 0 0 0 1px rgba(241, 196, 15, 0.1);
         }
 
         #s1 .s1-session-info:focus-visible {
-            outline: 2px solid #59f7ae;
+            outline: 2px solid #f1c40f;
             outline-offset: 3px;
         }
 
@@ -496,13 +502,26 @@
             #s1 .s1-secondary-actions {
                 margin-top: 14px;
                 gap: 8px;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                align-self: center !important;
+                justify-content: center;
+                width: 100%;
+            }
+
+            #s1 .s1-secondary-actions .btn-tutorial {
+                align-self: center !important;
+                margin-left: 0 !important;
+                margin-top: 0 !important;
             }
 
             #s1 .s1-session-info {
                 width: 40px;
                 height: 40px;
-                font-size: 15px;
+            }
+
+            #s1 .s1-session-info svg {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
@@ -905,7 +924,7 @@
     </div><!-- fecha #app -->
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=17"></script>
+    <script src="shared.js?v=18"></script>
 </body>
 
 </html>
