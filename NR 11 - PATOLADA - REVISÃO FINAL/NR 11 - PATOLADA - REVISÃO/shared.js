@@ -2492,7 +2492,7 @@ function resetQuiz6() { quiz6.reset(); }
 
 
 /* ════════════════════════════════════════
-   ACESSIBILIDADE — Ouvir (TTS) & Libras
+   ACESSIBILIDADE — Ouvir (áudio da página)
    Injetado automaticamente em todas as páginas
    ════════════════════════════════════════ */
 (function () {
@@ -2508,17 +2508,17 @@ function resetQuiz6() { quiz6.reset(); }
         bar.setAttribute('role', 'toolbar');
         bar.setAttribute('aria-label', 'Ferramentas de acessibilidade');
         bar.innerHTML = `
-            <button type="button" id="a11y-launcher" aria-expanded="false" aria-controls="a11y-tools" aria-label="Abrir ferramentas de acessibilidade" title="Acessibilidade">
-                <img src="assets/accessibility-icon.png" alt="" aria-hidden="true">
+            <button type="button" id="a11y-launcher" aria-expanded="false" aria-controls="a11y-tools" aria-label="Ouvir o conteúdo da página" title="Ouvir">
+                <svg class="a11y-speaker-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 9v6h3.5L12 19V5L7.5 9H4z" fill="currentColor"/>
+                    <path d="M15.5 8.5a4.5 4.5 0 0 1 0 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M17.8 6a7.5 7.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
             </button>
             <div id="a11y-tools" role="group" aria-label="Opções de acessibilidade">
                 <button type="button" class="a11y-btn" id="a11y-btn-ouvir" aria-pressed="false" aria-label="Ouvir o conteúdo do slide">
                     <span class="a11y-ico" aria-hidden="true">🔊</span>
                     <span class="a11y-lbl">Ouvir</span>
-                </button>
-                <button type="button" class="a11y-btn" id="a11y-btn-libras" aria-label="Tradução em Libras">
-                    <span class="a11y-ico" aria-hidden="true">👋</span>
-                    <span class="a11y-lbl">Libras</span>
                 </button>
             </div>
             <div class="audio-helper">Reproduza o áudio em cada nova pergunta.</div>
@@ -2572,46 +2572,6 @@ function resetQuiz6() { quiz6.reset(); }
                 else logoImg.addEventListener('load', positionA11yBar);
             }
         }
-
-        // ── Toggle do launcher ──
-        const launcher = document.getElementById('a11y-launcher');
-        function setOpen(open) {
-            bar.classList.toggle('open', open);
-            launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
-            if (open) window.updateQuizAudioHelper();
-        }
-        launcher.addEventListener('click', function (e) {
-            e.stopPropagation();
-            setOpen(!bar.classList.contains('open'));
-        });
-        // Fecha ao clicar fora
-        document.addEventListener('click', function (e) {
-            if (!bar.contains(e.target) && bar.classList.contains('open')) setOpen(false);
-        });
-        // Fecha com ESC
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && bar.classList.contains('open')) setOpen(false);
-        });
-
-        // ── Modal Libras ──
-        const modal = document.createElement('div');
-        modal.id = 'libras-modal';
-        modal.setAttribute('role', 'dialog');
-        modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-labelledby', 'libras-modal-title');
-        modal.innerHTML = `
-            <div class="lm-box">
-                <button type="button" class="lm-close" aria-label="Fechar">×</button>
-                <div class="lm-ico" aria-hidden="true">👐</div>
-                <h3 id="libras-modal-title">Tradução em Libras</h3>
-                <p>Para acompanhar este treinamento em <strong>Língua Brasileira de Sinais</strong>, ative o <strong>VLibras</strong> — o tradutor gratuito do Governo Federal disponível para navegadores e celular.</p>
-                <div class="lm-actions">
-                    <button type="button" id="libras-go">Abrir VLibras</button>
-                    <button type="button" class="secondary" id="libras-cancel">Fechar</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
 
         // ── OUVIR (ÁUDIO LOCAL) ──
         const btnOuvir = document.getElementById('a11y-btn-ouvir');
@@ -2709,6 +2669,37 @@ function resetQuiz6() { quiz6.reset(); }
             }
         }
 
+        // ── Toggle do launcher + leitura automática ──
+        const launcher = document.getElementById('a11y-launcher');
+        function setOpen(open) {
+            bar.classList.toggle('open', open);
+            launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) window.updateQuizAudioHelper();
+        }
+        launcher.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const willOpen = !bar.classList.contains('open');
+            setOpen(willOpen);
+            if (willOpen) {
+                if (btnOuvir && !btnOuvir.classList.contains('is-active')) startSpeak();
+            } else {
+                stopSpeak();
+            }
+        });
+        // Fecha o painel ao clicar fora, mas mantém o áudio tocando
+        // (ex.: ao trocar cards do carrossel)
+        document.addEventListener('click', function (e) {
+            if (!bar.contains(e.target) && bar.classList.contains('open')) {
+                setOpen(false);
+            }
+        });
+        // Fecha com ESC (sem interromper o áudio)
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && bar.classList.contains('open')) {
+                setOpen(false);
+            }
+        });
+
         if (btnOuvir) {
             btnOuvir.addEventListener('click', function () {
                 if (btnOuvir.classList.contains('is-active')) {
@@ -2743,29 +2734,6 @@ function resetQuiz6() { quiz6.reset(); }
             if (panel) {
                 new MutationObserver(window.updateQuizAudioHelper).observe(panel, { attributes: true, attributeFilter: ['style', 'class'] });
             }
-        });
-
-        // ── LIBRAS ──
-        const btnLibras = document.getElementById('a11y-btn-libras');
-        const lmClose = modal.querySelector('.lm-close');
-        const lmCancel = document.getElementById('libras-cancel');
-        const lmGo = document.getElementById('libras-go');
-
-        function openLibras() { modal.classList.add('active'); }
-        function closeLibras() { modal.classList.remove('active'); }
-
-        btnLibras.addEventListener('click', openLibras);
-        lmClose.addEventListener('click', closeLibras);
-        lmCancel.addEventListener('click', closeLibras);
-        lmGo.addEventListener('click', function () {
-            window.open('https://vlibras.gov.br/', '_blank', 'noopener,noreferrer');
-            closeLibras();
-        });
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) closeLibras();
-        });
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) closeLibras();
         });
     }
 

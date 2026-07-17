@@ -6355,6 +6355,14 @@ body {
     pointer-events: none;
 }
 
+#a11y-launcher .a11y-speaker-ico {
+    width: 58%;
+    height: 58%;
+    display: block;
+    color: #0b1f4b;
+    pointer-events: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
     #a11y-launcher:hover {
         transform: scale(1.1);
