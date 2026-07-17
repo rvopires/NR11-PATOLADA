@@ -3156,6 +3156,12 @@ img {
     filter: drop-shadow(0 18px 32px rgba(46, 204, 113, 0.22));
 }
 
+#s7 .flip-card:hover .flip-front>div:first-child,
+#s7 .flip-card:hover .flip-back>div:first-child {
+    transform: none;
+    filter: none;
+}
+
 .flip-card h4 {
     font-size: 18px;
     line-height: 1.25;
@@ -5152,7 +5158,7 @@ body {
         margin-bottom: 20px !important;
     }
 
-    /* Cards de flip do mÃ³dulo 1 (s7) - tamanho aumentado pra nÃ£o cortar texto */
+    /* Cards de flip do módulo 1 (s7) - tamanho aumentado pra não cortar texto */
     #s7 .flip-card {
         width: 100% !important;
         max-width: 320px !important;
@@ -5166,33 +5172,30 @@ body {
         overflow: hidden;
     }
 
-    #s7 .flip-card h4,
-    #s7 .flip-card .flip-front div[style*="font-size"] {
+    #s7 .s7-title {
         font-size: 16px !important;
         line-height: 1.25;
     }
 
-    #s7 .flip-card p,
-    #s7 .flip-card .flip-back p {
+    #s7 .s7-title-back {
+        font-size: 15px !important;
+    }
+
+    #s7 .s7-desc {
         font-size: 13px !important;
         line-height: 1.45;
     }
 
-    #s7 .flip-card .flip-front>div:first-child {
-        font-size: 32px !important;
+    #s7 .s7-icon {
+        width: 56px !important;
+        height: 56px !important;
+        font-size: 26px !important;
     }
 
-    /* Cards horizontais (flex row) viram coluna no mobile */
-    #s7 .content-area>div[style*="display: flex"][style*="gap"] {
+    #s7 .s7-cards {
         flex-direction: column !important;
         align-items: center !important;
         gap: 14px !important;
-    }
-
-    /* Flip-card container vertical no mobile */
-    #s7 .content-area>div[style*="display: flex"][style*="gap"] {
-        flex-direction: column !important;
-        align-items: center !important;
     }
 }
 
