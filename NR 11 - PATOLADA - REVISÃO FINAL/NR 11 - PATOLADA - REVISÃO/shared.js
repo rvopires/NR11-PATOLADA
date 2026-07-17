@@ -1014,7 +1014,7 @@ function resetTfButtons(btnTrue, btnFalse) {
 function createQuizEngine(prefix, questions, numDots) {
     let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
     let wrongTopics = [];
-    const isM1Quiz = () => prefix === 'q1' || prefix === 'q3';
+    const isM1Quiz = () => prefix === 'q1' || prefix === 'q3' || prefix === 'q4';
 
     const _stateKey = () => 'nr11_' + getPageKey() + '_' + prefix + '_state';
     function _saveState() {
@@ -1033,6 +1033,7 @@ function createQuizEngine(prefix, questions, numDots) {
             qPanel.style.opacity = '0';
             setTimeout(() => qPanel.style.opacity = '1', 50);
         }
+        render();
         playBeep('click');
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
@@ -1178,7 +1179,7 @@ function createQuizEngine(prefix, questions, numDots) {
 
     function getMinCorrect() {
         if (prefix === 'q1') return 2;
-        if (prefix === 'q3') return 4;
+        if (prefix === 'q3' || prefix === 'q4') return 4;
         if (prefix === 'q5') return Math.ceil(questions.length * 0.70);
         return Math.ceil(questions.length * 0.60);
     }
@@ -1306,7 +1307,7 @@ function createQuizEngine(prefix, questions, numDots) {
 
         // Volta o scroll para o card inicial (sem ficar “embaixo”)
         try {
-            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : prefix === 'q3' ? 's-quiz3' : null) ||
+            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : prefix === 'q3' ? 's-quiz3' : prefix === 'q4' ? 's-quiz4' : null) ||
                 (introPanel && introPanel.closest('.slide'));
             const area = slide && slide.querySelector('.content-area');
             if (area) area.scrollTop = 0;
@@ -2115,29 +2116,44 @@ window.checkMod4Item = function (el) {
 
 const q4_questions = [
     {
-        q: '<div class="q4-sit-title">SITUAÇÃO 1</div><div class="q4-sit-desc">A carga começou a inclinar durante o deslocamento.</div>',
-        opts: ['PARAR E REPOSICIONAR', 'CONTINUAR A OPERAÇÃO'],
-        correct: 0, feedback_ok: '✅ Correto! Parar e reposicionar evita o tombamento imediato da carga.', feedback_nok: '❌ Incorreto. Continuar a operação com carga inclinada causará um acidente iminente.'
+        q: 'A carga começou a inclinar durante o deslocamento. O que fazer?',
+        opts: ['Parar e reposicionar', 'Continuar a operação'],
+        correct: 0,
+        topic: 'Carga inclinada no deslocamento',
+        feedback_ok: '✅ Correto! Parar e reposicionar evita o tombamento imediato da carga.',
+        feedback_nok: '❌ Incorreto. Continuar a operação com carga inclinada causará um acidente iminente.'
     },
     {
-        q: '<div class="q4-sit-title">SITUAÇÃO 2</div><div class="q4-sit-desc">O trajeto possui pessoas circulando próximas.</div>',
-        opts: ['MANTER VELOCIDADE', 'REDUZIR E SINALIZAR'],
-        correct: 1, feedback_ok: '✅ Correto! A prioridade é sempre do pedestre. Reduza a velocidade e use a buzina.', feedback_nok: '❌ Incorreto. Manter a velocidade com pedestres próximos é uma falha grave de segurança.'
+        q: 'O trajeto possui pessoas circulando próximas. Qual a decisão correta?',
+        opts: ['Manter velocidade', 'Reduzir e sinalizar'],
+        correct: 1,
+        topic: 'Pedestres no trajeto',
+        feedback_ok: '✅ Correto! A prioridade é sempre do pedestre. Reduza a velocidade e use a buzina.',
+        feedback_nok: '❌ Incorreto. Manter a velocidade com pedestres próximos é uma falha grave de segurança.'
     },
     {
-        q: '<div class="q4-sit-title">SITUAÇÃO 3</div><div class="q4-sit-desc">Sua visão frontal foi totalmente bloqueada pela carga alta.</div>',
-        opts: ['CONDUZIR DE RÉ', 'TENTAR OLHAR POR CIMA'],
-        correct: 0, feedback_ok: '✅ Correto! Se a visibilidade frontal estiver bloqueada, conduza o equipamento de marcha à ré.', feedback_nok: '❌ Incorreto. É impossível garantir a segurança operando às cegas ou tentando olhar por cima.'
+        q: 'Sua visão frontal foi totalmente bloqueada pela carga alta. O que fazer?',
+        opts: ['Conduzir de ré', 'Tentar olhar por cima'],
+        correct: 0,
+        topic: 'Visibilidade bloqueada',
+        feedback_ok: '✅ Correto! Se a visibilidade frontal estiver bloqueada, conduza o equipamento de marcha à ré.',
+        feedback_nok: '❌ Incorreto. É impossível garantir a segurança operando às cegas ou tentando olhar por cima.'
     },
     {
-        q: '<div class="q4-sit-title">SITUAÇÃO 4</div><div class="q4-sit-desc">Você finalizou o turno e precisa estacionar o equipamento.</div>',
-        opts: ['BAIXAR OS GARFOS AO CHÃO', 'DEIXAR OS GARFOS ELEVADOS'],
-        correct: 0, feedback_ok: '✅ Correto! Os garfos devem estar sempre abaixados e apoiados no chão ao estacionar.', feedback_nok: '❌ Incorreto. Deixar garfos elevados cria um risco severo de tropeço e colisão para pedestres.'
+        q: 'Você finalizou o turno e precisa estacionar o equipamento. Qual procedimento correto?',
+        opts: ['Baixar os garfos ao chão', 'Deixar os garfos elevados'],
+        correct: 0,
+        topic: 'Estacionamento seguro',
+        feedback_ok: '✅ Correto! Os garfos devem estar sempre abaixados e apoiados no chão ao estacionar.',
+        feedback_nok: '❌ Incorreto. Deixar garfos elevados cria um risco severo de tropeço e colisão para pedestres.'
     },
     {
-        q: '<div class="q4-sit-title">SITUAÇÃO 5</div><div class="q4-sit-desc">Durante o deslocamento, você precisa passar por uma rampa.</div>',
-        opts: ['SUBIR DE FRENTE, DESCER DE RÉ', 'SUBIR E DESCER DE FRENTE'],
-        correct: 0, feedback_ok: '✅ Correto! A carga deve estar sempre apontada para o lado mais alto da rampa para evitar tombamento.', feedback_nok: '❌ Incorreto. Descer de frente com carga em uma rampa fatalmente fará a carga escorregar ou a máquina tombar.'
+        q: 'Durante o deslocamento, você precisa passar por uma rampa. Qual a forma correta?',
+        opts: ['Subir de frente, descer de ré', 'Subir e descer de frente'],
+        correct: 0,
+        topic: 'Rampas com carga',
+        feedback_ok: '✅ Correto! A carga deve estar sempre apontada para o lado mais alto da rampa para evitar tombamento.',
+        feedback_nok: '❌ Incorreto. Descer de frente com carga em uma rampa fatalmente fará a carga escorregar ou a máquina tombar.'
     }
 ];
 const quiz4 = createQuizEngine('q4', q4_questions, 5);

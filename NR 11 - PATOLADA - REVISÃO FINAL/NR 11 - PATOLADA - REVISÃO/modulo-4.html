@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=46">
+    <link rel="stylesheet" href="shared.css?v=48">
     <script>
         window.MODULE_NAV = {
             id: "modulo-4",
@@ -215,18 +215,18 @@
 
                         #s-mod4-video-finalizacao .m4p-layout {
                             width: 100%;
-                            max-width: 680px;
+                            max-width: 720px;
                             margin: 0 auto;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
-                            gap: 20px;
-                            padding: 48px 20px 16px;
+                            gap: 18px;
+                            padding: 34px 20px 16px;
                         }
 
                         #s-mod4-video-finalizacao .m4p-carousel {
                             width: 100%;
-                            max-width: 620px;
+                            max-width: 660px;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
@@ -238,84 +238,132 @@
                         #s-mod4-video-finalizacao .m4p-card {
                             width: 100%;
                             position: relative;
-                            background: linear-gradient(165deg, rgba(22, 32, 55, 0.95) 0%, rgba(10, 14, 26, 0.98) 100%);
-                            border: 1px solid rgba(46, 204, 113, 0.22);
-                            border-radius: 18px;
+                            isolation: isolate;
+                            background:
+                                radial-gradient(circle at 50% 0%, rgba(89, 247, 174, 0.12), transparent 42%),
+                                linear-gradient(145deg, rgba(23, 48, 62, 0.98) 0%, rgba(10, 25, 36, 0.99) 58%, rgba(7, 17, 27, 1) 100%);
+                            border: 1px solid rgba(132, 235, 190, 0.28);
+                            border-radius: 26px;
                             padding: 0;
                             text-align: center;
-                            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+                            box-shadow:
+                                0 28px 65px rgba(0, 0, 0, 0.52),
+                                0 0 42px rgba(46, 204, 113, 0.1),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                                inset 0 0 0 1px rgba(255, 255, 255, 0.025);
                             transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
                             overflow: hidden;
                         }
 
+                        #s-mod4-video-finalizacao .m4p-card::before {
+                            content: "";
+                            position: absolute;
+                            inset: 0;
+                            z-index: -1;
+                            pointer-events: none;
+                            opacity: 0.32;
+                            background-image:
+                                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+                            background-size: 28px 28px;
+                            mask-image: linear-gradient(to bottom, #000, transparent 78%);
+                        }
+
+                        #s-mod4-video-finalizacao .m4p-card::after {
+                            content: "";
+                            position: absolute;
+                            inset: 12px;
+                            z-index: -1;
+                            pointer-events: none;
+                            border: 1px solid rgba(255, 255, 255, 0.045);
+                            border-radius: 18px;
+                        }
+
                         #s-mod4-video-finalizacao .m4p-card.is-active {
-                            border-color: rgba(46, 204, 113, 0.45);
-                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
-                            transform: translateY(-2px);
+                            border-color: rgba(89, 247, 174, 0.52);
+                            box-shadow:
+                                0 30px 70px rgba(0, 0, 0, 0.58),
+                                0 0 52px rgba(46, 204, 113, 0.18),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                            transform: translateY(-3px);
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-accent {
-                            height: 4px;
-                            background: linear-gradient(90deg, transparent, var(--red) 30%, var(--green-lt) 70%, transparent);
-                            opacity: 0.85;
+                            height: 5px;
+                            background: linear-gradient(90deg, #f39c12 0%, #f1c40f 24%, #59f7ae 68%, #2ecc71 100%);
+                            box-shadow: 0 0 22px rgba(89, 247, 174, 0.42);
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-inner {
-                            padding: 28px 32px 30px;
+                            position: relative;
+                            padding: 30px 38px 36px;
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-label {
-                            display: inline-block;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            min-height: 28px;
+                            padding: 5px 13px;
                             font-family: var(--font-h);
-                            font-size: 11px;
-                            font-weight: 700;
-                            letter-spacing: 0.18em;
+                            font-size: 10px;
+                            font-weight: 800;
+                            letter-spacing: 0.2em;
                             text-transform: uppercase;
-                            color: rgba(46, 204, 113, 0.85);
-                            margin-bottom: 12px;
+                            color: #9dffd0;
+                            background: rgba(46, 204, 113, 0.1);
+                            border: 1px solid rgba(89, 247, 174, 0.24);
+                            border-radius: 999px;
+                            margin-bottom: 15px;
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-step {
-                            width: 72px;
-                            height: 72px;
-                            margin: 0 auto 18px;
+                            width: 82px;
+                            height: 82px;
+                            margin: 0 auto 21px;
                             border-radius: 50%;
-                            background: radial-gradient(circle at 35% 30%, rgba(46, 204, 113, 0.35), rgba(46, 204, 113, 0.08) 70%);
-                            border: 2px solid rgba(46, 204, 113, 0.55);
+                            background:
+                                radial-gradient(circle at 38% 28%, rgba(255, 255, 255, 0.24), transparent 25%),
+                                linear-gradient(145deg, rgba(46, 204, 113, 0.36), rgba(9, 44, 37, 0.92));
+                            border: 2px solid rgba(125, 255, 188, 0.68);
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             font-family: var(--font-h);
-                            font-size: 30px;
-                            font-weight: 800;
-                            color: var(--green-lt);
-                            box-shadow: 0 0 28px rgba(46, 204, 113, 0.25), 0 0 0 6px rgba(46, 204, 113, 0.06);
+                            font-size: 34px;
+                            font-weight: 900;
+                            color: #d8ffea;
+                            box-shadow:
+                                0 0 34px rgba(46, 204, 113, 0.34),
+                                0 0 0 7px rgba(46, 204, 113, 0.07),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.25);
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-title {
                             font-family: var(--font-h);
-                            font-size: clamp(20px, 3vw, 26px);
-                            font-weight: 800;
+                            font-size: clamp(22px, 3vw, 29px);
+                            font-weight: 900;
                             color: var(--white);
-                            margin-bottom: 14px;
-                            letter-spacing: -0.01em;
+                            margin: 0 0 14px;
+                            letter-spacing: -0.025em;
                             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-divider {
-                            width: 48px;
-                            height: 2px;
-                            margin: 0 auto 16px;
+                            width: 76px;
+                            height: 3px;
+                            margin: 0 auto 17px;
                             border-radius: 2px;
-                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.6), transparent);
+                            background: linear-gradient(90deg, transparent, #59f7ae, transparent);
+                            box-shadow: 0 0 12px rgba(89, 247, 174, 0.4);
                         }
 
                         #s-mod4-video-finalizacao .m4p-card-desc {
                             font-family: var(--font-b);
-                            font-size: clamp(14px, 2.2vw, 17px);
-                            line-height: 1.6;
-                            color: rgba(255, 255, 255, 0.78);
-                            max-width: 460px;
+                            font-size: clamp(15px, 2.2vw, 18px);
+                            line-height: 1.55;
+                            color: rgba(238, 248, 244, 0.82);
+                            max-width: 500px;
                             margin: 0 auto;
                         }
 
@@ -372,18 +420,56 @@
 
                         @media (max-width: 768px) {
                             #s-mod4-video-finalizacao .m4p-layout {
-                                gap: 16px;
-                                padding: 36px 16px 12px;
+                                gap: 13px;
+                                padding: 12px 14px 8px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-carousel {
+                                gap: 13px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-card {
+                                border-radius: 20px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-card::after {
+                                inset: 9px;
+                                border-radius: 14px;
                             }
 
                             #s-mod4-video-finalizacao .m4p-card-inner {
-                                padding: 22px 20px 24px;
+                                padding: 20px 18px 22px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-card-label {
+                                min-height: 24px;
+                                padding: 4px 11px;
+                                margin-bottom: 11px;
                             }
 
                             #s-mod4-video-finalizacao .m4p-card-step {
-                                width: 60px;
-                                height: 60px;
-                                font-size: 26px;
+                                width: 62px;
+                                height: 62px;
+                                margin-bottom: 14px;
+                                font-size: 27px;
+                                box-shadow:
+                                    0 0 24px rgba(46, 204, 113, 0.3),
+                                    0 0 0 5px rgba(46, 204, 113, 0.07),
+                                    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-card-title {
+                                font-size: clamp(19px, 5.5vw, 23px);
+                                margin-bottom: 10px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-card-divider {
+                                margin-bottom: 11px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-card-desc {
+                                font-size: 14px;
+                                line-height: 1.45;
                             }
                         }
                     </style>
@@ -474,23 +560,20 @@
                         <div
                             style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%); z-index: -1; filter: blur(10px);">
                         </div>
-                        Decisões<span> Operacionais</span>
+                        Hora do <span>Desafio</span>
                     </h2>
                 </div>
                 <div class="content-area">
                     <div class="quiz-wrap">
-
-                        <!-- ABERTURA -->
-                                                <div id="q4-intro-panel" class="quiz-intro-panel">
+                        <div id="q4-intro-panel" class="quiz-intro-panel">
                             <div class="quiz-intro-card">
                                 <div class="quiz-intro-icon" aria-hidden="true">📋</div>
                                 <h3 class="quiz-intro-title">Desafio NR-11 — Módulo 4</h3>
                                 <p class="quiz-intro-desc">Analise <strong>5</strong> situações. Você precisa acertar no mínimo <strong>4</strong> para avançar.</p>
-                                <button type="button" class="quiz-intro-btn req-item" onclick="startQuiz4Intro(); this.classList.add('req-done'); updateNextButton();">INICIAR DESAFIO</button>
+                                <button type="button" class="quiz-intro-btn" onclick="startQuiz4Intro()">INICIAR DESAFIO</button>
                             </div>
                         </div>
 
-                        <!-- PERGUNTAS -->
                         <div id="q4-question-panel" style="display:none; transition: opacity 0.5s ease;">
                             <div class="q-meta">
                                 <div class="q-dots"></div>
@@ -499,32 +582,31 @@
                             <div class="q-text" id="q4-text"></div>
                             <div class="q-options" id="q4-options"></div>
                             <div id="q4-verify-container"
-                                style="text-align: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                style="text-align: center; margin-top: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
                                 <button class="btn-tf-verify" id="btn-tf-verify-q4" onclick="verifyAnswer4()">✔
                                     Verificar
                                     Resposta</button>
                             </div>
                             <div class="q-feedback" id="q4-feedback"></div>
-                            <button class="btn-next-q" id="btn-next-q4" onclick="nextQuestion4()">Próxima Situação
-                                    </button>
+                            <button class="btn-next-q" id="btn-next-q4" onclick="nextQuestion4()">Continuar →</button>
                         </div>
 
-                        <!-- RESULTADO FINAL -->
-                        <div id="q4-result-panel" style="display:none;text-align:center;">
-                            <div class="result-pct green" id="q4-pct">--</div>
-                            <div class="r-stars" id="q4-stars">⭐⭐⭐</div>
-                            <div class="r-status" id="q4-status"></div>
-                            <div class="r-sub" id="q4-sub"></div>
-                            <button class="btn-tf-verify" style="margin-top:40px; font-size:16px;"
-                                onclick="resetQuiz4()">Refazer
-                                Situações</button>
+                        <div id="q4-result-panel" class="quiz-result-panel" style="display:none;">
+                            <div class="quiz-result-card">
+                                <div class="quiz-result-icon" id="q4-result-icon" aria-hidden="true">🏅</div>
+                                <h3 class="quiz-result-title" id="q4-status">Desafio Concluído!</h3>
+                                <p class="quiz-result-desc" id="q4-sub"></p>
+                                <div class="quiz-result-review" id="q4-review" hidden></div>
+                                <button type="button" class="quiz-result-btn" id="q4-retry-btn"
+                                    onclick="resetQuiz4()">JOGAR NOVAMENTE</button>
+                            </div>
+                            <div id="q4-pct" class="result-pct" style="display:none" aria-hidden="true"></div>
+                            <div id="q4-stars" class="r-stars" style="display:none" aria-hidden="true"></div>
                         </div>
-
                     </div>
                 </div>
                 <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
-                            fill="rgba(46,204,113,0.07)" />
+                        <path d="M0,50 C480,10 960,85 1440,30 L1440,100 L0,100 Z" fill="rgba(46,204,113,0.07)" />
                     </svg></div>
             </div>
 
@@ -557,7 +639,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=24"></script>
+    <script src="shared.js?v=39"></script>
 </body>
 
 </html>
