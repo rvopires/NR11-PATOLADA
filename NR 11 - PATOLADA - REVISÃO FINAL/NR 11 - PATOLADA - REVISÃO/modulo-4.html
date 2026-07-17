@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=48">
+    <link rel="stylesheet" href="shared.css?v=51">
     <script>
         window.MODULE_NAV = {
             id: "modulo-4",
@@ -419,13 +419,25 @@
                         }
 
                         @media (max-width: 768px) {
+                            #s-mod4-video-finalizacao .content-area {
+                                justify-content: flex-start;
+                                padding-top: 14px;
+                                padding-bottom: 10px;
+                            }
+
                             #s-mod4-video-finalizacao .m4p-layout {
-                                gap: 13px;
-                                padding: 12px 14px 8px;
+                                gap: 11px;
+                                padding: 16px 14px 6px;
+                                margin-top: 0;
+                                transform: none;
                             }
 
                             #s-mod4-video-finalizacao .m4p-carousel {
-                                gap: 13px;
+                                gap: 11px;
+                            }
+
+                            #s-mod4-video-finalizacao .m4p-carousel-nav {
+                                margin-top: 0;
                             }
 
                             #s-mod4-video-finalizacao .m4p-card {
@@ -569,7 +581,7 @@
                             <div class="quiz-intro-card">
                                 <div class="quiz-intro-icon" aria-hidden="true">📋</div>
                                 <h3 class="quiz-intro-title">Desafio NR-11 — Módulo 4</h3>
-                                <p class="quiz-intro-desc">Analise <strong>5</strong> situações. Você precisa acertar no mínimo <strong>4</strong> para avançar.</p>
+                                <p class="quiz-intro-desc">Analise <strong>5</strong> situações. Você precisa acertar no mínimo <strong>3</strong> para avançar.</p>
                                 <button type="button" class="quiz-intro-btn" onclick="startQuiz4Intro()">INICIAR DESAFIO</button>
                             </div>
                         </div>
@@ -639,7 +651,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=39"></script>
+    <script src="shared.js?v=40"></script>
 </body>
 
 </html>

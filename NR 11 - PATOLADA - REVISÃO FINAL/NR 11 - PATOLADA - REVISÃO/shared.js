@@ -1179,7 +1179,8 @@ function createQuizEngine(prefix, questions, numDots) {
 
     function getMinCorrect() {
         if (prefix === 'q1') return 2;
-        if (prefix === 'q3' || prefix === 'q4') return 4;
+        if (prefix === 'q3') return 4;
+        if (prefix === 'q4') return 3;
         if (prefix === 'q5') return Math.ceil(questions.length * 0.70);
         return Math.ceil(questions.length * 0.60);
     }
