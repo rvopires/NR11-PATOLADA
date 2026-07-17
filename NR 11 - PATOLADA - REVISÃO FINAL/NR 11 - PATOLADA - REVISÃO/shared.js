@@ -769,6 +769,9 @@ function playQuizMp3(kind) {
     const src = isOk ? QUIZ_CORRECT_SFX : QUIZ_WRONG_SFX;
 
     try {
+        // Garante AudioContext desbloqueado no mesmo gesto do clique
+        try { ensureAudioCtx(); } catch (e) { }
+
         let audio = isOk ? quizCorrectAudio : quizWrongAudio;
         if (!audio) {
             audio = new Audio(src);
@@ -790,7 +793,6 @@ function playQuizMp3(kind) {
             const playPromise = audio.play();
             if (playPromise && typeof playPromise.then === 'function') {
                 playPromise.catch(function () {
-                    // Alguns browsers bloqueiam reuso; tenta um Audio novo
                     try {
                         const fresh = new Audio(src);
                         fresh.volume = 0.45;
@@ -807,22 +809,20 @@ function playQuizMp3(kind) {
             }
         };
 
-        if (audio.readyState >= 2) {
-            startPlay();
-        } else {
-            const onReady = function () {
-                audio.removeEventListener('canplaythrough', onReady);
-                audio.removeEventListener('loadeddata', onReady);
+        // Toca imediatamente (não espera canplay) — evita perder o gesto do usuário
+        startPlay();
+        // Se ainda estiver pausado após carregar, tenta de novo
+        setTimeout(function () {
+            if (activeQuizSfx === audio && audio.paused) {
                 startPlay();
-            };
-            audio.addEventListener('canplaythrough', onReady, { once: true });
-            audio.addEventListener('loadeddata', onReady, { once: true });
-            try { audio.load(); } catch (e) { }
-            // Fallback se o evento não disparar a tempo
-            setTimeout(function () {
-                if (activeQuizSfx === audio && audio.paused) startPlay();
-            }, 180);
-        }
+            }
+        }, 120);
+        // Fallback sintético se o MP3 falhar em silêncio
+        setTimeout(function () {
+            if (activeQuizSfx === audio && audio.paused) {
+                playSynthFallback(isOk ? 'ok' : 'nok');
+            }
+        }, 320);
     } catch (e) {
         playSynthFallback(isOk ? 'ok' : 'nok');
     }
@@ -834,6 +834,34 @@ function playCorrectAnswerSound() {
 
 function playWrongAnswerSound() {
     playQuizMp3('nok');
+}
+
+function preloadQuizSfx() {
+    try {
+        if (!quizCorrectAudio) {
+            quizCorrectAudio = new Audio(QUIZ_CORRECT_SFX);
+            quizCorrectAudio.preload = 'auto';
+            quizCorrectAudio.volume = 0.45;
+        }
+        if (!quizWrongAudio) {
+            quizWrongAudio = new Audio(QUIZ_WRONG_SFX);
+            quizWrongAudio.preload = 'auto';
+            quizWrongAudio.volume = 0.45;
+        }
+        try { quizCorrectAudio.load(); } catch (e) { }
+        try { quizWrongAudio.load(); } catch (e) { }
+    } catch (e) { }
+}
+
+if (typeof document !== 'undefined') {
+    const unlockOnce = function () {
+        preloadQuizSfx();
+        try { ensureAudioCtx(); } catch (e) { }
+        document.removeEventListener('pointerdown', unlockOnce, true);
+        document.removeEventListener('keydown', unlockOnce, true);
+    };
+    document.addEventListener('pointerdown', unlockOnce, true);
+    document.addEventListener('keydown', unlockOnce, true);
 }
 
 function playBeep(type) {
@@ -1499,6 +1527,15 @@ document.head.appendChild(styleHUD);
 
 function playHUDBeep(type) {
     try {
+        if (type === 'correct') {
+            playCorrectAnswerSound();
+            return;
+        }
+        if (type === 'incorrect') {
+            playWrongAnswerSound();
+            return;
+        }
+
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (!AudioContext) return;
         if (!window.hudAudioCtx) window.hudAudioCtx = new AudioContext();
@@ -1520,12 +1557,6 @@ function playHUDBeep(type) {
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
             osc.start(now);
             osc.stop(now + 0.05);
-        } else if (type === 'correct') {
-            playCorrectAnswerSound();
-            return;
-        } else if (type === 'incorrect') {
-            playWrongAnswerSound();
-            return;
         } else if (type === 'transition') {
             osc.type = 'sine';
             osc.frequency.setValueAtTime(500, now);
@@ -1733,16 +1764,15 @@ window.verifyAnswer2 = function () {
     if (isCorrect) scoreQ2++;
     else if (data.topic) wrongTopicsQ2.push(data.topic);
 
+    // Som imediato no gesto do clique (sem setTimeout — evita bloqueio do browser)
+    try { playBeep(isCorrect ? 'ok' : 'nok'); } catch (e) { }
+
     const vContainer = document.getElementById('sq2-verify-container');
     if (vContainer) {
         vContainer.style.opacity = '0';
         vContainer.style.visibility = 'hidden';
         setTimeout(() => { vContainer.style.display = 'none'; }, 300);
     }
-
-    setTimeout(() => {
-        playHUDBeep(isCorrect ? 'correct' : 'incorrect');
-    }, 100);
 
     const fbPanel = document.getElementById('sq2-question-panel');
     if (fbPanel) {
@@ -1932,9 +1962,7 @@ window.answerConducao = function (isAllowBtn) {
 
     if (isCorrect) {
         if (selectedBtn) selectedBtn.classList.add('selected-true');
-
-        // Timeout para garantir que a animação CSS não trave o áudio sintetizado
-        setTimeout(() => { playHUDBeep('correct'); }, 50);
+        try { playBeep('ok'); } catch (e) { }
 
         if (fb && fbTitle && fbText) {
             fbTitle.textContent = 'Correto!';
@@ -1966,8 +1994,7 @@ window.answerConducao = function (isAllowBtn) {
 
     } else {
         if (selectedBtn) selectedBtn.classList.add('selected-false');
-
-        setTimeout(() => { playHUDBeep('incorrect'); }, 50);
+        try { playBeep('nok'); } catch (e) { }
 
         if (fb && fbTitle && fbText) {
             fbTitle.textContent = 'Incorreto';
@@ -2144,6 +2171,15 @@ function toggleQuiz6Music() {
 
 function playQuiz6Audio(type) {
     try {
+        if (type === 'correct') {
+            playCorrectAnswerSound();
+            return;
+        }
+        if (type === 'incorrect') {
+            playWrongAnswerSound();
+            return;
+        }
+
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (!AudioContext) return;
         const ctx = new AudioContext();
@@ -2170,12 +2206,6 @@ function playQuiz6Audio(type) {
             gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
             osc.connect(gain); gain.connect(ctx.destination);
             osc.start(now); osc.stop(now + 0.1);
-        } else if (type === 'correct') {
-            playCorrectAnswerSound();
-            return;
-        } else if (type === 'incorrect') {
-            playWrongAnswerSound();
-            return;
         } else if (type === 'transition') {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -2188,7 +2218,6 @@ function playQuiz6Audio(type) {
             osc.connect(gain); gain.connect(ctx.destination);
             osc.start(now); osc.stop(now + 0.2);
         } else if (type === 'end') {
-            // Soft short tech sound instead of strong chord
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'sine';
