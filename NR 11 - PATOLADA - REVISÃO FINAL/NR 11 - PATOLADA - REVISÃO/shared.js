@@ -1014,6 +1014,7 @@ function resetTfButtons(btnTrue, btnFalse) {
 function createQuizEngine(prefix, questions, numDots) {
     let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
     let wrongTopics = [];
+    const isM1Quiz = () => prefix === 'q1' || prefix === 'q3';
 
     const _stateKey = () => 'nr11_' + getPageKey() + '_' + prefix + '_state';
     function _saveState() {
@@ -1177,6 +1178,7 @@ function createQuizEngine(prefix, questions, numDots) {
 
     function getMinCorrect() {
         if (prefix === 'q1') return 2;
+        if (prefix === 'q3') return 4;
         if (prefix === 'q5') return Math.ceil(questions.length * 0.70);
         return Math.ceil(questions.length * 0.60);
     }
@@ -1207,7 +1209,7 @@ function createQuizEngine(prefix, questions, numDots) {
         }
         const status = document.getElementById(prefix + '-status');
         if (status) {
-            if (prefix === 'q1') {
+            if (isM1Quiz()) {
                 status.textContent = approved ? 'Desafio Concluído!' : 'Desafio não concluído';
                 status.className = 'quiz-result-title r-status ' + (approved ? 'ap' : 'ref');
             } else {
@@ -1217,7 +1219,7 @@ function createQuizEngine(prefix, questions, numDots) {
         }
         const sub = document.getElementById(prefix + '-sub');
         if (sub) {
-            if (prefix === 'q1') {
+            if (isM1Quiz()) {
                 if (approved) {
                     sub.textContent = `Você acertou ${score} de ${questions.length} questões. Parabéns! Pode avançar para a próxima etapa.`;
                 } else {
@@ -1230,10 +1232,10 @@ function createQuizEngine(prefix, questions, numDots) {
             }
         }
 
-        if (prefix === 'q1') {
-            const reviewEl = document.getElementById('q1-review');
-            const iconEl = document.getElementById('q1-result-icon');
-            const retryBtn = document.getElementById('q1-retry-btn');
+        if (isM1Quiz()) {
+            const reviewEl = document.getElementById(prefix + '-review');
+            const iconEl = document.getElementById(prefix + '-result-icon');
+            const retryBtn = document.getElementById(prefix + '-retry-btn');
             const topics = uniqueTopics(wrongTopics);
 
             if (iconEl) iconEl.textContent = approved ? '🏅' : '📚';
@@ -1294,7 +1296,7 @@ function createQuizEngine(prefix, questions, numDots) {
         const btn = document.getElementById('btn-next-' + prefix);
         if (btn) btn.className = 'btn-next-q';
 
-        const reviewEl = document.getElementById(prefix === 'q1' ? 'q1-review' : null);
+        const reviewEl = document.getElementById(isM1Quiz() ? prefix + '-review' : null);
         if (reviewEl) { reviewEl.hidden = true; reviewEl.innerHTML = ''; }
 
         // removed persistence
@@ -1304,7 +1306,7 @@ function createQuizEngine(prefix, questions, numDots) {
 
         // Volta o scroll para o card inicial (sem ficar “embaixo”)
         try {
-            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : null) ||
+            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : prefix === 'q3' ? 's-quiz3' : null) ||
                 (introPanel && introPanel.closest('.slide'));
             const area = slide && slide.querySelector('.content-area');
             if (area) area.scrollTop = 0;
@@ -1356,29 +1358,44 @@ function resetQuiz1() { quiz1.reset(); }
 
 const q3_questions = [
     {
-        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(241, 196, 15, 0.15);border:1px solid rgba(241, 196, 15, 0.3);color:var(--gold);box-shadow:0 0 10px rgba(241, 196, 15, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🟡 Atenção</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">A bateria atingiu 20% durante a operação.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">O que o operador deve fazer?</div>',
+        q: 'A bateria atingiu 20% durante a operação. O que o operador deve fazer?',
         opts: ['Solicitar troca segura da bateria', 'Continuar operando até descarregar completamente', 'Aumentar velocidade para finalizar mais rápido', 'Ignorar o nível de carga'],
-        correct: 0, feedback_ok: '✅ Procedimento correto! A troca da bateria deve ocorrer ao atingir aproximadamente 20% de carga.', feedback_nok: '❌ Incorreto. O procedimento padrão indica que a bateria deve ser trocada ao atingir 20%.'
+        correct: 0,
+        topic: 'Troca de bateria',
+        feedback_ok: '✅ Procedimento correto! A troca da bateria deve ocorrer ao atingir aproximadamente 20% de carga.',
+        feedback_nok: '❌ Incorreto. O procedimento padrão indica que a bateria deve ser trocada ao atingir 20%.'
     },
     {
-        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(231, 76, 60, 0.15);border:1px solid rgba(231, 76, 60, 0.3);color:var(--red);box-shadow:0 0 10px rgba(231, 76, 60, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🔴 Crítico</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">A troca da bateria será realizada.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">Qual procedimento é obrigatório?</div>',
+        q: 'A troca da bateria será realizada. Qual procedimento é obrigatório?',
         opts: ['Remover rapidamente sem desligar', 'Realizar sozinho para agilizar', 'Utilizar EPIs e apoio adequado', 'Desconectar apenas após remover'],
-        correct: 2, feedback_ok: '✅ Procedimento correto! O uso de EPIs e o apoio adequado são fundamentais na troca da bateria.', feedback_nok: '❌ Incorreto. É obrigatório desligar, desconectar cabos e usar EPIs adequados.'
+        correct: 2,
+        topic: 'Troca de bateria com EPIs',
+        feedback_ok: '✅ Procedimento correto! O uso de EPIs e o apoio adequado são fundamentais na troca da bateria.',
+        feedback_nok: '❌ Incorreto. É obrigatório desligar, desconectar cabos e usar EPIs adequados.'
     },
     {
-        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(46, 204, 113, 0.15);border:1px solid rgba(46, 204, 113, 0.3);color:var(--green);box-shadow:0 0 10px rgba(46, 204, 113, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🟢 Seguro</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">O operador está transportando um palete.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">Qual altura correta da carga?</div>',
+        q: 'O operador está transportando um palete. Qual altura correta da carga?',
         opts: ['Encostada no chão', 'Acima da linha de visão', 'O mais alto possível', '15–20 cm do solo'],
-        correct: 3, feedback_ok: '✅ Procedimento correto! O deslocamento deve ser sempre feito entre 15 e 20 cm do solo.', feedback_nok: '❌ Incorreto. Para evitar acidentes, a carga deve transitar entre 15 e 20 cm do solo.'
+        correct: 3,
+        topic: 'Altura da carga no transporte',
+        feedback_ok: '✅ Procedimento correto! O deslocamento deve ser sempre feito entre 15 e 20 cm do solo.',
+        feedback_nok: '❌ Incorreto. Para evitar acidentes, a carga deve transitar entre 15 e 20 cm do solo.'
     },
     {
-        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(241, 196, 15, 0.15);border:1px solid rgba(241, 196, 15, 0.3);color:var(--gold);box-shadow:0 0 10px rgba(241, 196, 15, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🟡 Atenção</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">O operador se aproxima de um cruzamento.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">O que deve ser feito?</div>',
+        q: 'O operador se aproxima de um cruzamento. O que deve ser feito?',
         opts: ['Acelerar para passar rápido', 'Usar buzina e reduzir velocidade', 'Levantar a carga', 'Ignorar pedestres'],
-        correct: 1, feedback_ok: '✅ Procedimento correto! Reduzir velocidade e emitir alerta sonoro são essenciais.', feedback_nok: '❌ Incorreto. É obrigatório reduzir a velocidade e usar a buzina em cruzamentos.'
+        correct: 1,
+        topic: 'Cruzamentos e pedestres',
+        feedback_ok: '✅ Procedimento correto! Reduzir velocidade e emitir alerta sonoro são essenciais.',
+        feedback_nok: '❌ Incorreto. É obrigatório reduzir a velocidade e usar a buzina em cruzamentos.'
     },
     {
-        q: '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0;"><div class="q3-badge" style="background:rgba(231, 76, 60, 0.15);border:1px solid rgba(231, 76, 60, 0.3);color:var(--red);box-shadow:0 0 10px rgba(231, 76, 60, 0.15);font-size:12px;padding:2px 10px;margin-bottom:4px;">🔴 Crítico</div><div style="font-size:clamp(16px, 2.5vw, 20px);color:var(--white);font-family:var(--font-h);font-weight:800;line-height:1.2;text-align:center;text-shadow: 0 0 10px rgba(255,255,255,0.1);">Outro funcionário pede carona no equipamento.</div></div><div style="font-size:14px;color:rgba(255,255,255,0.8);font-family:var(--font-h);font-weight:400;margin-top:8px;">Qual a atitude correta?</div>',
+        q: 'Outro funcionário pede carona no equipamento. Qual a atitude correta?',
         opts: ['Negar e seguir normas de segurança', 'Transportar em baixa velocidade', 'Permitir se for rápido', 'Permitir apenas sem carga'],
-        correct: 0, feedback_ok: '✅ Procedimento correto! A empilhadeira não é veículo de passageiros.', feedback_nok: '❌ Incorreto. O equipamento é exclusivo para transporte de cargas. Dar carona é proibido.'
+        correct: 0,
+        topic: 'Transporte de pessoas',
+        feedback_ok: '✅ Procedimento correto! A empilhadeira não é veículo de passageiros.',
+        feedback_nok: '❌ Incorreto. O equipamento é exclusivo para transporte de cargas. Dar carona é proibido.'
     }
 ];
 const quiz3 = createQuizEngine('q3', q3_questions, 5);
@@ -1490,44 +1507,6 @@ styleHUD.textContent = `
         .tf-btn:active {
           transform: scale(0.95) !important;
         }
-        /* Página 19: sem scale/filter no clique (causa flash branco no Windows) */
-        #s-conducao .tf-btn,
-        #s-conducao .btn-tf-verify,
-        #s-conducao .btn-tf-next {
-          transition: none !important;
-          transform: none !important;
-          filter: none !important;
-          -webkit-appearance: none !important;
-          appearance: none !important;
-          -webkit-tap-highlight-color: transparent !important;
-        }
-        #s-conducao .tf-btn:hover,
-        #s-conducao .tf-btn:active,
-        #s-conducao .tf-btn:focus,
-        #s-conducao .tf-btn.selected-visual,
-        #s-conducao .tf-btn.selected-true,
-        #s-conducao .tf-btn.selected-false,
-        #s-conducao .btn-tf-verify:hover,
-        #s-conducao .btn-tf-verify:active,
-        #s-conducao .btn-tf-verify:focus,
-        #s-conducao .btn-tf-next:hover,
-        #s-conducao .btn-tf-next:active,
-        #s-conducao .btn-tf-next:focus {
-          transform: none !important;
-          filter: none !important;
-        }
-        #s-conducao .tf-btn.true,
-        #s-conducao .tf-btn.true:hover,
-        #s-conducao .tf-btn.true:active,
-        #s-conducao .tf-btn.true:focus {
-          background: linear-gradient(135deg, #168756, #2ecc71) !important;
-        }
-        #s-conducao .tf-btn.false,
-        #s-conducao .tf-btn.false:hover,
-        #s-conducao .tf-btn.false:active,
-        #s-conducao .tf-btn.false:focus {
-          background: linear-gradient(135deg, #c62828, #e74c3c) !important;
-        }
         .btn-tf-verify {
           background: var(--gold);
           color: var(--black);
@@ -1552,10 +1531,6 @@ styleHUD.textContent = `
           transform: scale(0.98);
           border-color: var(--gold) !important;
           box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
-        }
-        #s-conducao .tf-btn.selected-visual {
-          transform: none !important;
-          border-color: #fff !important;
         }
         .hud-anim-enter {
           animation: hudFadeIn 0.4s ease forwards;
@@ -1907,7 +1882,7 @@ window.startQuiz2Intro = function () {
 };
 
 /* ════════════════════════════════════════
-   ENGINE: CONDUÇÃO SEGURA (1 A 1)
+   ENGINE: CONDUÇÃO SEGURA (módulo 3) — layout igual ao quiz 1
    ════════════════════════════════════════ */
 const conducaoData = [
     { text: "Usar celular durante operação", isAllowed: false, explanation: "O uso de celular reduz a atenção do operador e aumenta o risco de acidentes." },
@@ -1922,59 +1897,41 @@ let conducaoAnswered = false;
 let conducaoLastCorrect = false;
 let selectedConducaoAns = null;
 
-function resetConducaoBtnClasses() {
-    const btnTrue = document.getElementById('btn-conducao-true');
-    const btnFalse = document.getElementById('btn-conducao-false');
-
-    [btnTrue, btnFalse].forEach(function (btn) {
-        if (!btn) return;
-        ANSWER_STATE_CLASSES.forEach(function (cls) { btn.classList.remove(cls); });
-        btn.classList.remove('selected-visual', 'selected-true', 'selected-false');
-        btn.disabled = false;
-    });
-}
-
-function hideConducaoFeedback(fb) {
-    if (!fb) return;
-    fb.className = 'tf-feedback';
-    fb.style.display = 'none';
+function renderConducaoDots() {
+    for (let i = 0; i < conducaoData.length; i++) {
+        const d = document.getElementById('conducao-dot' + i);
+        if (!d) continue;
+        d.className = 'qdot2';
+        if (i < currentConducao) d.classList.add('done');
+        if (i === currentConducao) d.classList.add('cur');
+    }
 }
 
 function hideConducaoVerify() {
     const vContainer = document.getElementById('conducao-verify-container');
     if (!vContainer) return;
     vContainer.style.display = 'none';
+    vContainer.style.opacity = '0';
+    vContainer.style.visibility = 'hidden';
 }
 
 function showConducaoVerify() {
     const vContainer = document.getElementById('conducao-verify-container');
     if (!vContainer) return;
-    hideConducaoFeedback(document.getElementById('conducao-feedback'));
     vContainer.style.display = 'block';
-}
-
-function showConducaoFeedback(fb, type, title, text) {
-    if (!fb) return;
-    const fbTitle = document.getElementById('conducao-fb-title');
-    const fbText = document.getElementById('conducao-fb-text');
-
-    hideConducaoVerify();
-
-    if (fbTitle) fbTitle.textContent = title || '';
-    if (fbText) fbText.innerHTML = text || '';
-
-    fb.className = 'tf-feedback show visible ' + (type === 'success' ? 'success' : 'error');
-    fb.style.display = 'block';
+    setTimeout(function () {
+        vContainer.style.opacity = '1';
+        vContainer.style.visibility = 'visible';
+    }, 50);
 }
 
 function loadConducao(idx) {
     if (idx >= conducaoData.length) return;
 
-    resetConducaoBtnClasses();
     conducaoAnswered = false;
     conducaoLastCorrect = false;
     selectedConducaoAns = null;
-    hideConducaoVerify();
+    currentConducao = idx;
 
     const counter = document.getElementById('conducao-counter');
     if (counter) counter.textContent = 'Ação ' + (idx + 1) + ' de ' + conducaoData.length;
@@ -1982,34 +1939,43 @@ function loadConducao(idx) {
     const textElement = document.getElementById('conducao-text');
     if (textElement) textElement.textContent = conducaoData[idx].text;
 
+    const opts = document.getElementById('conducao-options');
+    if (opts) {
+        opts.innerHTML = '';
+        [
+            { label: 'Permitido', value: true, letter: 'A' },
+            { label: 'Proibido', value: false, letter: 'B' }
+        ].forEach(function (opt) {
+            const el = document.createElement('div');
+            el.className = 'q-opt';
+            el.innerHTML = '<div class="opt-l">' + opt.letter + '</div><span>' + opt.label + '</span>';
+            el.onclick = function () { answerConducao(opt.value, el); };
+            opts.appendChild(el);
+        });
+    }
+
     const fb = document.getElementById('conducao-feedback');
-    hideConducaoFeedback(fb);
-    const fbTitle = document.getElementById('conducao-fb-title');
-    const fbText = document.getElementById('conducao-fb-text');
-    if (fbTitle) fbTitle.textContent = '';
-    if (fbText) fbText.innerHTML = '';
+    if (fb) { fb.className = 'q-feedback'; fb.textContent = ''; }
+
+    hideConducaoVerify();
+
+    const btnNext = document.getElementById('btn-next-conducao');
+    if (btnNext) btnNext.className = 'btn-next-q';
+
+    renderConducaoDots();
     try { window.updateQuizAudioHelper(); } catch (e) { }
+    scheduleScrollBtnRefresh();
 }
 
-// ============================================
-// CORREÇÃO DE ÁUDIO - MÓDULO 3 CONDUÇÃO
-// Utilizando o mesmo sistema sintetizado (playHUDBeep) do módulo 2
-// para garantir consistência e zero delay
-// ============================================
-
-window.answerConducao = function (isAllowBtn) {
+window.answerConducao = function (isAllowBtn, el) {
     if (conducaoAnswered) return;
 
-    playHUDBeep('click');
+    playBeep('click');
     selectedConducaoAns = isAllowBtn;
 
-    const btnTrue = document.getElementById('btn-conducao-true');
-    const btnFalse = document.getElementById('btn-conducao-false');
-    if (btnTrue) btnTrue.classList.remove('selected-visual', 'selected-true', 'selected-false');
-    if (btnFalse) btnFalse.classList.remove('selected-visual', 'selected-true', 'selected-false');
-
-    const selectedBtn = isAllowBtn ? btnTrue : btnFalse;
-    if (selectedBtn) selectedBtn.classList.add('selected-visual');
+    const allOpts = document.querySelectorAll('#conducao-options .q-opt');
+    allOpts.forEach(clearAnswerState);
+    if (el) el.classList.add('selected');
 
     showConducaoVerify();
 };
@@ -2021,79 +1987,93 @@ window.verifyConducao = function () {
     const data = conducaoData[currentConducao];
     const isCorrect = (data.isAllowed === selectedConducaoAns);
     conducaoLastCorrect = isCorrect;
+    const isLastConducao = currentConducao === conducaoData.length - 1;
 
-    try { playBeep(isCorrect ? 'ok' : 'nok'); } catch (e) { }
+    hideConducaoVerify();
 
-    const btnTrue = document.getElementById('btn-conducao-true');
-    const btnFalse = document.getElementById('btn-conducao-false');
-    if (btnTrue) {
-        btnTrue.classList.remove('selected-visual', 'selected-true', 'selected-false');
-        btnTrue.disabled = true;
+    const allOpts = document.querySelectorAll('#conducao-options .q-opt');
+    allOpts.forEach(function (o) {
+        clearAnswerState(o);
+        o.style.pointerEvents = 'none';
+        o.classList.add('answered');
+    });
+
+    function setOptIcon(optEl, icon) {
+        if (!optEl) return;
+        const letter = optEl.querySelector('.opt-l');
+        if (letter) letter.textContent = icon;
     }
-    if (btnFalse) {
-        btnFalse.classList.remove('selected-visual', 'selected-true', 'selected-false');
-        btnFalse.disabled = true;
+
+    const selectedIdx = selectedConducaoAns ? 0 : 1;
+    const correctIdx = data.isAllowed ? 0 : 1;
+
+    if (isCorrect) {
+        allOpts[selectedIdx].classList.add('correct');
+        setOptIcon(allOpts[selectedIdx], '✓');
+        playBeep('ok');
+    } else {
+        allOpts[selectedIdx].classList.add('wrong');
+        setOptIcon(allOpts[selectedIdx], '✕');
+        if (allOpts[correctIdx]) {
+            allOpts[correctIdx].classList.add('correct');
+            setOptIcon(allOpts[correctIdx], '✓');
+        }
+        playBeep('nok');
     }
-    const selectedBtn = selectedConducaoAns ? btnTrue : btnFalse;
-    if (selectedBtn) selectedBtn.classList.add(isCorrect ? 'selected-true' : 'selected-false');
+
+    allOpts.forEach(function (o) {
+        if (!o.classList.contains('correct') && !o.classList.contains('wrong')) {
+            o.classList.add('muted');
+        }
+    });
 
     const fb = document.getElementById('conducao-feedback');
     if (fb) {
-        if (isCorrect) {
-            showConducaoFeedback(fb, 'success', 'Correto!', data.explanation);
-        } else {
-            showConducaoFeedback(
-                fb,
-                'error',
-                'Incorreto!',
-                data.explanation + '<br><br><strong>Tente novamente.</strong>'
-            );
-        }
-        scheduleScrollBtnRefresh();
+        fb.textContent = data.explanation;
+        fb.className = 'q-feedback ' + (isCorrect ? 'ok' : 'nok');
     }
+
+    const btnNext = document.getElementById('btn-next-conducao');
+    if (btnNext) {
+        if (isLastConducao && isCorrect) {
+            btnNext.className = 'btn-next-q';
+            const panel = document.getElementById('conducao-question-panel');
+            if (panel) panel.classList.add('req-done');
+            updateNextButton();
+            playHUDBeep('conclusion');
+        } else {
+            btnNext.className = 'btn-next-q show';
+        }
+    }
+
+    scheduleScrollBtnRefresh();
 };
 
 window.nextConducao = function () {
     if (!conducaoAnswered) return;
 
-    const fb = document.getElementById('conducao-feedback');
-
     if (!conducaoLastCorrect) {
-        conducaoAnswered = false;
-        conducaoLastCorrect = false;
-        selectedConducaoAns = null;
-        resetConducaoBtnClasses();
-        hideConducaoVerify();
-        hideConducaoFeedback(fb);
+        loadConducao(currentConducao);
         return;
     }
 
-    currentConducao++;
-    selectedConducaoAns = null;
-    resetConducaoBtnClasses();
-
-    if (currentConducao < conducaoData.length) {
-        loadConducao(currentConducao);
-    } else {
-        const qPanel = document.getElementById('conducao-question-panel');
-        const rPanel = document.getElementById('conducao-result-panel');
-        if (qPanel) qPanel.style.display = 'none';
-        if (rPanel) rPanel.style.display = 'block';
-
-        const container = document.getElementById('conducao-container');
-        if (container) {
-            container.classList.add('req-done');
-            updateNextButton();
-        }
-        playHUDBeep('conclusion');
+    if (currentConducao >= conducaoData.length - 1) {
+        const btnNext = document.getElementById('btn-next-conducao');
+        if (btnNext) btnNext.className = 'btn-next-q';
+        const panel = document.getElementById('conducao-question-panel');
+        if (panel) panel.classList.add('req-done');
+        updateNextButton();
+        return;
     }
 
-    try { window.updateQuizAudioHelper(); } catch (e) { }
-    scheduleScrollBtnRefresh();
+    playBeep('click');
+    currentConducao++;
+    loadConducao(currentConducao);
 };
 
-// Initialize on load
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', function () {
+    const qPanel = document.getElementById('conducao-question-panel');
+    if (qPanel) qPanel.style.display = 'block';
     loadConducao(0);
 });
 

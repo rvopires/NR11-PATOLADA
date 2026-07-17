@@ -70,21 +70,18 @@
         },
 
         // ─── MICRO-QUIZ CONDUÇÃO (slide global 19, modulo-3.html, s-conducao) ─
-        // Esse slide não tem painel de intro; já entra direto na pergunta 1.
-        // Possui painel de resultado quando todas as 6 ações são acertadas.
         's-conducao': {
-            panels: { intro: null, question: '#conducao-question-panel', result: '#conducao-result-panel' },
+            panels: { intro: null, question: '#conducao-question-panel', result: null },
             counterSelector: '#conducao-counter',
             counterPattern: /Ação\s+(\d+)\s+de/i,
             questions: [
-                'Decisões seguras na operação. Ação 1 de 6. Avalie a seguinte ação: Usar celular durante a operação. Essa ação é permitida ou não permitida?',
-                'Ação 2 de 6. Avalie a seguinte ação: Reduzir velocidade em curvas. Essa ação é permitida ou não permitida?',
-                'Ação 3 de 6. Avalie a seguinte ação: Transportar pessoas no equipamento. Essa ação é permitida ou não permitida?',
-                'Ação 4 de 6. Avalie a seguinte ação: Utilizar buzina em cruzamentos. Essa ação é permitida ou não permitida?',
-                'Ação 5 de 6. Avalie a seguinte ação: Circular com carga elevada. Essa ação é permitida ou não permitida?',
-                'Ação 6 de 6. Avalie a seguinte ação: Olhar sempre na direção do movimento. Essa ação é permitida ou não permitida?'
-            ],
-            result: 'Decisões seguras concluídas. Você avaliou corretamente as seis ações de condução segura.'
+                'Ação 1 de 6. Avalie a seguinte ação: Usar celular durante a operação. Opção A: Permitido. Opção B: Proibido.',
+                'Ação 2 de 6. Avalie a seguinte ação: Reduzir velocidade em curvas. Opção A: Permitido. Opção B: Proibido.',
+                'Ação 3 de 6. Avalie a seguinte ação: Transportar pessoas no equipamento. Opção A: Permitido. Opção B: Proibido.',
+                'Ação 4 de 6. Avalie a seguinte ação: Utilizar buzina em cruzamentos. Opção A: Permitido. Opção B: Proibido.',
+                'Ação 5 de 6. Avalie a seguinte ação: Circular com carga elevada. Opção A: Permitido. Opção B: Proibido.',
+                'Ação 6 de 6. Avalie a seguinte ação: Olhar sempre na direção do movimento. Opção A: Permitido. Opção B: Proibido.'
+            ]
         },
 
         // ─── QUIZ 3 (slide global 22, modulo-3.html, s-quiz3) ─────────────────

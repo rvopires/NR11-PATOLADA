@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=64">
+    <link rel="stylesheet" href="shared.css?v=68">
     <style>
         #s-bateria .content-area > .video-wrap--std,
         #s-rampas .content-area > .video-wrap--std,
@@ -112,50 +112,40 @@
                 <div class="top-bar">
                     <div class="section-tag"
                         style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
-                        MÓDULO 3</div>
+                        🎯 Quiz · Módulo 3</div>
                     <h2 class="slide-title"
                         style="font-size: clamp(32px, 5vw, 48px); letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(46, 204, 113, 0.6); position: relative; display: inline-block;">
                         <div
                             style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%); z-index: -1; filter: blur(10px);">
                         </div>
-                        Decisões Seguras na <span>Operação</span>
+                        Hora do <span>Desafio</span>
                     </h2>
 
                 </div>
                 <div class="content-area">
-                    <div class="tf-container req-item" id="conducao-container">
-                        <div id="conducao-question-panel" style="position: relative;">
-                            <div class="q-meta" style="justify-content: center; margin-bottom: 10px;">
+                    <div class="quiz-wrap">
+                        <div id="conducao-question-panel" class="req-item" style="transition: opacity 0.5s ease;">
+                            <div class="q-meta">
+                                <div class="q-dots" id="conducao-dots">
+                                    <div class="qdot2 cur" id="conducao-dot0"></div>
+                                    <div class="qdot2" id="conducao-dot1"></div>
+                                    <div class="qdot2" id="conducao-dot2"></div>
+                                    <div class="qdot2" id="conducao-dot3"></div>
+                                    <div class="qdot2" id="conducao-dot4"></div>
+                                    <div class="qdot2" id="conducao-dot5"></div>
+                                </div>
                                 <div class="q-lbl" id="conducao-counter">Ação 1 de 6</div>
                             </div>
-
-                            <div class="tf-question-box">
-                                <h3 class="tf-question-text" id="conducao-text">Usar celular durante operação</h3>
+                            <div class="q-text" id="conducao-text"></div>
+                            <div class="q-options" id="conducao-options"></div>
+                            <div id="conducao-verify-container"
+                                style="text-align: center; margin-top: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                <button class="btn-tf-verify" id="btn-conducao-verify" onclick="verifyConducao()">✔
+                                    Verificar
+                                    Resposta</button>
                             </div>
-
-                            <div class="tf-buttons">
-                                <button class="tf-btn true" id="btn-conducao-true" onclick="answerConducao(true)">✅ Permitido</button>
-                                <button class="tf-btn false" id="btn-conducao-false" onclick="answerConducao(false)">❌ Proibido</button>
-                            </div>
-
-                            <div class="conducao-action-slot" id="conducao-action-slot">
-                                <div id="conducao-verify-container" style="display: none;">
-                                    <button class="btn-tf-verify" id="btn-conducao-verify" onclick="verifyConducao()">Verificar
-                                        Resposta</button>
-                                </div>
-
-                                <div class="tf-feedback" id="conducao-feedback" style="display: none;">
-                                    <div class="tf-feedback-title" id="conducao-fb-title"></div>
-                                    <div class="tf-feedback-text" id="conducao-fb-text"></div>
-                                    <button class="btn-tf-next" id="btn-conducao-next" onclick="nextConducao()">Continuar</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="conducao-result-panel" style="display:none; text-align:center; padding: 60px 20px;">
-                            <div class="r-stars stars-anim">⭐⭐⭐</div>
-                            <div class="r-status ap" style="font-size: 32px; margin-bottom: 10px;">✅ Excelente!</div>
-                            <div class="r-sub">Você identificou corretamente todas as práticas de condução segura.</div>
+                            <div class="q-feedback" id="conducao-feedback"></div>
+                            <button class="btn-next-q" id="btn-next-conducao" onclick="nextConducao()">Continuar →</button>
                         </div>
                     </div>
                 </div>
@@ -246,7 +236,7 @@
                         <div
                             style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%); z-index: -1; filter: blur(10px);">
                         </div>
-                        Decisão <span>Rápida</span>
+                        Hora do <span>Desafio</span>
                     </h2>
                 </div>
                 <div class="content-area">
@@ -268,24 +258,26 @@
                             <div class="q-text" id="q3-text"></div>
                             <div class="q-options" id="q3-options"></div>
                             <div id="q3-verify-container"
-                                style="text-align: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                style="text-align: center; margin-top: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
                                 <button class="btn-tf-verify" id="btn-tf-verify-q3" onclick="verifyAnswer3()">✔
                                     Verificar
                                     Resposta</button>
                             </div>
                             <div class="q-feedback" id="q3-feedback"></div>
-                            <button class="btn-next-q" id="btn-next-q3" onclick="nextQuestion3()">Próxima Situação
-                                ▶</button>
+                            <button class="btn-next-q" id="btn-next-q3" onclick="nextQuestion3()">Continuar →</button>
                         </div>
 
-                        <div id="q3-result-panel" style="display:none;text-align:center;">
-                            <div class="result-pct green" id="q3-pct">--</div>
-                            <div class="r-stars" id="q3-stars">⭐⭐⭐</div>
-                            <div class="r-status" id="q3-status"></div>
-                            <div class="r-sub" id="q3-sub"></div>
-                            <button class="btn-tf-verify" style="margin-top:40px; font-size:16px;"
-                                onclick="resetQuiz3()">Refazer
-                                Situações</button>
+                        <div id="q3-result-panel" class="quiz-result-panel" style="display:none;">
+                            <div class="quiz-result-card">
+                                <div class="quiz-result-icon" id="q3-result-icon" aria-hidden="true">🏅</div>
+                                <h3 class="quiz-result-title" id="q3-status">Desafio Concluído!</h3>
+                                <p class="quiz-result-desc" id="q3-sub"></p>
+                                <div class="quiz-result-review" id="q3-review" hidden></div>
+                                <button type="button" class="quiz-result-btn" id="q3-retry-btn"
+                                    onclick="resetQuiz3()">JOGAR NOVAMENTE</button>
+                            </div>
+                            <div id="q3-pct" class="result-pct" style="display:none" aria-hidden="true"></div>
+                            <div id="q3-stars" class="r-stars" style="display:none" aria-hidden="true"></div>
                         </div>
                     </div>
                 </div>
@@ -323,7 +315,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=31"></script>
+    <script src="shared.js?v=37"></script>
 </body>
 
 </html>
