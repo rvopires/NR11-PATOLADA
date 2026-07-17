@@ -3349,10 +3349,8 @@ img {
     transform: scale(1.05);
 }
 
-#sq2-result-panel {
-    display: none;
-    text-align: center;
-    padding: 40px 20px;
+#sq2-result-panel.quiz-result-panel {
+    padding: 12px 0 24px;
 }
 
 @media (max-width: 600px) {
@@ -7350,19 +7348,22 @@ body {
     }
 }
 
-/* Card de resultado — quiz módulo 1 */
-#sq1 #q1-result-panel.quiz-result-panel {
+/* Card de resultado — quiz módulo 1 e módulo 2 */
+#sq1 #q1-result-panel.quiz-result-panel,
+#sq2 #sq2-result-panel.quiz-result-panel {
     display: none !important;
     width: min(560px, 100%);
     margin: 0 auto;
     text-align: center;
 }
 
-#sq1 #q1-result-panel.quiz-result-panel.is-visible {
+#sq1 #q1-result-panel.quiz-result-panel.is-visible,
+#sq2 #sq2-result-panel.quiz-result-panel.is-visible {
     display: block !important;
 }
 
-#sq1 .quiz-result-card {
+#sq1 .quiz-result-card,
+#sq2 .quiz-result-card {
     position: relative;
     isolation: isolate;
     padding: 36px 28px 30px;
@@ -7375,7 +7376,8 @@ body {
         0 0 80px rgba(46, 204, 113, 0.14);
 }
 
-#sq1 .quiz-result-card::before {
+#sq1 .quiz-result-card::before,
+#sq2 .quiz-result-card::before {
     content: '';
     position: absolute;
     inset: -18px;
@@ -7389,14 +7391,16 @@ body {
     pointer-events: none;
 }
 
-#sq1 .quiz-result-icon {
+#sq1 .quiz-result-icon,
+#sq2 .quiz-result-icon {
     font-size: 48px;
     line-height: 1;
     margin-bottom: 14px;
     filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
 }
 
-#sq1 .quiz-result-title {
+#sq1 .quiz-result-title,
+#sq2 .quiz-result-title {
     font-family: var(--font-h);
     font-size: clamp(26px, 4vw, 34px);
     font-weight: 800;
@@ -7405,22 +7409,26 @@ body {
     letter-spacing: -0.02em;
 }
 
-#sq1 .quiz-result-title.ref {
+#sq1 .quiz-result-title.ref,
+#sq2 .quiz-result-title.ref {
     color: #ffb074;
 }
 
-#sq1 .quiz-result-title.ap {
+#sq1 .quiz-result-title.ap,
+#sq2 .quiz-result-title.ap {
     color: #7dffa8;
 }
 
-#sq1 .quiz-result-desc {
+#sq1 .quiz-result-desc,
+#sq2 .quiz-result-desc {
     color: rgba(255, 255, 255, 0.88);
     font-size: clamp(15px, 1.8vw, 17px);
     line-height: 1.5;
     margin: 0 0 18px;
 }
 
-#sq1 .quiz-result-review {
+#sq1 .quiz-result-review,
+#sq2 .quiz-result-review {
     text-align: left;
     margin: 0 auto 20px;
     padding: 14px 16px;
@@ -7431,7 +7439,8 @@ body {
     color: #ffb074;
 }
 
-#sq1 .quiz-result-review strong {
+#sq1 .quiz-result-review strong,
+#sq2 .quiz-result-review strong {
     display: block;
     margin-bottom: 8px;
     font-family: var(--font-h);
@@ -7441,19 +7450,22 @@ body {
     color: #ff9a4a;
 }
 
-#sq1 .quiz-result-review ul {
+#sq1 .quiz-result-review ul,
+#sq2 .quiz-result-review ul {
     margin: 0;
     padding-left: 18px;
 }
 
-#sq1 .quiz-result-review li {
+#sq1 .quiz-result-review li,
+#sq2 .quiz-result-review li {
     margin: 4px 0;
     font-size: 14px;
     line-height: 1.4;
     color: rgba(255, 255, 255, 0.9);
 }
 
-#sq1 .quiz-result-btn {
+#sq1 .quiz-result-btn,
+#sq2 .quiz-result-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7483,7 +7495,8 @@ body {
     animation: q1-retry-pulse 1.8s ease-in-out infinite;
 }
 
-#sq1 .quiz-result-btn::before {
+#sq1 .quiz-result-btn::before,
+#sq2 .quiz-result-btn::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -7493,7 +7506,8 @@ body {
     pointer-events: none;
 }
 
-#sq1 .quiz-result-btn:hover {
+#sq1 .quiz-result-btn:hover,
+#sq2 .quiz-result-btn:hover {
     transform: translateY(-3px) scale(1.02);
     filter: brightness(1.04);
     box-shadow:
@@ -7531,14 +7545,16 @@ body {
     }
 }
 
-#sq1 #q1-result-panel.is-approved .quiz-result-card {
+#sq1 #q1-result-panel.is-approved .quiz-result-card,
+#sq2 #sq2-result-panel.is-approved .quiz-result-card {
     box-shadow:
         0 20px 48px rgba(0, 0, 0, 0.45),
         0 0 48px rgba(46, 204, 113, 0.35),
         0 0 90px rgba(46, 204, 113, 0.2);
 }
 
-#sq1 #q1-result-panel.is-approved .quiz-result-card::before {
+#sq1 #q1-result-panel.is-approved .quiz-result-card::before,
+#sq2 #sq2-result-panel.is-approved .quiz-result-card::before {
     background: radial-gradient(ellipse at 50% 40%,
             rgba(46, 204, 113, 0.55) 0%,
             rgba(46, 204, 113, 0.22) 45%,
@@ -7546,12 +7562,14 @@ body {
 }
 
 @media (max-width: 768px) {
-    #sq1 .quiz-result-card {
+    #sq1 .quiz-result-card,
+    #sq2 .quiz-result-card {
         padding: 28px 18px 24px;
         border-radius: 18px;
     }
 
-    #sq1 .quiz-result-btn {
+    #sq1 .quiz-result-btn,
+    #sq2 .quiz-result-btn {
         width: 100%;
         max-width: 320px;
         min-width: 0;

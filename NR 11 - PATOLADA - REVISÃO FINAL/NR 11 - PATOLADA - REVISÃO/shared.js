@@ -1552,37 +1552,56 @@ function playHUDBeep(type) {
 }
 
 const q2Data = [
-    { q: "A inspeção visual do equipamento deve ser realizada antes da operação.", ans: true, exp: "A verificação ajuda a identificar falhas e prevenir acidentes." },
-    { q: "Os garfos podem permanecer elevados durante o deslocamento.", ans: false, exp: "O deslocamento deve ocorrer com os garfos baixos para maior estabilidade." },
-    { q: "O botão de buzina auxilia na prevenção de colisões.", ans: true, exp: "A buzina alerta pessoas próximas durante a movimentação." },
-    { q: "O timão possui sistema de frenagem automática nas posições extremas.", ans: true, exp: "O freio atua automaticamente para aumentar a segurança operacional." },
-    { q: "Curvas em alta velocidade aumentam o risco de tombamento.", ans: true, exp: "A velocidade excessiva compromete a estabilidade do equipamento." },
-    { q: "A empilhadeira patolada é utilizada apenas para movimentação vertical.", ans: false, exp: "O equipamento realiza movimentação horizontal e elevação de cargas." },
-    { q: "A carga instável pode causar queda de materiais.", ans: true, exp: "O posicionamento incorreto da carga aumenta os riscos operacionais." },
-    { q: "O operador pode utilizar o equipamento sem conhecer os comandos.", ans: false, exp: "O conhecimento dos comandos é essencial para uma operação segura." }
+    { q: "A inspeção visual do equipamento deve ser realizada antes da operação.", ans: true, exp: "A verificação ajuda a identificar falhas e prevenir acidentes.", topic: "Inspeção visual antes da operação" },
+    { q: "Os garfos podem permanecer elevados durante o deslocamento.", ans: false, exp: "O deslocamento deve ocorrer com os garfos baixos para maior estabilidade.", topic: "Posição dos garfos no deslocamento" },
+    { q: "O botão de buzina auxilia na prevenção de colisões.", ans: true, exp: "A buzina alerta pessoas próximas durante a movimentação.", topic: "Uso da buzina para prevenção" },
+    { q: "O timão possui sistema de frenagem automática nas posições extremas.", ans: true, exp: "O freio atua automaticamente para aumentar a segurança operacional.", topic: "Frenagem automática do timão" },
+    { q: "Curvas em alta velocidade aumentam o risco de tombamento.", ans: true, exp: "A velocidade excessiva compromete a estabilidade do equipamento.", topic: "Velocidade em curvas e risco de tombamento" },
+    { q: "A empilhadeira patolada é utilizada apenas para movimentação vertical.", ans: false, exp: "O equipamento realiza movimentação horizontal e elevação de cargas.", topic: "Função da empilhadeira patolada" },
+    { q: "A carga instável pode causar queda de materiais.", ans: true, exp: "O posicionamento incorreto da carga aumenta os riscos operacionais.", topic: "Estabilidade e posicionamento da carga" },
+    { q: "O operador pode utilizar o equipamento sem conhecer os comandos.", ans: false, exp: "O conhecimento dos comandos é essencial para uma operação segura.", topic: "Conhecimento dos comandos do equipamento" }
 ];
 
 let currentQ2 = 0;
 let scoreQ2 = 0;
 let selectedQ2Ans = null;
+let wrongTopicsQ2 = [];
+
+function uniqueTopicsQ2(list) {
+    const seen = {};
+    const out = [];
+    (list || []).forEach(function (t) {
+        if (!t || seen[t]) return;
+        seen[t] = true;
+        out.push(t);
+    });
+    return out;
+}
 
 function loadQuestion2(idx) {
     if (idx >= q2Data.length) {
         playHUDBeep('conclusion');
-        // Finished
         { const _p = document.getElementById('sq2-question-panel'); if (_p) _p.style.display = 'none'; }
 
+        const minCorrect = 5;
+        const approved = scoreQ2 >= minCorrect;
         const pct = Math.round((scoreQ2 / q2Data.length) * 100);
-        const approved = scoreQ2 >= 5;
 
         const rPanel = document.getElementById('sq2-result-panel');
         const pctEl = document.getElementById('sq2-pct');
         const starsEl = document.getElementById('sq2-stars');
         const statusEl = document.getElementById('sq2-status');
         const subEl = document.getElementById('sq2-sub');
+        const iconEl = document.getElementById('sq2-result-icon');
+        const retryBtn = document.getElementById('sq2-retry-btn');
+        const reviewEl = document.getElementById('sq2-review');
+        const topics = uniqueTopicsQ2(wrongTopicsQ2);
 
         if (rPanel) {
             rPanel.style.display = 'block';
+            rPanel.classList.add('is-visible');
+            rPanel.classList.toggle('is-approved', approved);
+            rPanel.classList.toggle('is-failed', !approved);
             rPanel.classList.remove('q-result-anim');
             void rPanel.offsetWidth;
             rPanel.classList.add('q-result-anim');
@@ -1595,18 +1614,38 @@ function loadQuestion2(idx) {
 
         if (starsEl) {
             starsEl.textContent = pct === 100 ? '⭐⭐⭐' : approved ? '⭐⭐' : '⭐';
-            starsEl.classList.remove('stars-anim');
-            void starsEl.offsetWidth;
-            starsEl.classList.add('stars-anim');
         }
 
         if (statusEl) {
-            statusEl.textContent = approved ? '✅ Aprovado!' : '🔄 Continue Tentando!';
-            statusEl.className = 'r-status ' + (approved ? 'ap' : 'try');
+            statusEl.textContent = approved ? 'Desafio Concluído!' : 'Desafio não concluído';
+            statusEl.className = 'quiz-result-title r-status ' + (approved ? 'ap' : 'ref');
         }
 
         if (subEl) {
-            subEl.textContent = `Você acertou ${scoreQ2} de ${q2Data.length} questões.` + (approved ? " Parabéns!" : "");
+            if (approved) {
+                subEl.textContent = 'Você acertou ' + scoreQ2 + ' de ' + q2Data.length + ' questões. Parabéns! Pode avançar para a próxima etapa.';
+            } else {
+                subEl.textContent = 'Você acertou ' + scoreQ2 + ' de ' + q2Data.length + ' questões. É necessário acertar pelo menos ' + minCorrect + ' questões. Estude e tente novamente.';
+            }
+        }
+
+        if (iconEl) iconEl.textContent = approved ? '🏅' : '📚';
+
+        if (retryBtn) {
+            retryBtn.textContent = approved ? 'REVISAR DESAFIO' : 'JOGAR NOVAMENTE';
+            retryBtn.style.display = approved ? 'none' : 'inline-flex';
+        }
+
+        if (reviewEl) {
+            if (!approved && topics.length) {
+                reviewEl.hidden = false;
+                reviewEl.innerHTML = '<strong>Revise estes temas:</strong><ul>' +
+                    topics.map(function (t) { return '<li>' + t + '</li>'; }).join('') +
+                    '</ul>';
+            } else {
+                reviewEl.hidden = true;
+                reviewEl.innerHTML = '';
+            }
         }
 
         const slide = document.getElementById('sq2');
@@ -1692,6 +1731,7 @@ window.verifyAnswer2 = function () {
     const isCorrect = (data.ans === selectedQ2Ans);
 
     if (isCorrect) scoreQ2++;
+    else if (data.topic) wrongTopicsQ2.push(data.topic);
 
     const vContainer = document.getElementById('sq2-verify-container');
     if (vContainer) {
@@ -1759,11 +1799,17 @@ window.resetQuiz2 = function () {
     currentQ2 = 0;
     scoreQ2 = 0;
     selectedQ2Ans = null;
+    wrongTopicsQ2 = [];
 
-    document.getElementById('sq2-result-panel').style.display = 'none';
+    const rPanel = document.getElementById('sq2-result-panel');
+    if (rPanel) {
+        rPanel.style.display = 'none';
+        rPanel.classList.remove('is-visible', 'is-approved', 'is-failed', 'q-result-anim');
+    }
+    const reviewEl = document.getElementById('sq2-review');
+    if (reviewEl) { reviewEl.hidden = true; reviewEl.innerHTML = ''; }
+
     document.getElementById('sq2-question-panel').style.display = 'block';
-
-    // removed persistence
 
     loadQuestion2(currentQ2);
 };
@@ -1783,6 +1829,7 @@ window.startQuiz2Intro = function () {
 
     currentQ2 = 0;
     scoreQ2 = 0;
+    wrongTopicsQ2 = [];
     loadQuestion2(currentQ2);
     try { window.updateQuizAudioHelper(); } catch (e) { }
 };
