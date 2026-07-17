@@ -6676,6 +6676,18 @@ body {
         margin-top: 28px !important;
     }
 
+    /* Páginas de vídeo: centraliza o player verticalmente (layout da página 7)
+       para o vídeo não ficar "mais pra cima" quando o título é curto */
+    .slide .content-area:has(> .video-wrap--std) {
+        justify-content: center !important;
+        padding-top: 0 !important;
+    }
+
+    .slide .content-area:has(> .video-wrap--std) > .video-wrap--std {
+        margin-top: 0 !important;
+        margin-bottom: 48px !important;
+    }
+
     #s10 .content-area,
     #s9 .content-area {
         overflow-y: auto !important;
