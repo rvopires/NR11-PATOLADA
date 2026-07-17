@@ -698,27 +698,142 @@ let currentOsc = null;
 let currentGain = null;
 let quizCorrectAudio = null;
 let quizWrongAudio = null;
+let activeQuizSfx = null;
+
+const QUIZ_CORRECT_SFX = encodeURI('assets/efeitos sonoros/correct-answer.mp3');
+const QUIZ_WRONG_SFX = encodeURI('assets/efeitos sonoros/OBJMisc-wrong_answer-Elevenlabs.mp3');
+
+function ensureAudioCtx() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') {
+        return audioCtx.resume().then(function () { return audioCtx; }).catch(function () { return audioCtx; });
+    }
+    return Promise.resolve(audioCtx);
+}
+
+function stopQuizSfx(except) {
+    [quizCorrectAudio, quizWrongAudio, activeQuizSfx].forEach(function (audio) {
+        if (!audio || audio === except) return;
+        try {
+            audio.pause();
+            audio.currentTime = 0;
+        } catch (e) { }
+    });
+}
+
+function playSynthFallback(kind) {
+    ensureAudioCtx().then(function (ctx) {
+        if (!ctx) return;
+        try {
+            if (currentOsc) {
+                try { currentOsc.stop(); currentOsc.disconnect(); } catch (e) { }
+            }
+            if (currentGain) {
+                try { currentGain.disconnect(); } catch (e) { }
+            }
+
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            currentOsc = osc;
+            currentGain = gain;
+
+            const now = ctx.currentTime;
+            if (kind === 'ok' || kind === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.09);
+                osc.frequency.setValueAtTime(783.99, now + 0.18);
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, now);
+                osc.frequency.exponentialRampToValueAtTime(140, now + 0.28);
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(0.16, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+                osc.start(now);
+                osc.stop(now + 0.34);
+            }
+        } catch (e) { }
+    });
+}
+
+function playQuizMp3(kind) {
+    const isOk = kind === 'ok' || kind === 'correct';
+    const src = isOk ? QUIZ_CORRECT_SFX : QUIZ_WRONG_SFX;
+
+    try {
+        let audio = isOk ? quizCorrectAudio : quizWrongAudio;
+        if (!audio) {
+            audio = new Audio(src);
+            audio.preload = 'auto';
+            audio.volume = 0.45;
+            if (isOk) quizCorrectAudio = audio;
+            else quizWrongAudio = audio;
+        }
+
+        stopQuizSfx(audio);
+        activeQuizSfx = audio;
+
+        const startPlay = function () {
+            try {
+                if (audio.readyState >= 1) audio.currentTime = 0;
+            } catch (e) {
+                try { audio.load(); } catch (err) { }
+            }
+            const playPromise = audio.play();
+            if (playPromise && typeof playPromise.then === 'function') {
+                playPromise.catch(function () {
+                    // Alguns browsers bloqueiam reuso; tenta um Audio novo
+                    try {
+                        const fresh = new Audio(src);
+                        fresh.volume = 0.45;
+                        activeQuizSfx = fresh;
+                        if (isOk) quizCorrectAudio = fresh;
+                        else quizWrongAudio = fresh;
+                        return fresh.play().catch(function () {
+                            playSynthFallback(isOk ? 'ok' : 'nok');
+                        });
+                    } catch (err) {
+                        playSynthFallback(isOk ? 'ok' : 'nok');
+                    }
+                });
+            }
+        };
+
+        if (audio.readyState >= 2) {
+            startPlay();
+        } else {
+            const onReady = function () {
+                audio.removeEventListener('canplaythrough', onReady);
+                audio.removeEventListener('loadeddata', onReady);
+                startPlay();
+            };
+            audio.addEventListener('canplaythrough', onReady, { once: true });
+            audio.addEventListener('loadeddata', onReady, { once: true });
+            try { audio.load(); } catch (e) { }
+            // Fallback se o evento não disparar a tempo
+            setTimeout(function () {
+                if (activeQuizSfx === audio && audio.paused) startPlay();
+            }, 180);
+        }
+    } catch (e) {
+        playSynthFallback(isOk ? 'ok' : 'nok');
+    }
+}
 
 function playCorrectAnswerSound() {
-    try {
-        if (!quizCorrectAudio) {
-            quizCorrectAudio = new Audio('assets/efeitos sonoros/correct-answer.mp3');
-            quizCorrectAudio.volume = 0.15;
-        }
-        quizCorrectAudio.currentTime = 0;
-        quizCorrectAudio.play().catch(() => { });
-    } catch (e) { }
+    playQuizMp3('ok');
 }
 
 function playWrongAnswerSound() {
-    try {
-        if (!quizWrongAudio) {
-            quizWrongAudio = new Audio('assets/efeitos sonoros/OBJMisc-wrong_answer-Elevenlabs.mp3');
-            quizWrongAudio.volume = 0.15;
-        }
-        quizWrongAudio.currentTime = 0;
-        quizWrongAudio.play().catch(() => { });
-    } catch (e) { }
+    playQuizMp3('nok');
 }
 
 function playBeep(type) {
@@ -731,66 +846,67 @@ function playBeep(type) {
         return;
     }
 
-    if (!audioCtx) audioCtx = new AudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+    ensureAudioCtx().then(function (ctx) {
+        if (!ctx) return;
 
-    // Evitar sobreposição cancelando o áudio anterior imediatamente
-    if (currentOsc) {
-        try { currentOsc.stop(); currentOsc.disconnect(); } catch (e) { }
-    }
-    if (currentGain) {
-        try { currentGain.disconnect(); } catch (e) { }
-    }
+        // Evitar sobreposição cancelando o áudio anterior imediatamente
+        if (currentOsc) {
+            try { currentOsc.stop(); currentOsc.disconnect(); } catch (e) { }
+        }
+        if (currentGain) {
+            try { currentGain.disconnect(); } catch (e) { }
+        }
 
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
 
-    currentOsc = osc;
-    currentGain = gain;
+        currentOsc = osc;
+        currentGain = gain;
 
-    const now = audioCtx.currentTime;
+        const now = ctx.currentTime;
 
-    if (type === 'click') {
-        // Som de clique tecnológico super rápido e sutil
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, now);
-        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.05);
-        gain.gain.setValueAtTime(0.05, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-        osc.start(now); osc.stop(now + 0.08);
-    } else if (type === 'end') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(440, now);
-        osc.frequency.setValueAtTime(554.37, now + 0.1);
-        osc.frequency.setValueAtTime(659.25, now + 0.2);
-        osc.frequency.setValueAtTime(880, now + 0.3);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.6);
-        osc.start(now); osc.stop(now + 0.6);
-    } else if (type === 'hover') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(620, now);
-        osc.frequency.exponentialRampToValueAtTime(540, now + 0.1);
-        gain.gain.setValueAtTime(0.05, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-        osc.start(now); osc.stop(now + 0.15);
-    } else if (type === 'flip') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(520, now);
-        osc.frequency.exponentialRampToValueAtTime(680, now + 0.12);
-        gain.gain.setValueAtTime(0.05, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-        osc.start(now); osc.stop(now + 0.2);
-    } else {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(300, now);
-        osc.frequency.exponentialRampToValueAtTime(150, now + 0.2);
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-        osc.start(now); osc.stop(now + 0.3);
-    }
+        if (type === 'click') {
+            // Som de clique tecnológico super rápido e sutil
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, now);
+            osc.frequency.exponentialRampToValueAtTime(1200, now + 0.05);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+            osc.start(now); osc.stop(now + 0.08);
+        } else if (type === 'end') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.setValueAtTime(554.37, now + 0.1);
+            osc.frequency.setValueAtTime(659.25, now + 0.2);
+            osc.frequency.setValueAtTime(880, now + 0.3);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.6);
+            osc.start(now); osc.stop(now + 0.6);
+        } else if (type === 'hover') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(620, now);
+            osc.frequency.exponentialRampToValueAtTime(540, now + 0.1);
+            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+            osc.start(now); osc.stop(now + 0.15);
+        } else if (type === 'flip') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(520, now);
+            osc.frequency.exponentialRampToValueAtTime(680, now + 0.12);
+            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+            osc.start(now); osc.stop(now + 0.2);
+        } else {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(300, now);
+            osc.frequency.exponentialRampToValueAtTime(150, now + 0.2);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            osc.start(now); osc.stop(now + 0.3);
+        }
+    });
 }
 
 
@@ -803,12 +919,25 @@ window.playTechClick = function () {
 (function unlockAudioOnFirstInteraction() {
     function unlock() {
         try {
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => { });
+            ensureAudioCtx();
             // create a tiny silent buffer to unlock audio on iOS
             const silent = new Audio();
             silent.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
             silent.volume = 0;
             silent.play().catch(() => { });
+            // Pré-carrega efeitos de certo/errado para não falhar no 1º verify
+            if (!quizCorrectAudio) {
+                quizCorrectAudio = new Audio(QUIZ_CORRECT_SFX);
+                quizCorrectAudio.preload = 'auto';
+                quizCorrectAudio.volume = 0.45;
+                try { quizCorrectAudio.load(); } catch (e) { }
+            }
+            if (!quizWrongAudio) {
+                quizWrongAudio = new Audio(QUIZ_WRONG_SFX);
+                quizWrongAudio.preload = 'auto';
+                quizWrongAudio.volume = 0.45;
+                try { quizWrongAudio.load(); } catch (e) { }
+            }
         } catch (e) { }
         window.removeEventListener('touchstart', unlock);
         window.removeEventListener('click', unlock);
