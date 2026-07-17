@@ -165,7 +165,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 14px;
+            gap: 12px;
             flex-shrink: 0;
         }
 
@@ -176,39 +176,45 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            margin-bottom: 4px;
+            font-size: 0;
             line-height: 1;
-            background: radial-gradient(circle at 35% 30%, #ffe082 0%, #f1c40f 45%, #d4a017 100%);
-            color: #1a1200;
+            background: #101820;
+            border: 2px solid #f1c40f;
+            color: #f1c40f;
             box-shadow:
-                0 0 0 6px rgba(241, 196, 15, 0.15),
-                0 0 0 12px rgba(241, 196, 15, 0.06),
-                0 10px 28px rgba(241, 196, 15, 0.35);
+                0 0 0 5px rgba(241, 196, 15, 0.12),
+                0 10px 24px rgba(0, 0, 0, 0.45);
             animation: swIconPulse 2.4s ease-in-out infinite;
+        }
+
+        #sessionWarningModal .sw-icon svg {
+            width: 30px;
+            height: 30px;
+            display: block;
         }
 
         @keyframes swIconPulse {
             0%, 100% {
                 box-shadow:
-                    0 0 0 6px rgba(241, 196, 15, 0.15),
-                    0 0 0 12px rgba(241, 196, 15, 0.06),
-                    0 10px 28px rgba(241, 196, 15, 0.35);
+                    0 0 0 5px rgba(241, 196, 15, 0.12),
+                    0 10px 24px rgba(0, 0, 0, 0.45);
             }
             50% {
                 box-shadow:
-                    0 0 0 8px rgba(241, 196, 15, 0.22),
-                    0 0 0 16px rgba(241, 196, 15, 0.08),
-                    0 12px 32px rgba(241, 196, 15, 0.45);
+                    0 0 0 8px rgba(241, 196, 15, 0.2),
+                    0 12px 28px rgba(0, 0, 0, 0.5);
             }
         }
 
         #sessionWarningModal .sw-badge {
             display: inline-block;
-            background: rgba(241, 196, 15, 0.14);
+            margin-top: 2px;
+            background: rgba(241, 196, 15, 0.12);
             color: #f1c40f;
             padding: 5px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(241, 196, 15, 0.35);
+            border: 1px solid rgba(241, 196, 15, 0.4);
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 1px;
@@ -323,17 +329,20 @@
             }
 
             #sessionWarningModal .sw-header {
-                gap: 6px;
+                gap: 10px;
             }
 
             #sessionWarningModal .sw-icon {
                 display: flex !important;
-                width: 48px;
-                height: 48px;
-                font-size: 22px;
-                box-shadow:
-                    0 0 0 4px rgba(241, 196, 15, 0.14),
-                    0 6px 16px rgba(241, 196, 15, 0.3);
+                width: 52px;
+                height: 52px;
+                margin-bottom: 6px;
+                font-size: 0;
+            }
+
+            #sessionWarningModal .sw-icon svg {
+                width: 26px;
+                height: 26px;
             }
 
             #sessionWarningModal .sw-badge {
@@ -775,7 +784,14 @@
                 <div class="sw-accent" aria-hidden="true"></div>
                 <div class="sw-inner" id="sessionWarningScroll">
                     <div class="sw-header">
-                        <div class="sw-icon" aria-hidden="true">⚠</div>
+                        <div class="sw-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 9v4" />
+                                <path d="M12 17h.01" />
+                                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            </svg>
+                        </div>
                         <span class="sw-badge">Aviso importante</span>
                         <h2 class="sw-title" id="sessionWarningTitle">Atenção</h2>
                     </div>
