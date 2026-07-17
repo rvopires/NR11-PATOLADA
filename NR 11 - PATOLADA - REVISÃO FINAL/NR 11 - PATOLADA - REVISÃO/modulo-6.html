@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=52">
+    <link rel="stylesheet" href="shared.css?v=55">
     <link rel="preload" as="image" href="https://i.imgur.com/gtuC8HP.png">
     <link rel="preload" as="image" href="https://i.imgur.com/7BJLUgg.png">
     <script>
@@ -969,14 +969,14 @@
                         #s-mod6-comp-preventiva .content-area {
                             justify-content: flex-start !important;
                             align-items: center !important;
-                            padding-top: 0 !important;
+                            padding-top: 10px !important;
                             padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
                             overflow: hidden !important;
                         }
 
                         #s-mod6-comp-preventiva .m6p-layout {
                             width: 100%;
-                            padding: 2px 14px 0;
+                            padding: 12px 14px 0;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
@@ -2105,30 +2105,49 @@
                     }
 
                     #s-conclusion .btn-finish {
-                        background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(39, 174, 96, 0.4));
-                        border: 1px solid var(--green);
-                        color: #fff;
+                        width: 100%;
+                        max-width: 420px;
+                        margin: 22px auto 0;
+                        background:
+                            radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.28), transparent 36%),
+                            linear-gradient(135deg, #59f7ae 0%, #2ecc71 46%, #16a85a 100%);
+                        border: 1px solid rgba(89, 247, 174, 0.75);
+                        color: #06150d;
                         font-family: var(--font-h);
-                        font-weight: 700;
-                        font-size: 20px;
-                        padding: 20px 60px;
+                        font-weight: 900;
+                        font-size: 15px;
+                        padding: 15px 28px;
+                        min-height: 52px;
                         border-radius: 999px;
                         cursor: pointer;
                         text-transform: uppercase;
-                        letter-spacing: 2px;
-                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                        box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.1);
+                        letter-spacing: 0.08em;
+                        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+                        box-shadow:
+                            0 12px 28px rgba(0, 0, 0, 0.35),
+                            0 0 28px rgba(46, 204, 113, 0.42),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5);
                         opacity: 0;
                         animation: fade-up 0.8s ease forwards 1.9s;
                         display: inline-flex;
                         align-items: center;
-                        gap: 15px;
+                        justify-content: center;
+                        gap: 10px;
+                    }
+
+                    #s-conclusion .btn-finish svg {
+                        width: 18px;
+                        height: 18px;
+                        flex-shrink: 0;
                     }
 
                     #s-conclusion .btn-finish:hover {
-                        background: linear-gradient(135deg, rgba(46, 204, 113, 0.4), rgba(39, 174, 96, 0.6));
-                        box-shadow: 0 15px 40px rgba(46, 204, 113, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.2);
-                        transform: translateY(-5px) scale(1.02);
+                        filter: brightness(1.05);
+                        box-shadow:
+                            0 16px 34px rgba(0, 0, 0, 0.4),
+                            0 0 40px rgba(46, 204, 113, 0.58),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.58);
+                        transform: translateY(-3px) scale(1.02);
                     }
 
                     @keyframes fade-up {
@@ -2212,72 +2231,101 @@
                             flex: 1 1 auto !important;
                             min-height: 0 !important;
                             height: 100% !important;
-                            padding: 24px 14px calc(140px + env(safe-area-inset-bottom, 0px)) !important;
+                            padding: 48px 14px calc(140px + env(safe-area-inset-bottom, 0px)) !important;
                             justify-content: flex-start !important;
                             align-items: center !important;
                         }
                         #s-conclusion .content-wrap {
-                            margin: 0 auto 16px auto !important;
-                            padding: 28px 18px 24px !important;
+                            margin: 28px auto 12px auto !important;
+                            padding: 18px 14px 16px !important;
                             display: flex;
                             flex-direction: column;
                             align-items: center !important;
                             justify-content: center !important;
                             text-align: center !important;
-                            width: 92% !important;
-                            border-radius: 20px !important;
+                            width: 94% !important;
+                            border-radius: 18px !important;
                         }
                         #s-conclusion .seal-container {
-                            margin: 0 auto 16px auto !important;
-                            transform: scale(0.9);
+                            width: 72px !important;
+                            height: 72px !important;
+                            margin: 0 auto 10px auto !important;
+                            transform: none !important;
+                        }
+                        #s-conclusion .seal-inner {
+                            width: 54px !important;
+                            height: 54px !important;
+                            font-size: 28px !important;
                         }
                         #s-conclusion .title-epic {
-                            font-size: clamp(24px, 7vw, 30px) !important;
-                            margin: 0 auto 10px auto !important;
+                            font-size: clamp(22px, 6.2vw, 26px) !important;
+                            margin: 0 auto 8px auto !important;
                             text-align: center !important;
-                            letter-spacing: 0.04em !important;
+                            letter-spacing: 0.03em !important;
                         }
                         #s-conclusion .subtext {
-                            font-size: 14px !important;
-                            margin: 0 auto 18px auto !important;
+                            font-size: 13px !important;
+                            line-height: 1.4 !important;
+                            margin: 0 auto 12px auto !important;
                             text-align: center !important;
                         }
                         #s-conclusion .msg-box {
-                            padding: 16px 16px 18px !important;
-                            font-size: 13.5px !important;
+                            padding: 12px 12px 14px !important;
+                            font-size: 12.5px !important;
+                            line-height: 1.45 !important;
                             margin: 0 auto !important;
                             text-align: left !important;
-                            border-radius: 14px !important;
+                            border-radius: 12px !important;
                             width: 100%;
                         }
-                        #s-conclusion .concl-stats {
-                            margin-top: 16px !important;
-                            gap: 10px !important;
-                        }
-                        #s-conclusion .concl-stat {
-                            padding: 12px 14px !important;
-                            border-radius: 12px !important;
-                            gap: 12px !important;
-                        }
-                        #s-conclusion .concl-stat-icon {
-                            width: 36px !important;
-                            height: 36px !important;
-                            font-size: 18px !important;
-                            border-radius: 10px !important;
-                        }
-                        #s-conclusion .concl-stat-label {
+                        #s-conclusion .msg-box::before {
+                            width: 22px !important;
+                            height: 22px !important;
+                            margin-bottom: 8px !important;
                             font-size: 11px !important;
                         }
+                        #s-conclusion .concl-stats {
+                            margin-top: 12px !important;
+                            gap: 8px !important;
+                        }
+                        #s-conclusion .concl-stat {
+                            padding: 10px 12px !important;
+                            border-radius: 12px !important;
+                            gap: 10px !important;
+                        }
+                        #s-conclusion .concl-stat-icon {
+                            width: 32px !important;
+                            height: 32px !important;
+                            font-size: 16px !important;
+                            border-radius: 9px !important;
+                        }
+                        #s-conclusion .concl-stat-label {
+                            font-size: 10px !important;
+                        }
                         #s-conclusion .concl-stat-value {
-                            font-size: 13px !important;
+                            font-size: 12px !important;
                         }
                         #s-conclusion .concl-stat-arrow {
-                            width: 24px !important;
-                            height: 24px !important;
+                            width: 22px !important;
+                            height: 22px !important;
                         }
                         #s-conclusion .concl-stat-arrow svg {
-                            width: 12px !important;
-                            height: 12px !important;
+                            width: 11px !important;
+                            height: 11px !important;
+                        }
+                        #s-conclusion .btn-finish {
+                            margin-top: 14px !important;
+                            width: 100% !important;
+                            max-width: 100% !important;
+                            min-height: 46px !important;
+                            padding: 12px 18px !important;
+                            font-size: 13px !important;
+                            letter-spacing: 0.06em !important;
+                            gap: 8px !important;
+                        }
+                        #s-conclusion .btn-finish svg {
+                            width: 16px !important;
+                            height: 16px !important;
                         }
                     }
                 </style>
@@ -2326,6 +2374,14 @@
                         </div>
                     </div>
 
+                    <button type="button" class="btn-finish" id="btn-restart-course" onclick="restartCourse()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 12a9 9 0 1 0 3-6.7" />
+                            <polyline points="3 4 3 9 8 9" />
+                        </svg>
+                        Reiniciar Curso
+                    </button>
+
                 </div>
                 </div>
             </div>
@@ -2359,7 +2415,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=26"></script>
+    <script src="shared.js?v=27"></script>
 </body>
 
 </html>

@@ -711,6 +711,15 @@ function finishTraining() {
     // Aqui iria a chamada para o LMS, ex: window.close(), SCORM.quit(), etc.
 }
 
+function restartCourse() {
+    try {
+        window.location.href = 'index.html';
+    } catch (e) {
+        window.location.assign('index.html');
+    }
+}
+window.restartCourse = restartCourse;
+
 /* ════════════════════════════════════════
    ════════════════════════════════════════ */
 const AudioContext = window.AudioContext || window.webkitAudioContext;
