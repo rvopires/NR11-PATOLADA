@@ -5631,15 +5631,15 @@ body {
     #s-mod5-epi .content-area {
         justify-content: flex-start !important;
         align-items: center !important;
-        padding-top: 12px !important;
-        padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-top: 0 !important;
+        padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
         overflow: hidden !important;
         overflow-y: hidden !important;
     }
 
     #s-mod5-epi .m5e-layout {
-        padding: 28px 14px 8px !important;
-        gap: 12px !important;
+        padding: 6px 14px 4px !important;
+        gap: 10px !important;
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
@@ -5651,13 +5651,45 @@ body {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 12px !important;
+        gap: 10px !important;
+    }
+
+    #s-mod5-epi .m5e-card {
+        border-radius: 18px !important;
+        border-color: rgba(46, 204, 113, 0.35) !important;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(46, 204, 113, 0.16), transparent 55%),
+            linear-gradient(165deg, rgba(22, 32, 55, 0.96) 0%, rgba(10, 14, 26, 0.98) 100%) !important;
+        box-shadow:
+            0 20px 55px rgba(0, 0, 0, 0.55),
+            0 0 28px rgba(46, 204, 113, 0.18),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    }
+
+    #s-mod5-epi .m5e-card-photo {
+        border-radius: 18px !important;
+        border: 1.5px solid rgba(46, 204, 113, 0.4) !important;
+        box-shadow:
+            0 0 22px rgba(46, 204, 113, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        overflow: hidden !important;
+    }
+
+    #s-mod5-epi .m5e-card-status {
+        border-radius: 999px !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        border: 1px solid rgba(46, 204, 113, 0.4) !important;
+        background: rgba(46, 204, 113, 0.14) !important;
+        color: #58D68D !important;
     }
 
     #s-mod5-epi .m5e-carousel-nav {
         position: relative !important;
         z-index: 20 !important;
         pointer-events: auto !important;
+        margin-top: 0 !important;
+        padding-bottom: 4px !important;
     }
 
     #s-mod5-epi .m5e-nav-btn {
