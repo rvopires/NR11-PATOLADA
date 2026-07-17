@@ -827,7 +827,7 @@ function initFlipCardInteractions() {
 initFlipCardInteractions();
 
 /* ── Reset de estado visual das respostas (quizzes/atividades) ── */
-var ANSWER_STATE_CLASSES = ['selected', 'active', 'correct', 'wrong', 'checked', 'selected-true', 'selected-false', 'selected-visual'];
+var ANSWER_STATE_CLASSES = ['selected', 'active', 'correct', 'wrong', 'checked', 'selected-true', 'selected-false', 'selected-visual', 'answered', 'muted'];
 
 function clearAnswerState(el) {
     if (!el) return;
@@ -856,6 +856,7 @@ function resetTfButtons(btnTrue, btnFalse) {
    ════════════════════════════════════════ */
 function createQuizEngine(prefix, questions, numDots) {
     let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
+    let wrongTopics = [];
 
     const _stateKey = () => 'nr11_' + getPageKey() + '_' + prefix + '_state';
     function _saveState() {
@@ -956,20 +957,40 @@ function createQuizEngine(prefix, questions, numDots) {
         allOpts.forEach(function (o) {
             clearAnswerState(o);
             o.style.pointerEvents = 'none';
+            o.classList.add('answered');
         });
         const fb = document.getElementById(prefix + '-feedback');
+
+        function setOptIcon(el, icon) {
+            if (!el) return;
+            const letter = el.querySelector('.opt-l');
+            if (letter) letter.textContent = icon;
+        }
 
         if (selectedOptIdx === q.correct) {
             // removed persistence
             allOpts[selectedOptIdx].classList.add('correct');
+            setOptIcon(allOpts[selectedOptIdx], '✓');
             if (fb) { fb.textContent = q.feedback_ok; fb.className = 'q-feedback ok'; }
             score++; playBeep('ok');
         } else {
             allOpts[selectedOptIdx].classList.add('wrong');
-            if (allOpts[q.correct]) allOpts[q.correct].classList.add('correct');
+            setOptIcon(allOpts[selectedOptIdx], '✕');
+            if (allOpts[q.correct]) {
+                allOpts[q.correct].classList.add('correct');
+                setOptIcon(allOpts[q.correct], '✓');
+            }
+            if (q.topic) wrongTopics.push(q.topic);
             if (fb) { fb.textContent = q.feedback_nok; fb.className = 'q-feedback nok'; }
             playBeep('nok');
         }
+
+        allOpts.forEach(function (o) {
+            if (!o.classList.contains('correct') && !o.classList.contains('wrong')) {
+                o.classList.add('muted');
+            }
+        });
+
         const btn = document.getElementById('btn-next-' + prefix);
         if (btn) btn.className = 'btn-next-q show';
 
@@ -986,6 +1007,23 @@ function createQuizEngine(prefix, questions, numDots) {
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
 
+    function uniqueTopics(list) {
+        const seen = {};
+        const out = [];
+        list.forEach(function (t) {
+            if (!t || seen[t]) return;
+            seen[t] = true;
+            out.push(t);
+        });
+        return out;
+    }
+
+    function getMinCorrect() {
+        if (prefix === 'q1') return 2;
+        if (prefix === 'q5') return Math.ceil(questions.length * 0.70);
+        return Math.ceil(questions.length * 0.60);
+    }
+
     function showResult() {
         playBeep('end');
         const qPanel = document.getElementById(prefix + '-question-panel');
@@ -993,34 +1031,78 @@ function createQuizEngine(prefix, questions, numDots) {
         const rPanel = document.getElementById(prefix + '-result-panel');
         if (rPanel) {
             rPanel.style.display = 'block';
+            rPanel.classList.add('is-visible');
             rPanel.classList.remove('q-result-anim');
             void rPanel.offsetWidth;
             rPanel.classList.add('q-result-anim');
         }
+        const minCorrect = getMinCorrect();
+        const approved = score >= minCorrect;
         const pct = score / questions.length;
-        const approved = prefix === 'q5' ? pct >= 0.70 : pct >= 0.60;
         const pctEl = document.getElementById(prefix + '-pct');
         if (pctEl) { pctEl.textContent = Math.round(pct * 100) + '%'; pctEl.className = 'result-pct ' + (approved ? 'green' : 'red-c'); }
         const starsEl = document.getElementById(prefix + '-stars');
         if (starsEl) {
-            starsEl.textContent = pct === 1 ? '⭐⭐⭐' : pct >= 0.60 ? '⭐⭐' : '⭐';
+            starsEl.textContent = pct === 1 ? '⭐⭐⭐' : approved ? '⭐⭐' : '⭐';
             starsEl.classList.remove('stars-anim');
             void starsEl.offsetWidth;
             starsEl.classList.add('stars-anim');
         }
         const status = document.getElementById(prefix + '-status');
         if (status) {
-            status.textContent = approved ? '✅ Aprovado!' : (prefix === 'q5' ? '❌ Reprovado!' : '❌ Tente Novamente');
-            status.className = 'r-status ' + (approved ? 'ap' : 'ref');
+            if (prefix === 'q1') {
+                status.textContent = approved ? 'Desafio Concluído!' : 'Desafio não concluído';
+                status.className = 'quiz-result-title r-status ' + (approved ? 'ap' : 'ref');
+            } else {
+                status.textContent = approved ? '✅ Aprovado!' : (prefix === 'q5' ? '❌ Reprovado!' : '❌ Tente Novamente');
+                status.className = 'r-status ' + (approved ? 'ap' : 'ref');
+            }
         }
         const sub = document.getElementById(prefix + '-sub');
         if (sub) {
-            if (prefix === 'q5') {
+            if (prefix === 'q1') {
+                if (approved) {
+                    sub.textContent = `Você acertou ${score} de ${questions.length} questões. Parabéns! Pode avançar para a próxima etapa.`;
+                } else {
+                    sub.textContent = `Você acertou ${score} de ${questions.length} questões. É necessário acertar pelo menos ${minCorrect} questões. Estude e tente novamente.`;
+                }
+            } else if (prefix === 'q5') {
                 sub.textContent = `Você acertou ${score} de ${questions.length} questões. ` + (approved ? 'Você concluiu a simulação operacional com sucesso.' : 'Revise os procedimentos operacionais e tente novamente.');
             } else {
                 sub.textContent = `Você acertou ${score} de ${questions.length} questões.` + (approved ? ' Parabéns!' : ' Revise o módulo e tente novamente.');
             }
         }
+
+        if (prefix === 'q1') {
+            const reviewEl = document.getElementById('q1-review');
+            const iconEl = document.getElementById('q1-result-icon');
+            const retryBtn = document.getElementById('q1-retry-btn');
+            const topics = uniqueTopics(wrongTopics);
+
+            if (iconEl) iconEl.textContent = approved ? '🏅' : '📚';
+            if (retryBtn) {
+                retryBtn.textContent = approved ? 'REVISAR DESAFIO' : 'JOGAR NOVAMENTE';
+                retryBtn.style.display = approved ? 'none' : 'inline-flex';
+            }
+
+            if (reviewEl) {
+                if (!approved && topics.length) {
+                    reviewEl.hidden = false;
+                    reviewEl.innerHTML = '<strong>Revise estes temas:</strong><ul>' +
+                        topics.map(function (t) { return '<li>' + t + '</li>'; }).join('') +
+                        '</ul>';
+                } else {
+                    reviewEl.hidden = true;
+                    reviewEl.innerHTML = '';
+                }
+            }
+
+            if (rPanel) {
+                rPanel.classList.toggle('is-approved', approved);
+                rPanel.classList.toggle('is-failed', !approved);
+            }
+        }
+
         // removed persistence
         updateNextButton();
         try { window.updateQuizAudioHelper(); } catch (e) { }
@@ -1029,13 +1111,22 @@ function createQuizEngine(prefix, questions, numDots) {
 
     function reset() {
         idx = 0; score = 0; answered = false; selectedOptIdx = -1;
+        wrongTopics = [];
         const introPanel = document.getElementById(prefix + '-intro-panel');
         const qPanel = document.getElementById(prefix + '-question-panel');
         const rPanel = document.getElementById(prefix + '-result-panel');
 
-        if (introPanel) introPanel.style.display = 'block';
-        if (qPanel) qPanel.style.display = 'none';
-        if (rPanel) rPanel.style.display = 'none';
+        if (qPanel) {
+            qPanel.style.display = 'none';
+            qPanel.style.opacity = '';
+        }
+        if (rPanel) {
+            rPanel.style.display = 'none';
+            rPanel.classList.remove('is-approved', 'is-failed', 'q-result-anim', 'is-visible');
+        }
+        if (introPanel) {
+            introPanel.style.display = 'flex';
+        }
 
         const fb = document.getElementById(prefix + '-feedback');
         if (fb) { fb.className = 'q-feedback'; fb.textContent = ''; }
@@ -1046,9 +1137,25 @@ function createQuizEngine(prefix, questions, numDots) {
         const btn = document.getElementById('btn-next-' + prefix);
         if (btn) btn.className = 'btn-next-q';
 
+        const reviewEl = document.getElementById(prefix === 'q1' ? 'q1-review' : null);
+        if (reviewEl) { reviewEl.hidden = true; reviewEl.innerHTML = ''; }
+
         // removed persistence
 
         render();
+        updateNextButton();
+
+        // Volta o scroll para o card inicial (sem ficar “embaixo”)
+        try {
+            const slide = document.getElementById(prefix === 'q1' ? 'sq1' : null) ||
+                (introPanel && introPanel.closest('.slide'));
+            const area = slide && slide.querySelector('.content-area');
+            if (area) area.scrollTop = 0;
+            if (introPanel && introPanel.scrollIntoView) {
+                introPanel.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+            }
+        } catch (e) { }
+
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
 
@@ -1062,30 +1169,29 @@ const q1_questions = [
     {
         q: 'O que a NR-11 regulamenta?',
         opts: ['Segurança elétrica industrial', 'Ergonomia no trabalho', 'Transporte, movimentação e armazenagem de materiais', 'Saúde ocupacional geral'],
-        correct: 2, feedback_ok: '✅ Correto! A NR-11 trata de transporte, movimentação e armazenagem de materiais.', feedback_nok: '❌ Incorreto. A NR-11 regulamenta transporte, movimentação e armazenagem de materiais.'
+        correct: 2,
+        topic: 'O que é a NR-11 (definição e abrangência)',
+        feedback_ok: '✅ Correto! A NR-11 trata de transporte, movimentação e armazenagem de materiais.',
+        feedback_nok: '❌ Incorreto. A NR-11 regulamenta transporte, movimentação e armazenagem de materiais.'
     },
     {
         q: 'Qual documento o operador de empilhadeira patolada deve portar durante a operação?',
         opts: ['Apenas o crachá da empresa', 'Cartão de identificação de operador autorizado', 'CNH — Carteira Nacional de Habilitação', 'Diploma de conclusão de curso'],
-        correct: 1, feedback_ok: '✅ Exato! O cartão de operador autorizado é obrigatório durante a operação.', feedback_nok: '❌ Incorreto. O operador deve portar o cartão de identificação de operador autorizado.'
+        correct: 1,
+        topic: 'Autorização e documentação do operador',
+        feedback_ok: '✅ Exato! O cartão de operador autorizado é obrigatório durante a operação.',
+        feedback_nok: '❌ Incorreto. O operador deve portar o cartão de identificação de operador autorizado.'
     },
     {
         q: 'Com que frequência deve ser renovada a autorização do operador de empilhadeira?',
         opts: ['A cada 2 anos', 'A cada 5 anos', 'Apenas uma vez na carreira', 'Anualmente — a cada 12 meses'],
-        correct: 3, feedback_ok: '✅ Correto! A autorização deve ser renovada anualmente, a cada 12 meses.', feedback_nok: '❌ Incorreto. A autorização deve ser renovada anualmente (a cada 12 meses).'
-    },
-    {
-        q: 'Qual requisito é obrigatório antes de operar a empilhadeira patolada?',
-        opts: ['Possuir autorização e treinamento', 'Apenas conhecer o equipamento', 'Trabalhar no estoque', 'Ter experiência informal'],
-        correct: 0, feedback_ok: '✅ Exato! O treinamento completo e a autorização são requisitos inegociáveis.', feedback_nok: '❌ Incorreto. É obrigatório possuir autorização formal e treinamento específico.'
-    },
-    {
-        q: 'A reciclagem periódica do treinamento tem como objetivo:',
-        opts: ['Substituir o exame médico', 'Aumentar velocidade da operação', 'Atualizar conhecimentos de segurança', 'Liberar operadores sem avaliação'],
-        correct: 2, feedback_ok: '✅ Correto! O foco principal da reciclagem é manter a segurança sempre atualizada.', feedback_nok: '❌ Incorreto. A reciclagem serve para atualizar os conhecimentos de segurança.'
+        correct: 3,
+        topic: 'Renovação da autorização do operador',
+        feedback_ok: '✅ Correto! A autorização deve ser renovada anualmente, a cada 12 meses.',
+        feedback_nok: '❌ Incorreto. A autorização deve ser renovada anualmente (a cada 12 meses).'
     }
 ];
-const quiz1 = createQuizEngine('q1', q1_questions, 5);
+const quiz1 = createQuizEngine('q1', q1_questions, 3);
 function startQuiz1Intro() { quiz1.start(); }
 function verifyAnswer1() { quiz1.verify(); }
 function nextQuestion1() { quiz1.next(); }
@@ -2581,18 +2687,36 @@ function resetQuiz6() { quiz6.reset(); }
     }
 
     function addReplayButton() {
-        if (document.querySelector('.tutorial-replay')) return;
+        if (document.querySelector('.s1-secondary-actions')) return;
         const startBtn = document.querySelector('#s1 .btn-start');
         if (!startBtn) return;
+
+        const row = document.createElement('div');
+        row.className = 's1-secondary-actions';
+
         const replay = document.createElement('button');
         replay.type = 'button';
         replay.className = 'btn-tutorial tutorial-replay';
         replay.innerHTML = '▶ Ver tutorial';
-        replay.onclick = function() {
+        replay.onclick = function () {
             const staticModal = document.getElementById('tutorialModal');
             if (staticModal) staticModal.classList.add('active');
         };
-        startBtn.insertAdjacentElement('afterend', replay);
+        row.appendChild(replay);
+
+        const warn = document.createElement('button');
+        warn.type = 'button';
+        warn.className = 's1-session-info';
+        warn.setAttribute('aria-label', 'Aviso importante sobre a conclusão do treinamento');
+        warn.title = 'Aviso importante';
+        warn.innerHTML = '⚠';
+        warn.onclick = function () {
+            try { if (window.playTechClick) playTechClick(); } catch (e) { }
+            if (typeof openSessionWarningModal === 'function') openSessionWarningModal();
+        };
+        row.appendChild(warn);
+
+        startBtn.insertAdjacentElement('afterend', row);
     }
 
     function init() {

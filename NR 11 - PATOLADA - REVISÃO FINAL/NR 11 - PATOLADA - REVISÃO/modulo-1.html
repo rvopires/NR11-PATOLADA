@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -12,7 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=23">
+    <link rel="stylesheet" href="shared.css?v=36">
     <script>
         window.MODULE_NAV = {
             id: "modulo-1",
@@ -48,7 +48,7 @@
         <div id="slides">
             <div class="slide active" id="intro-m1">
                 <div class="mod-intro">
-                    <div class="mod-intro-pill">INÍCIO DO MÓDULO</div>
+                    <div class="mod-intro-pill">INÍCIO</div>
                     <div class="mod-intro-num">MÓDULO 1</div>
                     <div class="mod-intro-title">Introdução e Legislação</div>
                 </div>
@@ -204,23 +204,6 @@
                                 padding-bottom: 4px;
                             }
 
-                            #s3 .m1o-nav-btn {
-                                width: 42px;
-                                height: 42px;
-                                border-radius: 50%;
-                                border: 1px solid rgba(255, 255, 255, 0.45);
-                                background: rgba(10, 10, 10, 0.95);
-                                color: #fff;
-                                font-size: 22px;
-                                cursor: pointer;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                pointer-events: auto;
-                                touch-action: manipulation;
-                                z-index: 21;
-                            }
-
                             #s3 .m1o-nav-btn:disabled {
                                 opacity: 0.35;
                                 cursor: not-allowed;
@@ -242,35 +225,103 @@
                             }
                         }
                     </style>
+                    <style>
+                        #s3 .grid-2x2 {
+                            width: min(1180px, 100%);
+                            max-width: 1180px;
+                            margin: 0 auto;
+                            gap: 22px;
+                        }
+
+                        #s3 .grid-2x2 .icon-card {
+                            flex-direction: row;
+                            align-items: center;
+                            text-align: left;
+                            padding: 26px 28px;
+                            gap: 20px;
+                            min-height: 118px;
+                            position: relative;
+                            isolation: isolate;
+                            background:
+                                linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 45%),
+                                linear-gradient(145deg, #1c3d78 0%, #14295c 55%, #0e1f47 100%);
+                            border: 1px solid rgba(120, 170, 240, 0.28);
+                            border-top-color: rgba(150, 195, 255, 0.5);
+                            border-radius: 14px;
+                            box-shadow:
+                                inset 4px 0 0 0 #2ecc71,
+                                inset 8px 0 18px -6px rgba(46, 204, 113, 0.55),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                                inset 0 -18px 30px -18px rgba(0, 0, 0, 0.7),
+                                0 18px 34px rgba(0, 0, 0, 0.55),
+                                0 6px 14px rgba(0, 0, 0, 0.4),
+                                0 0 30px rgba(46, 204, 113, 0.18);
+                        }
+
+                        #s3 .grid-2x2 .icon-card::before {
+                            content: '';
+                            position: absolute;
+                            inset: -10px -6px;
+                            border-radius: 18px;
+                            background: radial-gradient(ellipse at 20% 50%,
+                                    rgba(46, 204, 113, 0.38) 0%,
+                                    rgba(56, 148, 255, 0.18) 42%,
+                                    transparent 72%);
+                            filter: blur(18px);
+                            z-index: -1;
+                            pointer-events: none;
+                        }
+
+                        #s3 .grid-2x2 .ic-circle {
+                            width: 64px;
+                            height: 64px;
+                            font-size: 34px;
+                            background: radial-gradient(circle at 35% 30%, rgba(30, 58, 110, 0.95), rgba(8, 18, 42, 0.98));
+                            border: 1.5px solid rgba(77, 163, 255, 0.45);
+                            box-shadow: 0 0 16px rgba(46, 204, 113, 0.25);
+                        }
+
+                        #s3 .grid-2x2 .ic-text {
+                            margin-top: 0;
+                        }
+
+                        #s3 .grid-2x2 .ic-text h4 {
+                            color: #2ecc71;
+                            font-size: 22px;
+                            margin-bottom: 6px;
+                        }
+
+                        #s3 .grid-2x2 .ic-text p {
+                            color: rgba(255, 255, 255, 0.88);
+                            font-size: 16px;
+                            line-height: 1.45;
+                        }
+                    </style>
                     <div class="grid-2x2">
-                        <div class="icon-card"
-                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
-                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
-                            <div class="ic-text" style="margin-top:8px;">
+                        <div class="icon-card">
+                            <div class="ic-circle">🚜</div>
+                            <div class="ic-text">
                                 <h4>Operação Segura</h4>
                                 <p>Utilizar a empilhadeira corretamente e com segurança</p>
                             </div>
                         </div>
-                        <div class="icon-card"
-                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
-                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
-                            <div class="ic-text" style="margin-top:8px;">
+                        <div class="icon-card">
+                            <div class="ic-circle">🛡️</div>
+                            <div class="ic-text">
                                 <h4>Prevenção de Riscos</h4>
                                 <p>Garantir a segurança e prevenir acidentes no ambiente</p>
                             </div>
                         </div>
-                        <div class="icon-card"
-                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
-                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
-                            <div class="ic-text" style="margin-top:8px;">
+                        <div class="icon-card">
+                            <div class="ic-circle">📋</div>
+                            <div class="ic-text">
                                 <h4>Normas e Leis</h4>
                                 <p>Cumprir todas as exigências legais da NR-11</p>
                             </div>
                         </div>
-                        <div class="icon-card"
-                            style="flex-direction:column; align-items:center; text-align:center; padding: 24px;">
-                            <div class="ic-circle" style="width:56px; height:56px; font-size: 37px;">🚜</div>
-                            <div class="ic-text" style="margin-top:8px;">
+                        <div class="icon-card">
+                            <div class="ic-circle">👥</div>
+                            <div class="ic-text">
                                 <h4>Objetivo Central</h4>
                                 <p>Preservar a integridade física de todos os colaboradores</p>
                             </div>
@@ -316,8 +367,8 @@
                             const M1O_CARDS = [
                                 { icon: '🚜', title: 'Operação Segura', desc: 'Utilizar a empilhadeira corretamente e com segurança' },
                                 { icon: '🛡️', title: 'Prevenção de Riscos', desc: 'Garantir a segurança e prevenir acidentes no ambiente' },
-                                { icon: '📜', title: 'Normas e Leis', desc: 'Cumprir todas as exigências legais da NR-11' },
-                                { icon: '🎯', title: 'Objetivo Central', desc: 'Preservar a integridade física de todos os colaboradores' }
+                                { icon: '📋', title: 'Normas e Leis', desc: 'Cumprir todas as exigências legais da NR-11' },
+                                { icon: '👥', title: 'Objetivo Central', desc: 'Preservar a integridade física de todos os colaboradores' }
                             ];
 
                             let m1oIdx = 0;
@@ -419,69 +470,482 @@
 
                 </div>
                 <div class="content-area">
-                    <p class="s2-acc-hint">👆 Toque em cada item para ver mais</p>
-                    <div class="def-banner s2-acc-item">
-                        <div class="ic-circle">📖</div>
-                        <div class="ic-text">
-                            <button type="button" class="s2-acc-trigger" aria-expanded="false">
-                                <h4>Definição</h4>
-                                <span class="s2-acc-chevron" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                                </span>
-                            </button>
-                            <div class="s2-acc-body">
-                                <p>A NR-11 estabelece requisitos de <strong style="color:var(--gold-lt)">segurança</strong>
-                                    para as
-                                    operações de transporte, movimentação, armazenagem e manuseio de materiais, com ênfase
-                                    na operação de
-                                    equipamentos como a empilhadeira patolada.</p>
+                    <style>
+                        #s2 .s2-layout {
+                            width: min(1180px, 100%);
+                            margin: 0 auto;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 18px;
+                        }
+
+                        #s2 .s2-pillars-label {
+                            font-family: var(--font-h);
+                            font-size: 13px;
+                            font-weight: 700;
+                            letter-spacing: 0.12em;
+                            text-transform: uppercase;
+                            color: rgba(46, 204, 113, 0.9);
+                            text-align: center;
+                            margin: 2px 0 0;
+                        }
+
+                        #s2 .def-banner,
+                        #s2 .three-col .icon-card {
+                            position: relative;
+                            isolation: isolate;
+                            background:
+                                linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 45%),
+                                linear-gradient(145deg, #1c3d78 0%, #14295c 55%, #0e1f47 100%);
+                            border: 1px solid rgba(120, 170, 240, 0.28);
+                            border-top-color: rgba(150, 195, 255, 0.5);
+                            border-radius: 14px;
+                            box-shadow:
+                                inset 4px 0 0 0 #2ecc71,
+                                inset 8px 0 18px -6px rgba(46, 204, 113, 0.55),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                                inset 0 -18px 30px -18px rgba(0, 0, 0, 0.7),
+                                0 18px 34px rgba(0, 0, 0, 0.55),
+                                0 6px 14px rgba(0, 0, 0, 0.4),
+                                0 0 30px rgba(46, 204, 113, 0.18);
+                        }
+
+                        #s2 .def-banner::before,
+                        #s2 .three-col .icon-card::before {
+                            content: '';
+                            position: absolute;
+                            inset: -10px -6px;
+                            border-radius: 18px;
+                            background: radial-gradient(ellipse at 20% 50%,
+                                    rgba(46, 204, 113, 0.38) 0%,
+                                    rgba(56, 148, 255, 0.18) 42%,
+                                    transparent 72%);
+                            filter: blur(18px);
+                            z-index: -1;
+                            pointer-events: none;
+                        }
+
+                        #s2 .def-banner {
+                            display: flex;
+                            align-items: flex-start;
+                            gap: 20px;
+                            padding: 26px 28px;
+                            margin-bottom: 0;
+                        }
+
+                        #s2 .def-banner .ic-circle,
+                        #s2 .three-col .ic-circle {
+                            width: 64px;
+                            height: 64px;
+                            font-size: 34px;
+                            background: radial-gradient(circle at 35% 30%, rgba(30, 58, 110, 0.95), rgba(8, 18, 42, 0.98));
+                            border: 1.5px solid rgba(77, 163, 255, 0.45);
+                            box-shadow: 0 0 16px rgba(46, 204, 113, 0.25);
+                            color: #fff;
+                        }
+
+                        #s2 .def-banner .ic-text h4 {
+                            color: #2ecc71;
+                            font-size: 24px;
+                        }
+
+                        #s2 .def-banner .ic-text p {
+                            color: rgba(255, 255, 255, 0.88);
+                            font-size: 17px;
+                            line-height: 1.55;
+                        }
+
+                        #s2 .three-col {
+                            gap: 18px;
+                            margin-top: 0;
+                        }
+
+                        #s2 .three-col .icon-card {
+                            flex-direction: column;
+                            align-items: flex-start;
+                            text-align: left;
+                            padding: 22px 22px 20px;
+                            gap: 14px;
+                            margin-bottom: 0;
+                        }
+
+                        #s2 .s2-card-num {
+                            position: absolute;
+                            top: 14px;
+                            right: 16px;
+                            font-family: var(--font-h);
+                            font-size: 12px;
+                            font-weight: 800;
+                            letter-spacing: 0.08em;
+                            color: rgba(46, 204, 113, 0.75);
+                        }
+
+                        #s2 .three-col .ic-text h4 {
+                            color: #2ecc71;
+                            font-size: 18px;
+                            margin-bottom: 6px;
+                        }
+
+                        #s2 .three-col .ic-text p {
+                            color: rgba(255, 255, 255, 0.88);
+                            font-size: 15px;
+                            line-height: 1.45;
+                        }
+
+                        #s2 .s2-mobile-wrap {
+                            display: none;
+                        }
+
+                        @media (max-width: 768px) {
+                            #s2 .s2-layout {
+                                gap: 14px;
+                            }
+
+                            /* Esconde desktop: definição, pilares label, grid e dica */
+                            #s2 .def-banner,
+                            #s2 .s2-pillars-label,
+                            #s2 .three-col,
+                            #s2 .s2-acc-hint {
+                                display: none !important;
+                            }
+
+                            #s2 .s2-mobile-wrap {
+                                display: block;
+                                width: 100%;
+                            }
+
+                            #s2 .s2-carousel {
+                                width: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                gap: 12px;
+                            }
+
+                            #s2 .s2-card {
+                                width: 100%;
+                                position: relative;
+                                isolation: isolate;
+                                background:
+                                    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 45%),
+                                    linear-gradient(145deg, #1c3d78 0%, #14295c 55%, #0e1f47 100%);
+                                border: 1px solid rgba(120, 170, 240, 0.28);
+                                border-top-color: rgba(150, 195, 255, 0.5);
+                                border-radius: 14px;
+                                box-shadow:
+                                    inset 4px 0 0 0 #2ecc71,
+                                    inset 8px 0 18px -6px rgba(46, 204, 113, 0.55),
+                                    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                                    inset 0 -18px 30px -18px rgba(0, 0, 0, 0.7),
+                                    0 18px 34px rgba(0, 0, 0, 0.55),
+                                    0 0 30px rgba(46, 204, 113, 0.18);
+                                touch-action: pan-y;
+                            }
+
+                            #s2 .s2-card-num {
+                                position: absolute;
+                                top: 14px;
+                                right: 16px;
+                                font-family: var(--font-h);
+                                font-size: 12px;
+                                font-weight: 800;
+                                letter-spacing: 0.08em;
+                                color: rgba(46, 204, 113, 0.75);
+                                z-index: 1;
+                            }
+
+                            #s2 .s2-card-inner {
+                                padding: 24px 18px 26px;
+                                text-align: center;
+                            }
+
+                            #s2 .s2-card-icon {
+                                font-size: 46px;
+                                line-height: 1;
+                                margin-bottom: 14px;
+                                filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.4));
+                            }
+
+                            #s2 .s2-card-title {
+                                font-family: var(--font-h);
+                                font-size: 18px;
+                                font-weight: 800;
+                                color: #2ecc71;
+                                margin-bottom: 10px;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                            }
+
+                            #s2 .s2-card-divider {
+                                width: 48px;
+                                height: 2px;
+                                margin: 0 auto 12px;
+                                border-radius: 2px;
+                                background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                            }
+
+                            #s2 .s2-card-desc {
+                                font-size: 15px;
+                                line-height: 1.5;
+                                color: rgba(255, 255, 255, 0.85);
+                                margin: 0 auto;
+                                max-width: 300px;
+                            }
+
+                            #s2 .s2-progress {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 8px;
+                            }
+
+                            #s2 .s2-dot {
+                                width: 8px;
+                                height: 8px;
+                                border-radius: 50%;
+                                background: rgba(255, 255, 255, 0.2);
+                                border: 1px solid rgba(255, 255, 255, 0.15);
+                                transition: all 0.3s ease;
+                            }
+
+                            #s2 .s2-dot.is-active {
+                                width: 22px;
+                                border-radius: 4px;
+                                background: rgba(46, 204, 113, 0.7);
+                                border-color: rgba(46, 204, 113, 0.9);
+                            }
+
+                            #s2 .s2-dot.is-done {
+                                background: rgba(46, 204, 113, 0.35);
+                                border-color: rgba(46, 204, 113, 0.5);
+                            }
+
+                            #s2 .s2-carousel-nav {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 14px;
+                                position: relative;
+                                z-index: 20;
+                                pointer-events: auto;
+                            }
+
+                            #s2 .s2-nav-btn:disabled {
+                                opacity: 0.35;
+                                cursor: not-allowed;
+                                pointer-events: none;
+                            }
+
+                            #s2 .s2-counter {
+                                font-family: var(--font-h);
+                                font-size: 15px;
+                                font-weight: 700;
+                                color: #fff;
+                                min-width: 40px;
+                                text-align: center;
+                            }
+                        }
+                    </style>
+
+                    <div class="s2-layout">
+                        <p class="s2-acc-hint">👆 Toque em cada item para ver mais</p>
+
+                        <div class="def-banner s2-acc-item">
+                            <div class="ic-circle">📖</div>
+                            <div class="ic-text">
+                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                    <h4>Definição</h4>
+                                    <span class="s2-acc-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="6 9 12 15 18 9" />
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="s2-acc-body">
+                                    <p>A NR-11 estabelece requisitos de <strong style="color:var(--gold-lt)">segurança</strong>
+                                        para as operações de transporte, movimentação, armazenagem e manuseio de materiais,
+                                        com ênfase na operação de equipamentos como a empilhadeira patolada.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="s2-pillars-label">A NR-11 se apoia em 3 pilares</p>
+
+                        <div class="three-col">
+                            <div class="icon-card s2-acc-item">
+                                <span class="s2-card-num">01</span>
+                                <div class="ic-circle">🚚</div>
+                                <div class="ic-text">
+                                    <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                        <h4>Transporte de Materiais</h4>
+                                        <span class="s2-acc-chevron" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <div class="s2-acc-body">
+                                        <p>Regras para movimentação segura de cargas no ambiente de trabalho</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="icon-card s2-acc-item">
+                                <span class="s2-card-num">02</span>
+                                <div class="ic-circle">📦</div>
+                                <div class="ic-text">
+                                    <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                        <h4>Armazenagem Segura</h4>
+                                        <span class="s2-acc-chevron" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <div class="s2-acc-body">
+                                        <p>Normas para estocagem, organização e estabilidade de cargas</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="icon-card s2-acc-item">
+                                <span class="s2-card-num">03</span>
+                                <div class="ic-circle">🦺</div>
+                                <div class="ic-text">
+                                    <button type="button" class="s2-acc-trigger" aria-expanded="false">
+                                        <h4>Segurança Operacional</h4>
+                                        <span class="s2-acc-chevron" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <div class="s2-acc-body">
+                                        <p>Proteger o trabalhador durante todas as fases da operação logística</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="s2-mobile-wrap">
+                            <div class="s2-carousel">
+                                <div class="s2-card" id="s2-card">
+                                    <span class="s2-card-num" id="s2-card-num"></span>
+                                    <div class="s2-card-inner">
+                                        <div class="s2-card-icon" id="s2-card-icon">📖</div>
+                                        <h3 class="s2-card-title" id="s2-card-title">Definição</h3>
+                                        <div class="s2-card-divider" aria-hidden="true"></div>
+                                        <p class="s2-card-desc" id="s2-card-desc">A NR-11 estabelece requisitos de
+                                            segurança para as operações de transporte, movimentação, armazenagem e
+                                            manuseio de materiais, com ênfase na operação de equipamentos como a
+                                            empilhadeira patolada.</p>
+                                    </div>
+                                </div>
+
+                                <div class="s2-progress" id="s2-progress" aria-hidden="true">
+                                    <span class="s2-dot is-active"></span>
+                                    <span class="s2-dot"></span>
+                                    <span class="s2-dot"></span>
+                                    <span class="s2-dot"></span>
+                                </div>
+
+                                <div class="s2-carousel-nav">
+                                    <button type="button" class="s2-nav-btn" id="s2-prev"
+                                        aria-label="Card anterior">‹</button>
+                                    <span class="s2-counter" id="s2-counter">1/4</span>
+                                    <button type="button" class="s2-nav-btn" id="s2-next"
+                                        aria-label="Próximo card">›</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="three-col">
-                        <div class="icon-card s2-acc-item" style="flex-direction:column; align-items:center; text-align:center;">
-                        <div class="ic-circle">📖</div>
-                            <div class="ic-text">
-                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
-                                    <h4>Transporte de Materiais</h4>
-                                    <span class="s2-acc-chevron" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                                    </span>
-                                </button>
-                                <div class="s2-acc-body">
-                                    <p>Regras para movimentação segura de cargas no ambiente de trabalho</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="icon-card s2-acc-item" style="flex-direction:column; align-items:center; text-align:center;">
-                        <div class="ic-circle">📖</div>
-                            <div class="ic-text">
-                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
-                                    <h4>Armazenagem Segura</h4>
-                                    <span class="s2-acc-chevron" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                                    </span>
-                                </button>
-                                <div class="s2-acc-body">
-                                    <p>Normas para estocagem, organização e estabilidade de cargas</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="icon-card s2-acc-item" style="flex-direction:column; align-items:center; text-align:center;">
-                        <div class="ic-circle">📖</div>
-                            <div class="ic-text">
-                                <button type="button" class="s2-acc-trigger" aria-expanded="false">
-                                    <h4>Segurança Operacional</h4>
-                                    <span class="s2-acc-chevron" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                                    </span>
-                                </button>
-                                <div class="s2-acc-body">
-                                    <p>Proteger o trabalhador durante todas as fases da operação logística</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <script>
+                        (function () {
+                            const S2_CARDS = [
+                                {
+                                    num: '',
+                                    icon: '📖',
+                                    title: 'Definição',
+                                    desc: 'A NR-11 estabelece requisitos de segurança para as operações de transporte, movimentação, armazenagem e manuseio de materiais, com ênfase na operação de equipamentos como a empilhadeira patolada.'
+                                },
+                                { num: '01', icon: '🚚', title: 'Transporte de Materiais', desc: 'Regras para movimentação segura de cargas no ambiente de trabalho' },
+                                { num: '02', icon: '📦', title: 'Armazenagem Segura', desc: 'Normas para estocagem, organização e estabilidade de cargas' },
+                                { num: '03', icon: '🦺', title: 'Segurança Operacional', desc: 'Proteger o trabalhador durante todas as fases da operação logística' }
+                            ];
+
+                            let s2Idx = 0;
+                            const viewed = new Set([0]);
+
+                            const numEl = document.getElementById('s2-card-num');
+                            const iconEl = document.getElementById('s2-card-icon');
+                            const titleEl = document.getElementById('s2-card-title');
+                            const descEl = document.getElementById('s2-card-desc');
+                            const counterEl = document.getElementById('s2-counter');
+                            const progressEl = document.getElementById('s2-progress');
+                            const cardEl = document.getElementById('s2-card');
+                            const prevBtn = document.getElementById('s2-prev');
+                            const nextBtn = document.getElementById('s2-next');
+
+                            function updateS2Nav() {
+                                if (prevBtn) prevBtn.disabled = s2Idx === 0;
+                                if (nextBtn) nextBtn.disabled = s2Idx >= S2_CARDS.length - 1;
+                            }
+
+                            function renderS2Card() {
+                                const c = S2_CARDS[s2Idx];
+                                if (numEl) {
+                                    numEl.textContent = c.num;
+                                    numEl.style.display = c.num ? '' : 'none';
+                                }
+                                if (iconEl) iconEl.textContent = c.icon;
+                                if (titleEl) titleEl.textContent = c.title;
+                                if (descEl) descEl.textContent = c.desc;
+                                if (counterEl) counterEl.textContent = (s2Idx + 1) + '/' + S2_CARDS.length;
+                                if (progressEl) {
+                                    progressEl.querySelectorAll('.s2-dot').forEach(function (dot, i) {
+                                        dot.classList.toggle('is-active', i === s2Idx);
+                                        dot.classList.toggle('is-done', viewed.has(i) && i !== s2Idx);
+                                    });
+                                }
+                                updateS2Nav();
+                            }
+
+                            function s2Go(dir) {
+                                const next = s2Idx + dir;
+                                if (next < 0 || next >= S2_CARDS.length) return;
+                                s2Idx = next;
+                                viewed.add(s2Idx);
+                                if (typeof playTechClick === 'function') playTechClick();
+                                renderS2Card();
+                            }
+
+                            if (prevBtn) prevBtn.addEventListener('click', function () { s2Go(-1); });
+                            if (nextBtn) nextBtn.addEventListener('click', function () { s2Go(1); });
+
+                            let touchX = null;
+                            if (cardEl) {
+                                cardEl.addEventListener('touchstart', function (e) {
+                                    touchX = e.touches[0].clientX;
+                                }, { passive: true });
+                                cardEl.addEventListener('touchend', function (e) {
+                                    if (touchX === null) return;
+                                    const dx = e.changedTouches[0].clientX - touchX;
+                                    touchX = null;
+                                    if (Math.abs(dx) < 40) return;
+                                    if (dx < 0 && s2Idx >= S2_CARDS.length - 1) return;
+                                    if (dx > 0 && s2Idx <= 0) return;
+                                    s2Go(dx < 0 ? 1 : -1);
+                                }, { passive: true });
+                            }
+
+                            renderS2Card();
+                        })();
+                    </script>
                 </div>
                 <button type="button" id="s2-scroll-down" class="slide-scroll-btn"
                     onclick="scrollSlideDown('s2')" aria-label="Rolar para baixo">
@@ -500,13 +964,13 @@
                 style="background: radial-gradient(circle at center, rgba(11, 31, 75, 1) 0%, rgba(5, 10, 20, 1) 100%); overflow: hidden;">
                 <!-- Fundo HUD Cinematográfico -->
                 <div
-                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.12) 0%, transparent 65%); animation: s1b-glow 4s infinite alternate ease-in-out;">
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(46, 204, 113, 0.12) 0%, transparent 65%);">
                 </div>
                 <div
                     style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.03) 3px, rgba(46, 204, 113, 0.03) 4px);">
                 </div>
                 <div
-                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 60px 60px; animation: s1b-smoke 30s infinite linear;">
+                    style="position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 60px 60px;">
                 </div>
                 <div class="top-bar" style="position: relative; z-index: 2;">
                     <div class="section-tag"
@@ -548,6 +1012,9 @@
                         <div class="badge-lanyard" style="top: -40px; height: 60px;"></div>
                         <div class="badge-img-wrapper">
                             <img src="https://imgur.com/B83Zchf.png" alt="Cartão de Identificação" />
+                            <button type="button" class="badge-img-expand"
+                                aria-label="Ampliar imagem" title="Ampliar imagem"
+                                onclick="event.stopPropagation(); openImageModal('https://imgur.com/B83Zchf.png')">🔍</button>
                         </div>
                     </div>
                     <p style="font-size: 16px; color: rgba(255,255,255,0.6); max-width: 400px; margin: 30px auto 0;">A
@@ -689,89 +1156,12 @@
                 </div>
                 <div class="content-area">
                     <div class="quiz-wrap">
-                        <div id="q1-intro-panel" style="text-align: center; padding: 40px 20px; position: relative;">
-                            <!-- Efeitos Visuais Sutis HUD -->
-                            <div
-                                style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at center, rgba(46, 204, 113, 0.05) 0%, transparent 60%);">
-                            </div>
-                            <div
-                                style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.3), transparent);">
-                            </div>
-                            <div
-                                style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.3), transparent);">
-                            </div>
-
-                            <div class="hud-anim-enter"
-                                style="position: relative; z-index: 1; max-width: 850px; margin: 0 auto 30px; padding: 50px 30px; border-radius: 8px; background: rgba(5, 15, 10, 0.6); border: 1px solid rgba(46, 204, 113, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(46,204,113,0.05); backdrop-filter: blur(12px); animation-delay: 0.2s; opacity: 0; overflow: hidden;">
-
-                                <!-- Efeitos Visuais HUD Premium Internos -->
-                                <div
-                                    style="position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46,204,113,0.03) 3px, rgba(46,204,113,0.03) 4px);">
-                                </div>
-                                <div
-                                    style="position: absolute; inset: 0; pointer-events: none; opacity: 0.3; background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px; animation: s1b-smoke 40s infinite linear;">
-                                </div>
-                                <div
-                                    style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.4), transparent);">
-                                </div>
-                                <div
-                                    style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(46,204,113,0.4), transparent);">
-                                </div>
-                                <div
-                                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 80%; background: radial-gradient(circle, rgba(46,204,113,0.08) 0%, transparent 70%); pointer-events: none; animation: pulse 4s infinite;">
-                                </div>
-
-                                <!-- PROTOCOLO DE AVALIAção -->
-                                <div
-                                    style="position: relative; font-family: var(--font-h); font-size: 12px; font-weight: 700; color: rgba(46,204,113,0.8); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                                    <span style="width: 30px; height: 1px; background: rgba(46,204,113,0.4);"></span>
-                                    PROTOCOLO DE AVALIAção
-                                    <span style="width: 30px; height: 1px; background: rgba(46,204,113,0.4);"></span>
-                                </div>
-
-                                <!-- MOSTRE QUE VOCÊ DOMINA -->
-                                <h3
-                                    style="position: relative; font-family: var(--font-h); font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; color: var(--white); text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-bottom: 16px; text-shadow: 0 0 15px rgba(46,204,113,0.5);">
-                                    MOSTRE QUE VOCÊ DOMINA
-                                </h3>
-
-                                <!-- Texto Inferior -->
-                                <p
-                                    style="position: relative; font-size: clamp(16px, 2vw, 18px); color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto; line-height: 1.5; font-weight: 300;">
-                                    os principais procedimentos<br>da operação segura
-                                </p>
-
-                                <div class="hud-anim-enter"
-                                    style="position: relative; z-index: 1; font-family: var(--font-h); font-size: 14px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-top: 40px; margin-bottom: 40px; animation-delay: 0.3s; opacity: 0; display: inline-flex; align-items: center; gap: 8px; background: rgba(10, 30, 20, 0.9); padding: 10px 20px; border: 1px solid rgba(46, 204, 113, 0.4); border-radius: 8px; box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);">
-                                    <span
-                                        style="display:inline-block; width:6px; height:6px; background:var(--green); border-radius:50%; box-shadow:0 0 6px var(--green);"></span>
-                                    5 PERGUNTAS &middot; Mínimo DE 70% DE ACERTOS
-                                </div><br>
-
-                                <div class="hud-anim-enter"
-                                    style="position: relative; display: inline-block; z-index: 2; animation-delay: 0.4s; opacity: 0;">
-                                    <!-- Círculo Tecnológico Atrês do Botão -->
-                                    <div
-                                        style="position: absolute; inset: -15px; border-radius: 99px; border: 1px dashed rgba(46,204,113,0.3); pointer-events: none;">
-                                    </div>
-                                    <div
-                                        style="position: absolute; inset: -5px; border-radius: 99px; background: rgba(46,204,113,0.15); filter: blur(10px); animation: pulse 2s infinite; pointer-events: none;">
-                                    </div>
-
-                                    <button class="btn-tf-verify"
-                                        style="position: relative; font-size: 18px; padding: 15px 40px; border-radius: 99px; display: inline-flex; align-items: center; gap: 10px; background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.6); color: var(--green-lt); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; box-shadow: 0 0 20px rgba(46, 204, 113, 0.2); transition: all 0.3s ease; animation: pulse 3s infinite;"
-                                        onmouseover="this.style.boxShadow='0 0 30px rgba(46,204,113,0.4)'; this.style.background='rgba(46, 204, 113, 0.25)';"
-                                        onmouseout="this.style.boxShadow='0 0 20px rgba(46, 204, 113, 0.2)'; this.style.background='rgba(46, 204, 113, 0.1)';"
-                                        onclick="startQuiz1Intro()">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            style="filter: drop-shadow(0 0 4px rgba(46,204,113,0.5));">
-                                            <polygon points="5 3 19 12 5 21"></polygon>
-                                        </svg>
-                                        INICIAR DESAFIO
-                                    </button>
-                                </div>
+                                                <div id="q1-intro-panel" class="quiz-intro-panel">
+                            <div class="quiz-intro-card">
+                                <div class="quiz-intro-icon" aria-hidden="true">📋</div>
+                                <h3 class="quiz-intro-title">Desafio NR-11 — Módulo 1</h3>
+                                <p class="quiz-intro-desc">Responda <strong>3</strong> perguntas. Você precisa acertar no mínimo <strong>2</strong> para avançar.</p>
+                                <button type="button" class="quiz-intro-btn" onclick="startQuiz1Intro()">INICIAR DESAFIO</button>
                             </div>
                         </div>
                         <div id="q1-question-panel" style="display:none; transition: opacity 0.5s ease;">
@@ -794,12 +1184,17 @@
                             <div class="q-feedback" id="q1-feedback"></div>
                             <button class="btn-next-q" id="btn-next-q1" onclick="nextQuestion1()">Continuar →</button>
                         </div>
-                        <div id="q1-result-panel" style="display:none;text-align:center;">
-                            <div class="result-pct green" id="q1-pct">--</div>
-                            <div class="r-stars" id="q1-stars">⭐⭐⭐</div>
-                            <div class="r-status" id="q1-status"></div>
-                            <div class="r-sub" id="q1-sub"></div>
-                            <button class="btn-retry" onclick="resetQuiz1()">↺ Tentar Novamente</button>
+                        <div id="q1-result-panel" class="quiz-result-panel" style="display:none;">
+                            <div class="quiz-result-card">
+                                <div class="quiz-result-icon" id="q1-result-icon" aria-hidden="true">🏅</div>
+                                <h3 class="quiz-result-title" id="q1-status">Desafio Concluído!</h3>
+                                <p class="quiz-result-desc" id="q1-sub"></p>
+                                <div class="quiz-result-review" id="q1-review" hidden></div>
+                                <button type="button" class="quiz-result-btn" id="q1-retry-btn"
+                                    onclick="resetQuiz1()">JOGAR NOVAMENTE</button>
+                            </div>
+                            <div id="q1-pct" class="result-pct" style="display:none" aria-hidden="true"></div>
+                            <div id="q1-stars" class="r-stars" style="display:none" aria-hidden="true"></div>
                         </div>
                     </div>
                 </div>
@@ -837,7 +1232,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=14"></script>
+    <script src="shared.js?v=18"></script>
 </body>
 
 </html>
