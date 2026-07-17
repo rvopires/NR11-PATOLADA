@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <link rel="stylesheet" href="shared.css?v=46">
+    <link rel="stylesheet" href="shared.css?v=51">
     <link rel="preload" as="image" href="https://i.imgur.com/gtuC8HP.png">
     <link rel="preload" as="image" href="https://i.imgur.com/7BJLUgg.png">
     <script>
@@ -49,9 +49,9 @@
         <div id="slides">
             <div class="slide active" id="s-mod6-intro">
                 <div class="mod-intro">
-                    <div class="mod-intro-pill">ENCERRAMENTO</div>
+                    <div class="mod-intro-pill">INÍCIO</div>
                     <div class="mod-intro-num">MÓDULO 6</div>
-                    <div class="mod-intro-title">Reforçando o compromisso com a Segurança Operacional</div>
+                    <div class="mod-intro-title">Encerramento</div>
                 </div>
                 <div class="wave">
                     <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
@@ -108,40 +108,86 @@
                     }
 
                     .hud-panel-item {
+                        --m6-accent: #2ECC71;
+                        --m6-accent-soft: rgba(46, 204, 113, 0.14);
+                        --m6-accent-glow: rgba(46, 204, 113, 0.28);
                         display: flex;
                         align-items: center;
-                        background: linear-gradient(145deg, #0b1120, #060a13);
-                        border: 1px solid rgba(255, 255, 255, 0.06);
-                        border-radius: 12px;
-                        padding: 20px 30px;
+                        background:
+                            radial-gradient(circle at 0% 50%, var(--m6-accent-soft), transparent 45%),
+                            linear-gradient(145deg, #101d33 0%, #0a1524 55%, #060c17 100%);
+                        border: 1px solid color-mix(in srgb, var(--m6-accent) 28%, transparent);
+                        border-radius: 16px;
+                        padding: 20px 28px;
                         cursor: pointer;
                         transition: all 0.4s cubic-bezier(0.18, 1, 0.26, 1);
                         position: relative;
-                        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01), 0 5px 15px rgba(0, 0, 0, 0.3);
+                        box-shadow:
+                            0 12px 32px rgba(0, 0, 0, 0.45),
+                            0 0 20px var(--m6-accent-glow),
+                            inset 0 0 0 1px rgba(255, 255, 255, 0.04);
                         overflow: hidden;
                     }
 
+                    .hud-panel-item::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        width: 4px;
+                        background: linear-gradient(180deg, transparent, var(--m6-accent), transparent);
+                        opacity: 0.9;
+                    }
+
+                    .hud-panel-item:nth-child(1) {
+                        --m6-accent: #2ECC71;
+                        --m6-accent-soft: rgba(46, 204, 113, 0.14);
+                        --m6-accent-glow: rgba(46, 204, 113, 0.28);
+                    }
+
+                    .hud-panel-item:nth-child(2) {
+                        --m6-accent: #3fb6ff;
+                        --m6-accent-soft: rgba(63, 182, 255, 0.14);
+                        --m6-accent-glow: rgba(63, 182, 255, 0.28);
+                    }
+
+                    .hud-panel-item:nth-child(3) {
+                        --m6-accent: #ffc63f;
+                        --m6-accent-soft: rgba(255, 198, 63, 0.14);
+                        --m6-accent-glow: rgba(255, 198, 63, 0.28);
+                    }
+
+                    .hud-panel-item:nth-child(4) {
+                        --m6-accent: #ff9e3f;
+                        --m6-accent-soft: rgba(255, 158, 63, 0.14);
+                        --m6-accent-glow: rgba(255, 158, 63, 0.28);
+                    }
+
                     .hud-panel-item:hover {
-                        transform: translateY(-3px) translateX(3px);
-                        border-color: rgba(255, 255, 255, 0.15);
-                        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02), 0 10px 25px rgba(0, 0, 0, 0.4);
+                        transform: translateY(-4px);
+                        border-color: var(--m6-accent);
+                        box-shadow:
+                            0 18px 40px rgba(0, 0, 0, 0.5),
+                            0 0 28px var(--m6-accent-glow),
+                            inset 0 0 0 1px rgba(255, 255, 255, 0.06);
                     }
 
                     @keyframes panel-activate {
                         0% {
                             box-shadow: 0 0 0 rgba(46, 204, 113, 0);
-                            border-color: rgba(255, 255, 255, 0.15);
+                            border-color: color-mix(in srgb, var(--m6-accent) 28%, transparent);
                             transform: scale(1);
                         }
 
                         50% {
-                            box-shadow: 0 0 30px rgba(46, 204, 113, 0.6), inset 0 0 20px rgba(46, 204, 113, 0.2);
+                            box-shadow: 0 0 30px rgba(46, 204, 113, 0.55), inset 0 0 20px rgba(46, 204, 113, 0.18);
                             border-color: var(--green);
-                            transform: scale(1.02);
+                            transform: scale(1.015);
                         }
 
                         100% {
-                            box-shadow: 0 0 20px rgba(46, 204, 113, 0.2), inset 0 0 10px rgba(46, 204, 113, 0.05);
+                            box-shadow: 0 0 22px rgba(46, 204, 113, 0.28), inset 0 0 12px rgba(46, 204, 113, 0.08);
                             border-color: var(--green);
                             transform: scale(1);
                         }
@@ -149,14 +195,16 @@
 
                     .hud-panel-item.req-done {
                         animation: panel-activate 0.6s cubic-bezier(0.18, 1, 0.26, 1) forwards;
+                        border-color: rgba(46, 204, 113, 0.65);
                     }
 
                     .hud-panel-num {
                         font-family: var(--font-h);
-                        font-size: 24px;
+                        font-size: 22px;
                         font-weight: 900;
-                        color: rgba(255, 255, 255, 0.1);
-                        margin-right: 25px;
+                        color: color-mix(in srgb, var(--m6-accent) 45%, transparent);
+                        margin-right: 22px;
+                        min-width: 36px;
                         transition: all 0.3s;
                     }
 
@@ -173,29 +221,46 @@
                     .hud-panel-title {
                         font-family: var(--font-h);
                         font-size: 18px;
-                        color: var(--gold);
-                        margin-bottom: 5px;
+                        color: var(--m6-accent);
+                        margin-bottom: 6px;
                         text-transform: uppercase;
                         letter-spacing: 1px;
-                        font-weight: 700;
+                        font-weight: 800;
                     }
 
                     .hud-panel-desc {
                         font-size: 15px;
-                        color: rgba(255, 255, 255, 0.7);
-                        line-height: 1.4;
+                        color: rgba(255, 255, 255, 0.78);
+                        line-height: 1.45;
                     }
 
                     .hud-panel-icon {
-                        margin-left: 20px;
-                        opacity: 0.2;
+                        margin-left: 18px;
+                        width: 52px;
+                        height: 52px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        opacity: 0.55;
+                        color: var(--m6-accent);
+                        background:
+                            radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.16), transparent 45%),
+                            var(--m6-accent-soft);
+                        border: 1.5px solid var(--m6-accent);
+                        box-shadow: 0 0 18px var(--m6-accent-glow);
                         transition: all 0.3s;
                     }
 
                     .hud-panel-item.req-done .hud-panel-icon {
                         opacity: 1;
                         color: var(--green);
-                        filter: drop-shadow(0 0 5px var(--green));
+                        border-color: var(--green);
+                        filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.45));
+                        background:
+                            radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 45%),
+                            rgba(46, 204, 113, 0.16);
                     }
 
                     .scanner-line {
@@ -371,75 +436,95 @@
                         }
 
                         #s-mod6-compromissos .m6c-card {
+                            --m6-accent: #2ECC71;
                             width: 100%;
                             position: relative;
-                            background: linear-gradient(145deg, #0b1120, #060a13);
-                            border: 1px solid rgba(255, 255, 255, 0.1);
-                            border-radius: 14px;
+                            background:
+                                radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--m6-accent) 16%, transparent), transparent 55%),
+                                linear-gradient(165deg, rgba(22, 32, 55, 0.96) 0%, rgba(10, 14, 26, 0.98) 100%);
+                            border: 1px solid color-mix(in srgb, var(--m6-accent) 35%, transparent);
+                            border-radius: 18px;
                             overflow: hidden;
-                            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.01);
+                            box-shadow:
+                                0 18px 48px rgba(0, 0, 0, 0.55),
+                                0 0 26px color-mix(in srgb, var(--m6-accent) 20%, transparent),
+                                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
                         }
 
                         #s-mod6-compromissos .m6c-card.is-active {
-                            border-color: rgba(46, 204, 113, 0.45);
-                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                            border-color: color-mix(in srgb, var(--m6-accent) 55%, transparent);
+                            box-shadow:
+                                0 22px 55px rgba(0, 0, 0, 0.55),
+                                0 0 30px color-mix(in srgb, var(--m6-accent) 24%, transparent),
+                                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
                         }
 
                         #s-mod6-compromissos .m6c-card-accent {
                             height: 4px;
-                            background: linear-gradient(90deg, transparent, var(--green) 30%, var(--green-lt) 70%, transparent);
-                            opacity: 0.85;
+                            background: linear-gradient(90deg, transparent, var(--m6-accent) 30%, var(--m6-accent) 70%, transparent);
+                            opacity: 0.95;
                         }
 
                         #s-mod6-compromissos .m6c-card-inner {
-                            padding: 20px 18px 22px;
+                            padding: 22px 18px 24px;
                             text-align: center;
                         }
 
                         #s-mod6-compromissos .m6c-card-label {
-                            display: inline-block;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
                             font-family: var(--font-h);
                             font-size: 11px;
                             font-weight: 700;
                             letter-spacing: 0.14em;
                             text-transform: uppercase;
-                            color: rgba(46, 204, 113, 0.85);
-                            margin-bottom: 12px;
+                            color: var(--m6-accent);
+                            margin-bottom: 14px;
+                            padding: 4px 12px;
+                            border-radius: 999px;
+                            background: color-mix(in srgb, var(--m6-accent) 14%, transparent);
+                            border: 1px solid color-mix(in srgb, var(--m6-accent) 40%, transparent);
                         }
 
                         #s-mod6-compromissos .m6c-card-icon {
-                            width: 56px;
-                            height: 56px;
+                            width: 64px;
+                            height: 64px;
                             margin: 0 auto 14px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            color: var(--green);
-                            filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.4));
+                            color: var(--m6-accent);
+                            border-radius: 50%;
+                            background:
+                                radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.18), transparent 45%),
+                                color-mix(in srgb, var(--m6-accent) 16%, transparent);
+                            border: 1.5px solid var(--m6-accent);
+                            box-shadow: 0 0 22px color-mix(in srgb, var(--m6-accent) 35%, transparent);
                         }
 
                         #s-mod6-compromissos .m6c-card-title {
                             font-family: var(--font-h);
-                            font-size: 18px;
+                            font-size: 19px;
                             font-weight: 800;
-                            color: var(--gold);
+                            color: #fff;
                             margin-bottom: 10px;
                             text-transform: uppercase;
-                            letter-spacing: 1px;
+                            letter-spacing: 0.04em;
                         }
 
                         #s-mod6-compromissos .m6c-card-divider {
                             width: 48px;
-                            height: 2px;
+                            height: 3px;
                             margin: 0 auto 12px;
-                            border-radius: 2px;
-                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                            border-radius: 3px;
+                            background: linear-gradient(90deg, transparent, var(--m6-accent), transparent);
                         }
 
                         #s-mod6-compromissos .m6c-card-desc {
                             font-size: 14px;
                             line-height: 1.5;
-                            color: rgba(255, 255, 255, 0.78);
+                            color: rgba(255, 255, 255, 0.8);
                             margin: 0 auto;
                             max-width: 300px;
                         }
@@ -505,7 +590,7 @@
                         🏁 MÓDULO 6</div>
                     <h2 class="slide-title"
                         style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
-                        Compromissos <span>Operaçãonais</span></h2>
+                        Compromissos <span>Operacionais</span></h2>
 
                 </div>
 
@@ -683,24 +768,28 @@
                                 step: '01',
                                 title: 'Segurança',
                                 desc: 'Cumprir procedimentos reduz riscos operacionais.',
+                                accent: '#2ECC71',
                                 icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>'
                             },
                             {
                                 step: '02',
                                 title: 'Responsabilidade',
                                 desc: 'Cada operador é responsável por uma operação segura.',
+                                accent: '#3fb6ff',
                                 icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'
                             },
                             {
                                 step: '03',
                                 title: 'Prevenção',
                                 desc: 'Atitudes preventivas ajudam a evitar acidentes.',
+                                accent: '#ffc63f',
                                 icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
                             },
                             {
                                 step: '04',
                                 title: 'Atenção Operacional',
                                 desc: 'Manter foco total durante a movimentação é essencial.',
+                                accent: '#ff9e3f',
                                 icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>'
                             }
                         ];
@@ -735,6 +824,7 @@
 
                         function renderM6cCard() {
                             const c = M6C_CARDS[m6cIdx];
+                            if (cardEl && c.accent) cardEl.style.setProperty('--m6-accent', c.accent);
                             if (labelEl) labelEl.textContent = 'Compromisso ' + c.step;
                             if (iconEl) iconEl.innerHTML = c.icon;
                             if (titleEl) titleEl.textContent = c.title;
@@ -814,6 +904,36 @@
                         border-top: 4px solid #2ecc71 !important;
                         transform: scale(1.02);
                     }
+                    #s-mod6-comp-preventiva .comp-card-img-wrap {
+                        position: relative;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-expand {
+                        position: absolute;
+                        bottom: 12px;
+                        right: 12px;
+                        z-index: 3;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 38px;
+                        height: 38px;
+                        padding: 0;
+                        border-radius: 50%;
+                        border: 1.5px solid rgba(255, 255, 255, 0.85);
+                        background: linear-gradient(145deg, #58D68D 0%, #2ECC71 50%, #1ea85a 100%);
+                        box-shadow: 0 4px 14px rgba(46, 204, 113, 0.5), 0 0 0 3px rgba(46, 204, 113, 0.14);
+                        color: #041526;
+                        font-size: 15px;
+                        line-height: 1;
+                        cursor: pointer;
+                        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+                    }
+                    #s-mod6-comp-preventiva .comp-card-expand:hover {
+                        background: linear-gradient(145deg, #6aef9d 0%, #3dde82 50%, #2ECC71 100%);
+                        border-color: #fff;
+                        box-shadow: 0 8px 22px rgba(46, 204, 113, 0.65), 0 0 0 4px rgba(46, 204, 113, 0.2);
+                        transform: scale(1.06);
+                    }
                     @media (min-width: 769px) {
                         #s-mod6-comp-preventiva .comp-cards-grid {
                             flex-direction: row;
@@ -849,18 +969,18 @@
                         #s-mod6-comp-preventiva .content-area {
                             justify-content: flex-start !important;
                             align-items: center !important;
-                            padding-top: 12px !important;
-                            padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+                            padding-top: 0 !important;
+                            padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
                             overflow: hidden !important;
                         }
 
                         #s-mod6-comp-preventiva .m6p-layout {
                             width: 100%;
-                            padding: 28px 14px 8px;
+                            padding: 6px 14px 4px;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
-                            gap: 12px;
+                            gap: 10px;
                         }
 
                         #s-mod6-comp-preventiva .m6p-carousel {
@@ -868,92 +988,169 @@
                             display: flex;
                             flex-direction: column;
                             align-items: center;
-                            gap: 12px;
+                            gap: 10px;
                         }
 
                         #s-mod6-comp-preventiva .m6p-card {
+                            --m6p-accent: #2ECC71;
+                            --m6p-accent-soft: rgba(46, 204, 113, 0.16);
+                            --m6p-accent-glow: rgba(46, 204, 113, 0.28);
                             width: 100%;
                             position: relative;
-                            background: linear-gradient(165deg, rgba(22, 32, 55, 0.95) 0%, rgba(10, 14, 26, 0.98) 100%);
-                            border: 1px solid rgba(255, 255, 255, 0.12);
-                            border-radius: 14px;
+                            background:
+                                radial-gradient(circle at 50% 0%, var(--m6p-accent-soft), transparent 55%),
+                                linear-gradient(165deg, rgba(22, 32, 55, 0.96) 0%, rgba(10, 14, 26, 0.98) 100%);
+                            border: 1px solid color-mix(in srgb, var(--m6p-accent) 38%, transparent);
+                            border-radius: 18px;
                             overflow: hidden;
-                            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+                            box-shadow:
+                                0 18px 48px rgba(0, 0, 0, 0.55),
+                                0 0 26px var(--m6p-accent-glow),
+                                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-wrong {
+                            --m6p-accent: #ff5a4d;
+                            --m6p-accent-soft: rgba(255, 90, 77, 0.16);
+                            --m6p-accent-glow: rgba(255, 90, 77, 0.28);
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card.is-right {
+                            --m6p-accent: #2ECC71;
+                            --m6p-accent-soft: rgba(46, 204, 113, 0.16);
+                            --m6p-accent-glow: rgba(46, 204, 113, 0.28);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-active.is-wrong {
-                            border-color: rgba(255, 71, 87, 0.45);
-                            box-shadow: 0 20px 55px rgba(255, 71, 87, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                            border-color: rgba(255, 90, 77, 0.5);
+                            box-shadow:
+                                0 20px 55px rgba(0, 0, 0, 0.55),
+                                0 0 28px rgba(255, 90, 77, 0.22),
+                                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-active.is-right {
-                            border-color: rgba(46, 204, 113, 0.45);
-                            box-shadow: 0 20px 55px rgba(46, 204, 113, 0.18), 0 12px 40px rgba(0, 0, 0, 0.55);
+                            border-color: rgba(46, 204, 113, 0.5);
+                            box-shadow:
+                                0 20px 55px rgba(0, 0, 0, 0.55),
+                                0 0 28px rgba(46, 204, 113, 0.22),
+                                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card-accent {
                             height: 4px;
-                            opacity: 0.9;
+                            opacity: 0.95;
+                            background: linear-gradient(90deg, transparent, var(--m6p-accent) 30%, var(--m6p-accent) 70%, transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-accent {
-                            background: linear-gradient(90deg, transparent, #ff4757 40%, rgba(255, 71, 87, 0.5) 70%, transparent);
+                            background: linear-gradient(90deg, transparent, #ff5a4d 30%, #ff7b70 70%, transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-accent {
-                            background: linear-gradient(90deg, transparent, var(--green-lt) 40%, rgba(46, 204, 113, 0.5) 70%, transparent);
+                            background: linear-gradient(90deg, transparent, #58D68D 30%, #2ECC71 70%, transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card-photo {
                             width: 100%;
-                            min-height: 120px;
-                            max-height: 150px;
-                            background: #0a0a0a;
-                            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                            min-height: 150px;
+                            max-height: 180px;
+                            background: #070b14;
+                            border-bottom: 1px solid color-mix(in srgb, var(--m6p-accent) 35%, transparent);
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             overflow: hidden;
+                            position: relative;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-photo::after {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            height: 40%;
+                            background: linear-gradient(to top, rgba(8, 12, 22, 0.8), transparent);
+                            pointer-events: none;
+                            z-index: 1;
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-photo {
-                            border-bottom-color: rgba(255, 71, 87, 0.35);
+                            border-bottom-color: rgba(255, 90, 77, 0.4);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-photo {
-                            border-bottom-color: rgba(46, 204, 113, 0.35);
+                            border-bottom-color: rgba(46, 204, 113, 0.4);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card-photo img {
                             width: 100%;
                             height: 100%;
-                            min-height: 120px;
-                            max-height: 150px;
+                            min-height: 150px;
+                            max-height: 180px;
                             object-fit: cover;
                             display: block;
                         }
 
+                        #s-mod6-comp-preventiva .m6p-card-expand {
+                            position: absolute;
+                            bottom: 10px;
+                            right: 10px;
+                            z-index: 3;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 34px;
+                            height: 34px;
+                            padding: 0;
+                            border-radius: 50%;
+                            border: 1.5px solid rgba(255, 255, 255, 0.85);
+                            background: linear-gradient(145deg, #58D68D 0%, #2ECC71 50%, #1ea85a 100%);
+                            box-shadow: 0 4px 14px rgba(46, 204, 113, 0.5), 0 0 0 3px rgba(46, 204, 113, 0.14);
+                            color: #041526;
+                            font-size: 14px;
+                            line-height: 1;
+                            cursor: pointer;
+                            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+                        }
+
+                        #s-mod6-comp-preventiva .m6p-card-expand:hover,
+                        #s-mod6-comp-preventiva .m6p-card-expand:active {
+                            background: linear-gradient(145deg, #6aef9d 0%, #3dde82 50%, #2ECC71 100%);
+                            border-color: #fff;
+                            box-shadow: 0 8px 22px rgba(46, 204, 113, 0.65), 0 0 0 4px rgba(46, 204, 113, 0.2);
+                            transform: scale(1.06);
+                        }
+
                         #s-mod6-comp-preventiva .m6p-card-inner {
-                            padding: 18px 18px 20px;
+                            padding: 16px 16px 18px;
                             text-align: center;
                         }
 
                         #s-mod6-comp-preventiva .m6p-card-label {
-                            display: inline-block;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
                             font-family: var(--font-h);
-                            font-size: 12px;
+                            font-size: 11px;
                             font-weight: 800;
-                            letter-spacing: 0.14em;
+                            letter-spacing: 0.12em;
                             text-transform: uppercase;
-                            margin-bottom: 8px;
+                            margin-bottom: 10px;
+                            padding: 4px 12px;
+                            border-radius: 999px;
+                            color: var(--m6p-accent);
+                            background: var(--m6p-accent-soft);
+                            border: 1px solid color-mix(in srgb, var(--m6p-accent) 42%, transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-label {
-                            color: #ff6b7a;
+                            color: #ff7b70;
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-label {
-                            color: var(--green-lt);
+                            color: #58D68D;
                         }
 
                         #s-mod6-comp-preventiva .m6p-card-title {
@@ -966,23 +1163,24 @@
 
                         #s-mod6-comp-preventiva .m6p-card-divider {
                             width: 48px;
-                            height: 2px;
+                            height: 3px;
                             margin: 0 auto 12px;
-                            border-radius: 2px;
+                            border-radius: 3px;
+                            background: linear-gradient(90deg, transparent, var(--m6p-accent), transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-wrong .m6p-card-divider {
-                            background: linear-gradient(90deg, transparent, rgba(255, 71, 87, 0.7), transparent);
+                            background: linear-gradient(90deg, transparent, rgba(255, 90, 77, 0.85), transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card.is-right .m6p-card-divider {
-                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+                            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.85), transparent);
                         }
 
                         #s-mod6-comp-preventiva .m6p-card-desc {
                             font-size: 13px;
                             line-height: 1.55;
-                            color: rgba(255, 255, 255, 0.78);
+                            color: rgba(255, 255, 255, 0.8);
                             margin: 0 auto;
                             max-width: 300px;
                             text-align: left;
@@ -1026,6 +1224,7 @@
                             z-index: 20;
                             pointer-events: auto;
                             padding-bottom: 4px;
+                            margin-top: 0;
                         }
 
                         #s-mod6-comp-preventiva .m6p-counter {
@@ -1064,8 +1263,11 @@
                         <!-- LADO ESQUERDO: INCORRETO -->
                         <div class="comp-card-modern m6p-desktop-item" onclick="activatePreventiva(this)" style="cursor: pointer; position: relative;">
                             <div class="comp-card-content">
-                                <div class="comp-card-img-wrap" style="height: 250px; border-bottom: 2px solid #ff4757; overflow: hidden;">
+                                <div class="comp-card-img-wrap" style="height: 250px; border-bottom: 2px solid #ff4757; overflow: hidden; position: relative;">
                                     <img src="assets/imgur/gtuC8HP.png" alt="Operador Distraído" loading="eager" fetchpriority="high" decoding="async" style="object-fit: cover; width: 100%; height: 100%;">
+                                    <button type="button" class="comp-card-expand"
+                                        aria-label="Ampliar imagem" title="Ampliar imagem"
+                                        onclick="event.stopPropagation(); openImageModal('assets/imgur/gtuC8HP.png')">🔍</button>
                                 </div>
                                 <div class="comp-card-body" style="padding: 20px;">
                                     <h4 class="comp-card-title" style="color: #ff4757; font-size: 20px; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px;">❌ INCORRETO</h4>
@@ -1080,8 +1282,11 @@
                         <!-- LADO DIREITO: CORRETO -->
                         <div class="comp-card-modern m6p-desktop-item" onclick="activatePreventiva(this)" style="cursor: pointer; position: relative;">
                             <div class="comp-card-content">
-                                <div class="comp-card-img-wrap" style="height: 250px; border-bottom: 2px solid #2ecc71; overflow: hidden;">
+                                <div class="comp-card-img-wrap" style="height: 250px; border-bottom: 2px solid #2ecc71; overflow: hidden; position: relative;">
                                     <img src="assets/imgur/7BJLUgg.png" alt="Operador Atento" loading="eager" fetchpriority="high" decoding="async" style="object-fit: cover; width: 100%; height: 100%;">
+                                    <button type="button" class="comp-card-expand"
+                                        aria-label="Ampliar imagem" title="Ampliar imagem"
+                                        onclick="event.stopPropagation(); openImageModal('assets/imgur/7BJLUgg.png')">🔍</button>
                                 </div>
                                 <div class="comp-card-body" style="padding: 20px;">
                                     <h4 class="comp-card-title" style="color: var(--green); font-size: 20px; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px;">✅ CORRETO</h4>
@@ -1102,6 +1307,8 @@
                                     <div class="m6p-card-accent" aria-hidden="true"></div>
                                     <div class="m6p-card-photo" id="m6p-card-photo">
                                         <img src="assets/imgur/gtuC8HP.png" alt="Operador sem atenção">
+                                        <button type="button" class="m6p-card-expand" id="m6p-card-expand"
+                                            aria-label="Ampliar imagem" title="Ampliar imagem">🔍</button>
                                     </div>
                                     <div class="m6p-card-inner">
                                         <span class="m6p-card-label" id="m6p-card-label">❌ Incorreto</span>
@@ -1185,6 +1392,7 @@
 
                         const cardEl = document.getElementById('m6p-card');
                         const photoEl = document.getElementById('m6p-card-photo');
+                        const expandBtn = document.getElementById('m6p-card-expand');
                         const labelEl = document.getElementById('m6p-card-label');
                         const titleEl = document.getElementById('m6p-card-title');
                         const descEl = document.getElementById('m6p-card-desc');
@@ -1248,6 +1456,14 @@
                         const nextBtn = document.getElementById('m6p-next');
                         if (prevBtn) prevBtn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); m6pGo(-1); });
                         if (nextBtn) nextBtn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); m6pGo(1); });
+                        if (expandBtn) {
+                            expandBtn.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const c = M6P_CARDS[m6pIdx];
+                                if (c && typeof openImageModal === 'function') openImageModal(c.photo);
+                            });
+                        }
 
                         renderM6pCard();
                     })();
@@ -1492,326 +1708,69 @@
             </div>
 
             <div class="slide" id="s-quiz6">
-                <style>
-                    /* CSS Exclusivo Módulo 6 Final Quiz HUD */
-                    #s-quiz6 {
-                        background: radial-gradient(circle at center, rgba(15, 23, 42, 1) 0%, rgba(5, 10, 20, 1) 100%);
-                    }
-
-                    #s-quiz6 .hud-scanner {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 2px;
-                        background: var(--green);
-                        box-shadow: 0 0 20px 2px var(--green);
-                        opacity: 0.3;
-                        animation: scan-line 4s linear infinite;
-                        pointer-events: none;
-                        z-index: 0;
-                    }
-
-                    @keyframes scan-line {
-                        0% {
-                            top: 0;
-                            opacity: 0;
-                        }
-
-                        10% {
-                            opacity: 0.5;
-                        }
-
-                        90% {
-                            opacity: 0.5;
-                        }
-
-                        100% {
-                            top: 100%;
-                            opacity: 0;
-                        }
-                    }
-
-                    #s-quiz6 .hud-status {
-                        font-family: monospace;
-                        font-size: 14px;
-                        color: var(--green);
-                        letter-spacing: 2px;
-                        text-transform: uppercase;
-                        animation: pulse-tech 1.5s infinite;
-                        margin-bottom: 20px;
-                    }
-
-                    @keyframes pulse-tech {
-
-                        0%,
-                        100% {
-                            opacity: 1;
-                        }
-
-                        50% {
-                            opacity: 0.4;
-                        }
-                    }
-
-                    #s-quiz6 .q-text {
-                        background: rgba(10, 15, 30, 0.9) !important;
-                        border: 1px solid rgba(46, 204, 113, 0.3) !important;
-                        padding: 0 !important;
-                        border-radius: 8px !important;
-                        margin-bottom: 15px !important;
-                        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(46, 204, 113, 0.1) !important;
-                        text-align: center;
-                        overflow: hidden;
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    #s-quiz6 .q-text-inner {
-                        padding: 12px 20px;
-                    }
-
-                    #s-quiz6 .q-img-wrap {
-                        width: 100%;
-                        height: 160px;
-                        position: relative;
-                    }
-
-                    #s-quiz6 .q-img-wrap img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        border-bottom: 1px solid rgba(46, 204, 113, 0.3);
-                    }
-
-                    #s-quiz6 .q-img-overlay {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: linear-gradient(to bottom, transparent 60%, rgba(10, 15, 30, 1) 100%);
-                    }
-
-                    #s-quiz6 .q-options {
-                        display: flex;
-                        gap: 15px;
-                        justify-content: center;
-                    }
-
-                    #s-quiz6 .q-opt {
-                        background: rgba(15, 23, 42, 0.8) !important;
-                        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                        padding: 12px !important;
-                        border-radius: 8px !important;
-                        transition: all 0.3s ease !important;
-                        flex: 1;
-                        text-align: center;
-                        font-size: 18px !important;
-                        font-family: var(--font-h) !important;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                        cursor: pointer;
-                    }
-
-                    #s-quiz6 .q-opt:hover {
-                        transform: translateY(-5px) !important;
-                    }
-
-                    #s-quiz6 .q-opt.opt-approve:hover {
-                        border-color: rgba(46, 204, 113, 0.8) !important;
-                        background: rgba(46, 204, 113, 0.1) !important;
-                        box-shadow: 0 0 20px rgba(46, 204, 113, 0.4) !important;
-                    }
-
-                    #s-quiz6 .q-opt.opt-reject:hover {
-                        border-color: rgba(231, 76, 60, 0.8) !important;
-                        background: rgba(231, 76, 60, 0.1) !important;
-                        box-shadow: 0 0 20px rgba(231, 76, 60, 0.4) !important;
-                    }
-
-                    #s-quiz6 .q-opt.selected.opt-approve,
-                    #s-quiz6 .q-opt.selected.opt-reject {
-                        background: rgba(255, 255, 255, 0.18) !important;
-                        border-color: #ffffff !important;
-                        color: #ffffff !important;
-                        box-shadow: 0 0 22px rgba(255, 255, 255, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.08) !important;
-                        transform: translateY(-2px) !important;
-                    }
-
-                    #s-quiz6 #q6-btn-music-toggle {
-                        position: fixed;
-                        top: calc(14px + 54px + 16px + 24px);
-                        right: 16px;
-                        border-radius: 999px;
-                        padding: 8px 14px;
-                        font-family: var(--font-h);
-                        font-size: 11px;
-                        font-weight: 800;
-                        letter-spacing: 0.6px;
-                        cursor: pointer;
-                        z-index: 903;
-                        transition: all 0.25s ease;
-                        background: rgba(46, 204, 113, 0.22);
-                        border: 2px solid rgba(46, 204, 113, 0.85);
-                        color: #ffffff;
-                        box-shadow: 0 0 18px rgba(46, 204, 113, 0.55), 0 4px 14px rgba(0, 0, 0, 0.35);
-                    }
-
-                    #s-quiz6 #q6-btn-music-toggle.is-muted {
-                        background: rgba(231, 76, 60, 0.2);
-                        border-color: rgba(231, 76, 60, 0.85);
-                        box-shadow: 0 0 18px rgba(231, 76, 60, 0.45), 0 4px 14px rgba(0, 0, 0, 0.35);
-                        color: #ffffff;
-                    }
-
-                    #q6-verify-container {
-                        margin-top: 20px !important;
-                    }
-
-                    #s-quiz6 .btn-tf-verify {
-                        font-size: 18px !important;
-                        padding: 15px 40px !important;
-                        box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                    }
-
-                    #s-quiz6 .btn-tf-verify:hover {
-                        box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
-                    }
-
-                    /* Final Result Enhancements */
-                    #q6-result-panel.q-result-anim {
-                        animation: hud-enter 1s ease forwards;
-                    }
-
-                    @keyframes hud-enter {
-                        0% {
-                            opacity: 0;
-                            transform: scale(0.9) translateY(20px);
-                            filter: blur(10px);
-                        }
-
-                        100% {
-                            opacity: 1;
-                            transform: scale(1) translateY(0);
-                            filter: blur(0);
-                        }
-                    }
-
-                    @media (max-width: 768px) {
-                        #s-quiz6 .q-img-wrap {
-                            height: 95px;
-                        }
-
-                        #s-quiz6 .q-img-wrap img {
-                            height: 95px;
-                            min-height: 95px;
-                            max-height: 95px;
-                        }
-
-                        #s-quiz6 .q-opt {
-                            font-size: 13px !important;
-                            padding: 8px 6px !important;
-                        }
-
-                        #s-quiz6 .hud-status {
-                            margin-bottom: 8px;
-                        }
-
-                        #s-quiz6 #q6-btn-music-toggle {
-                            top: calc(8px + env(safe-area-inset-top, 0px) + 30px + 6px + 24px);
-                            right: 10px;
-                            padding: 7px 12px;
-                            font-size: 10px;
-                        }
-                    }
-                </style>
-
-                <div class="hud-scanner"></div>
-
                 <audio id="q6-bg-music"
                     src="https://res.cloudinary.com/dzqns0zpe/video/upload/v1779288781/musica.mp3_gxctw8.mp3"
                     loop></audio>
                 <button type="button" id="q6-btn-music-toggle" onclick="toggleQuiz6Music()" hidden>🔊 MUSIC ON</button>
 
-                <div class="top-bar" style="position: relative; z-index: 2;">
+                <div class="top-bar">
                     <div class="section-tag"
                         style="background: var(--red); color: var(--black); font-size: 16px; padding: 6px 16px; font-weight: 800; box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);">
-                        🟩 CENTRAL<br>FINAL
-                    </div>
+                        🎯 Quiz · Módulo 6</div>
                     <h2 class="slide-title"
-                        style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.01em; text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);">
-                        Liberação
-                        <span>Operacional</span>
+                        style="font-size: clamp(32px, 5vw, 48px); letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(46, 204, 113, 0.6); position: relative; display: inline-block;">
+                        <div
+                            style="position: absolute; inset: -20px; background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%); z-index: -1; filter: blur(10px);">
+                        </div>
+                        Hora do <span>Desafio</span>
                     </h2>
-
                 </div>
 
-                <div class="content-area" style="position: relative; z-index: 2;">
-                    <div class="quiz-wrap" style="max-width: 800px; width: 100%;">
-
-                        <!-- ABERTURA -->
-                                                <div id="q6-intro-panel" class="quiz-intro-panel">
+                <div class="content-area">
+                    <div class="quiz-wrap">
+                        <div id="q6-intro-panel" class="quiz-intro-panel">
                             <div class="quiz-intro-card">
                                 <div class="quiz-intro-icon" aria-hidden="true">📋</div>
                                 <h3 class="quiz-intro-title">Desafio NR-11 — Módulo 6</h3>
-                                <p class="quiz-intro-desc">Analise <strong>5</strong> procedimentos. Você precisa acertar no mínimo <strong>4</strong> para avançar.</p>
+                                <p class="quiz-intro-desc">Analise <strong>5</strong> situações. Você precisa acertar no mínimo <strong>3</strong> para avançar.</p>
                                 <button type="button" class="quiz-intro-btn req-item" onclick="startQuiz6Intro(); this.classList.add('req-done'); updateNextButton();">INICIAR DESAFIO</button>
                             </div>
                         </div>
 
-                        <!-- PERGUNTAS -->
-                        <div id="q6-question-panel"
-                            style="display:none; transition: opacity 0.5s ease; position: relative;">
-                            <div class="hud-status" id="q6-hud-status" style="text-align: center;">🟢 ANÁLISE EM
-                                EXECUÇÃO</div>
-                            <div class="q-meta" style="justify-content: center; margin-bottom: 15px;">
-                                <div class="q-lbl" id="q6-counter" style="font-family: monospace; letter-spacing: 2px;">
-                                    Análise 1/5
-                                </div>
+                        <div id="q6-question-panel" style="display:none; transition: opacity 0.5s ease;">
+                            <div class="q-meta">
+                                <div class="q-dots"></div>
+                                <div class="q-lbl" id="q6-counter">Pergunta 1 de 5</div>
                             </div>
-
-                            <div class="q-text" id="q6-text">
-                                <!-- Dynamically filled by createQuiz6Engine -->
-                            </div>
-
-                            <div
-                                style="text-align: center; font-family: var(--font-h); font-size: 22px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--white); text-shadow: 0 0 10px rgba(255,255,255,0.3);">
-                                LIBERAR OPERAÇÃO?
-                            </div>
-
+                            <div class="q-text" id="q6-text"></div>
+                            <div class="q6-prompt">LIBERAR OPERAÇÃO?</div>
                             <div class="q-options" id="q6-options"></div>
-
                             <div id="q6-verify-container"
-                                style="text-align: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
-                                <button class="btn-tf-verify" id="btn-tf-verify-q6" onclick="verifyAnswer6()">CONFIRMAR
-                                    Decisão</button>
+                                style="text-align: center; margin-top: 15px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: none;">
+                                <button class="btn-tf-verify" id="btn-tf-verify-q6" onclick="verifyAnswer6()">✔ Verificar Resposta</button>
                             </div>
-
-                            <div class="q-feedback" id="q6-feedback" style="margin-top: 10px;"></div>
-
-                            <button class="btn-next-q" id="btn-next-q6" onclick="nextQuestion6()"
-                                style="margin-top: 10px; font-family: monospace; letter-spacing: 1px;">CARREGAR PRÓXIMO
-                                PROTOCOLO
-                            </button>
+                            <div class="q-feedback" id="q6-feedback"></div>
+                            <button class="btn-next-q" id="btn-next-q6" onclick="nextQuestion6()">Continuar →</button>
                         </div>
 
-                        <!-- RESULTADO FINAL -->
-                        <div id="q6-result-panel" style="display:none;text-align:center;">
-                            <div class="result-pct green" id="q6-pct">--</div>
-                            <div class="r-stars" id="q6-stars" style="font-size: 50px; margin: 20px 0;">⭐⭐⭐</div>
-                            <div class="r-status" id="q6-status"></div>
-                            <div class="r-sub" id="q6-sub"></div>
-                            <div class="r-sub" id="q6-sub-additional"
-                                style="font-size: 14px; margin-top: 6px; font-family: monospace;"></div>
-                            <button class="btn-tf-verify" id="q6-btn-final" style="margin-top:40px; font-size:16px;"
-                                onclick="resetQuiz6()">Refazer</button>
+                        <div id="q6-result-panel" class="quiz-result-panel" style="display:none;">
+                            <div class="quiz-result-card">
+                                <div class="quiz-result-icon" id="q6-result-icon" aria-hidden="true">🏅</div>
+                                <h3 class="quiz-result-title" id="q6-status">Desafio Concluído!</h3>
+                                <p class="quiz-result-desc" id="q6-sub"></p>
+                                <div class="quiz-result-review" id="q6-review" hidden></div>
+                                <button type="button" class="quiz-result-btn" id="q6-retry-btn"
+                                    onclick="resetQuiz6()">JOGAR NOVAMENTE</button>
+                            </div>
+                            <div id="q6-pct" class="result-pct" style="display:none" aria-hidden="true"></div>
+                            <div id="q6-stars" class="r-stars" style="display:none" aria-hidden="true"></div>
                         </div>
-
                     </div>
                 </div>
+                <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                        <path d="M0,65 C360,20 720,90 1080,40 C1260,15 1390,70 1440,60 L1440,100 L0,100 Z"
+                            fill="rgba(46,204,113,0.07)" />
+                    </svg></div>
             </div>
 
             <div class="slide" id="s-conclusion">
@@ -1858,21 +1817,74 @@
                         z-index: 1;
                     }
 
+                    #s-conclusion .content-area {
+                        position: relative;
+                        z-index: 10;
+                        width: 100%;
+                        max-width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                        min-height: 0;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                        -webkit-overflow-scrolling: touch;
+                        padding: 20px 16px 40px;
+                    }
+
                     #s-conclusion .content-wrap {
                         position: relative;
                         z-index: 10;
-                        padding: 60px 50px;
-                        max-width: 850px;
+                        isolation: isolate;
+                        padding: 52px 48px 48px;
+                        max-width: 780px;
                         width: 90%;
-                        margin-top: 80px;
-                        background: linear-gradient(180deg, rgba(10, 15, 30, 0.8) 0%, rgba(5, 8, 15, 0.95) 100%);
-                        border: 1px solid rgba(46, 204, 113, 0.4);
-                        border-radius: 16px;
-                        box-shadow: 0 0 80px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(46, 204, 113, 0.1);
+                        margin-top: 40px;
+                        margin-bottom: 20px;
+                        background:
+                            radial-gradient(ellipse at 50% 0%, rgba(46, 204, 113, 0.16) 0%, transparent 55%),
+                            linear-gradient(160deg, #1a2f3d 0%, #122532 55%, #0a1520 100%);
+                        border: 1px solid rgba(140, 180, 210, 0.28);
+                        border-radius: 24px;
+                        box-shadow:
+                            0 24px 60px rgba(0, 0, 0, 0.55),
+                            0 0 48px rgba(46, 204, 113, 0.22),
+                            0 0 90px rgba(46, 204, 113, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.06);
                         backdrop-filter: blur(16px);
                         animation: hud-enter-epic 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
                         opacity: 0;
                         transform: translateY(30px);
+                        overflow: visible;
+                        flex-shrink: 0;
+                    }
+
+                    #s-conclusion .content-wrap::before {
+                        content: '';
+                        position: absolute;
+                        inset: -20px;
+                        border-radius: 36px;
+                        background: radial-gradient(ellipse at 50% 30%,
+                                rgba(46, 204, 113, 0.4) 0%,
+                                rgba(46, 204, 113, 0.14) 40%,
+                                transparent 70%);
+                        filter: blur(24px);
+                        z-index: -1;
+                        pointer-events: none;
+                    }
+
+                    #s-conclusion .content-wrap::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 12%;
+                        right: 12%;
+                        height: 3px;
+                        border-radius: 0 0 4px 4px;
+                        background: linear-gradient(90deg, transparent, #58D68D 20%, #2ECC71 50%, #58D68D 80%, transparent);
+                        opacity: 0.95;
                     }
 
                     @keyframes hud-enter-epic {
@@ -1920,58 +1932,175 @@
                     .seal-inner {
                         width: 90px;
                         height: 90px;
-                        background: rgba(46, 204, 113, 0.1);
+                        background:
+                            radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.18), transparent 50%),
+                            linear-gradient(145deg, rgba(46, 204, 113, 0.28) 0%, rgba(22, 135, 86, 0.35) 100%);
                         border-radius: 50%;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         font-size: 45px;
-                        border: 2px solid var(--green);
-                        box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+                        border: 2px solid rgba(89, 247, 174, 0.85);
+                        box-shadow:
+                            0 0 32px rgba(46, 204, 113, 0.55),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.25);
                         text-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
                     }
 
                     #s-conclusion .title-epic {
                         font-family: var(--font-h);
-                        font-size: clamp(36px, 5vw, 64px);
+                        font-size: clamp(32px, 5vw, 56px);
                         color: var(--white);
                         text-transform: uppercase;
-                        letter-spacing: 4px;
-                        margin-bottom: 15px;
+                        letter-spacing: 0.06em;
+                        margin-bottom: 12px;
                         opacity: 0;
                         animation: fade-up 0.8s ease forwards 1s;
+                        line-height: 1.15;
                     }
 
                     #s-conclusion .title-epic span {
-                        color: var(--green);
+                        color: #7dffa8;
                         text-shadow: 0 0 30px rgba(46, 204, 113, 0.7), 0 0 60px rgba(46, 204, 113, 0.4);
                         display: block;
                     }
 
                     #s-conclusion .subtext {
-                        font-size: clamp(18px, 2.5vw, 24px);
-                        color: rgba(255, 255, 255, 0.8);
-                        margin-bottom: 35px;
-                        line-height: 1.6;
+                        font-size: clamp(16px, 2.2vw, 20px);
+                        color: rgba(255, 255, 255, 0.82);
+                        margin-bottom: 28px;
+                        line-height: 1.55;
                         opacity: 0;
                         animation: fade-up 0.8s ease forwards 1.3s;
+                        max-width: 560px;
+                        margin-left: auto;
+                        margin-right: auto;
                     }
 
                     #s-conclusion .msg-box {
-                        background: rgba(46, 204, 113, 0.05);
-                        border: 1px solid rgba(46, 204, 113, 0.2);
-                        border-left: 4px solid var(--green);
-                        padding: 25px;
-                        margin: 0 auto 45px;
-                        max-width: 650px;
+                        position: relative;
+                        background:
+                            radial-gradient(circle at 0% 50%, rgba(46, 204, 113, 0.14), transparent 50%),
+                            linear-gradient(145deg, rgba(20, 40, 32, 0.95) 0%, rgba(12, 28, 24, 0.98) 100%);
+                        border: 1px solid rgba(46, 204, 113, 0.38);
+                        border-left: 4px solid #2ECC71;
+                        padding: 22px 26px;
+                        margin: 0 auto;
+                        max-width: 600px;
                         font-family: var(--font-b);
-                        font-size: 17px;
-                        color: rgba(255, 255, 255, 0.95);
-                        line-height: 1.6;
-                        box-shadow: 0 0 30px rgba(46, 204, 113, 0.05);
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: rgba(255, 255, 255, 0.92);
+                        line-height: 1.65;
+                        box-shadow:
+                            0 12px 32px rgba(0, 0, 0, 0.35),
+                            0 0 28px rgba(46, 204, 113, 0.18),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.05);
                         opacity: 0;
                         animation: fade-up 0.8s ease forwards 1.6s;
-                        border-radius: 4px;
+                        border-radius: 16px;
+                        text-align: left;
+                    }
+
+                    #s-conclusion .msg-box::before {
+                        content: '✦';
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 28px;
+                        height: 28px;
+                        margin-bottom: 12px;
+                        border-radius: 50%;
+                        background: rgba(46, 204, 113, 0.18);
+                        border: 1px solid rgba(46, 204, 113, 0.45);
+                        color: #7dffa8;
+                        font-size: 13px;
+                        box-shadow: 0 0 14px rgba(46, 204, 113, 0.25);
+                    }
+
+                    #s-conclusion .concl-stats {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 12px;
+                        width: 100%;
+                        max-width: 600px;
+                        margin: 22px auto 0;
+                        opacity: 0;
+                        animation: fade-up 0.8s ease forwards 1.75s;
+                    }
+
+                    #s-conclusion .concl-stat {
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                        padding: 14px 18px;
+                        border-radius: 14px;
+                        background: linear-gradient(145deg, rgba(22, 36, 48, 0.95) 0%, rgba(14, 24, 34, 0.98) 100%);
+                        border: 1px solid rgba(140, 180, 210, 0.2);
+                        box-shadow:
+                            0 8px 22px rgba(0, 0, 0, 0.3),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+                        text-align: left;
+                    }
+
+                    #s-conclusion .concl-stat-icon {
+                        flex-shrink: 0;
+                        width: 42px;
+                        height: 42px;
+                        border-radius: 12px;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 22px;
+                        line-height: 1;
+                        background: rgba(46, 204, 113, 0.12);
+                        border: 1px solid rgba(46, 204, 113, 0.28);
+                        box-shadow: 0 0 14px rgba(46, 204, 113, 0.12);
+                    }
+
+                    #s-conclusion .concl-stat-label {
+                        flex: 1;
+                        font-family: var(--font-h);
+                        font-size: 12px;
+                        font-weight: 800;
+                        letter-spacing: 0.12em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.55);
+                    }
+
+                    #s-conclusion .concl-stat-value {
+                        font-family: var(--font-h);
+                        font-size: 15px;
+                        font-weight: 800;
+                        color: #fff;
+                        white-space: nowrap;
+                    }
+
+                    #s-conclusion .concl-stat-value.is-ok {
+                        color: #7dffa8;
+                        text-shadow: 0 0 12px rgba(46, 204, 113, 0.35);
+                    }
+
+                    #s-conclusion .concl-stat-arrow {
+                        flex-shrink: 0;
+                        width: 28px;
+                        height: 28px;
+                        border-radius: 50%;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: rgba(255, 255, 255, 0.55);
+                        background: rgba(255, 255, 255, 0.06);
+                        border: 1px solid rgba(255, 255, 255, 0.12);
+                        font-size: 18px;
+                        line-height: 1;
+                        margin-left: 4px;
+                    }
+
+                    #s-conclusion .concl-stat-arrow svg {
+                        width: 14px;
+                        height: 14px;
+                        display: block;
                     }
 
                     #s-conclusion .btn-finish {
@@ -2071,39 +2200,83 @@
                     @media (max-width: 768px) {
                         #s-conclusion {
                             justify-content: flex-start !important;
-                            align-items: center !important;
-                            padding-top: 2vh !important;
+                            align-items: stretch !important;
+                            padding-top: 0 !important;
                             margin-top: 0 !important;
+                            overflow: hidden !important;
+                        }
+                        #s-conclusion .content-area {
+                            overflow-y: auto !important;
+                            -webkit-overflow-scrolling: touch !important;
+                            flex: 1 1 auto !important;
+                            min-height: 0 !important;
+                            height: 100% !important;
+                            padding: 24px 14px calc(140px + env(safe-area-inset-bottom, 0px)) !important;
+                            justify-content: flex-start !important;
+                            align-items: center !important;
                         }
                         #s-conclusion .content-wrap {
-                            margin: -40px auto 0 auto !important;
-                            padding: 30px 20px !important;
+                            margin: 0 auto 16px auto !important;
+                            padding: 28px 18px 24px !important;
                             display: flex;
                             flex-direction: column;
                             align-items: center !important;
                             justify-content: center !important;
                             text-align: center !important;
-                            width: 90% !important;
+                            width: 92% !important;
+                            border-radius: 20px !important;
                         }
                         #s-conclusion .seal-container {
-                            margin: 0 auto 20px auto !important;
+                            margin: 0 auto 16px auto !important;
                             transform: scale(0.9);
                         }
                         #s-conclusion .title-epic {
-                            font-size: clamp(26px, 7vw, 32px) !important;
+                            font-size: clamp(24px, 7vw, 30px) !important;
                             margin: 0 auto 10px auto !important;
                             text-align: center !important;
+                            letter-spacing: 0.04em !important;
                         }
                         #s-conclusion .subtext {
-                            font-size: 15px !important;
-                            margin: 0 auto 25px auto !important;
+                            font-size: 14px !important;
+                            margin: 0 auto 18px auto !important;
                             text-align: center !important;
                         }
                         #s-conclusion .msg-box {
-                            padding: 15px !important;
-                            font-size: 14px !important;
+                            padding: 16px 16px 18px !important;
+                            font-size: 13.5px !important;
                             margin: 0 auto !important;
-                            text-align: center !important;
+                            text-align: left !important;
+                            border-radius: 14px !important;
+                            width: 100%;
+                        }
+                        #s-conclusion .concl-stats {
+                            margin-top: 16px !important;
+                            gap: 10px !important;
+                        }
+                        #s-conclusion .concl-stat {
+                            padding: 12px 14px !important;
+                            border-radius: 12px !important;
+                            gap: 12px !important;
+                        }
+                        #s-conclusion .concl-stat-icon {
+                            width: 36px !important;
+                            height: 36px !important;
+                            font-size: 18px !important;
+                            border-radius: 10px !important;
+                        }
+                        #s-conclusion .concl-stat-label {
+                            font-size: 11px !important;
+                        }
+                        #s-conclusion .concl-stat-value {
+                            font-size: 13px !important;
+                        }
+                        #s-conclusion .concl-stat-arrow {
+                            width: 24px !important;
+                            height: 24px !important;
+                        }
+                        #s-conclusion .concl-stat-arrow svg {
+                            width: 12px !important;
+                            height: 12px !important;
                         }
                     }
                 </style>
@@ -2113,6 +2286,7 @@
                 <div id="c-particles"></div>
                 <div id="c-confetti"></div>
 
+                <div class="content-area">
                 <div class="content-wrap">
                     
 
@@ -2125,13 +2299,33 @@
                         TREINAMENTO <span>CONCLUÍDO</span>
                     </h1>
 
-                    <p class="subtext">Você completou com sucesso a capacitação em NR-11 — Empilhadeira Patolada.</p>
+                    <p class="subtext">Você concluiu com sucesso a parte teórica do treinamento NR-11 — Empilhadeira Patolada.</p>
 
                     <div class="msg-box">
                         Sua dedicação aos procedimentos de segurança é fundamental.
                         A excelência operacional protege vidas e garante um ambiente de trabalho seguro.
                     </div>
 
+                    <div class="concl-stats" aria-label="Resumo do treinamento">
+                        <div class="concl-stat">
+                            <span class="concl-stat-icon" aria-hidden="true">📚</span>
+                            <span class="concl-stat-label">Módulos</span>
+                            <span class="concl-stat-value">6 Concluídos</span>
+                            <span class="concl-stat-arrow" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                            </span>
+                        </div>
+                        <div class="concl-stat">
+                            <span class="concl-stat-icon" aria-hidden="true">⭐</span>
+                            <span class="concl-stat-label">Avaliação</span>
+                            <span class="concl-stat-value is-ok">Aprovado</span>
+                            <span class="concl-stat-arrow" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
                 </div>
             </div>
 
@@ -2164,7 +2358,7 @@
     </div>
 
     <script src="audio-data.js"></script>
-    <script src="shared.js?v=24"></script>
+    <script src="shared.js?v=26"></script>
 </body>
 
 </html>

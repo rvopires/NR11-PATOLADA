@@ -640,6 +640,27 @@ function startConclusionEpic() {
     createCinematicParticles();
     createPremiumConfetti();
     playConclusionCinematicAudio();
+    try {
+        const slide = document.getElementById('s-conclusion');
+        if (slide) {
+            const area = slide.querySelector('.content-area');
+            if (area && !_slideScrollBtns['s-conclusion']) {
+                let btn = slide.querySelector(':scope > .slide-scroll-btn');
+                if (!btn) {
+                    btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'slide-scroll-btn is-hidden';
+                    btn.setAttribute('aria-label', 'Rolar para baixo');
+                    btn.innerHTML = _SCROLL_BTN_SVG;
+                    slide.appendChild(btn);
+                }
+                registerSlideScrollBtn('s-conclusion', btn, area);
+            }
+        }
+        scheduleScrollBtnRefresh();
+        setTimeout(scheduleScrollBtnRefresh, 600);
+        setTimeout(scheduleScrollBtnRefresh, 1600);
+    } catch (e) { }
 }
 
 function createCinematicParticles() {
@@ -2241,24 +2262,34 @@ function resetQuiz5() { quiz5.reset(); }
 
 const q6_questions = [
     {
-        q: '<div class="q-img-wrap"><img src="assets/imgur/CwVijDg.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Verificação do Trajeto ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O operador irá iniciar a movimentação sem verificar o corredor operacional.</p></div>',
-        correct: 1, feedback: 'O trajeto deve ser verificado antes da operação.'
+        q: '<img src="assets/imgur/CwVijDg.png" alt="Verificação do Trajeto"><span class="q6-topic">Verificação do Trajeto</span><p class="q6-desc">O operador irá iniciar a movimentação sem verificar o corredor operacional.</p><strong class="q6-ask">Qual deve ser a decisão correta?</strong>',
+        correct: 1,
+        topic: 'Verificação do Trajeto',
+        feedback: 'O trajeto deve ser verificado antes da operação.'
     },
     {
-        q: '<div class="q-img-wrap"><img src="assets/imgur/olIIX5d.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Altura da Carga ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">A carga está posicionada corretamente para movimentação segura.</p></div>',
-        correct: 0, feedback: 'A altura da carga está dentro do padrão seguro.'
+        q: '<img src="assets/imgur/olIIX5d.png" alt="Altura da Carga"><span class="q6-topic">Altura da Carga</span><p class="q6-desc">A carga está posicionada corretamente para movimentação segura.</p><strong class="q6-ask">Qual deve ser a decisão correta?</strong>',
+        correct: 0,
+        topic: 'Altura da Carga',
+        feedback: 'A altura da carga está dentro do padrão seguro.'
     },
     {
-        q: '<div class="q-img-wrap"><img src="assets/imgur/ywjw7Y8.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Distração Operacional ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O operador utiliza celular durante a movimentação da carga.</p></div>',
-        correct: 1, feedback: 'O foco operacional deve ser mantido durante toda a operação.'
+        q: '<img src="assets/imgur/ywjw7Y8.png" alt="Distração Operacional"><span class="q6-topic">Distração Operacional</span><p class="q6-desc">O operador utiliza celular durante a movimentação da carga.</p><strong class="q6-ask">Qual deve ser a decisão correta?</strong>',
+        correct: 1,
+        topic: 'Distração Operacional',
+        feedback: 'O foco operacional deve ser mantido durante toda a operação.'
     },
     {
-        q: '<div class="q-img-wrap"><img src="assets/imgur/YQuknH6.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Proteção Operacional ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O operador iniciou a operação utilizando os EPIs obrigatórios.</p></div>',
-        correct: 0, feedback: 'Os equipamentos de proteção estão corretos.'
+        q: '<img src="assets/imgur/YQuknH6.png" alt="Proteção Operacional"><span class="q6-topic">Proteção Operacional</span><p class="q6-desc">O operador iniciou a operação utilizando os EPIs obrigatórios.</p><strong class="q6-ask">Qual deve ser a decisão correta?</strong>',
+        correct: 0,
+        topic: 'Proteção Operacional',
+        feedback: 'Os equipamentos de proteção estão corretos.'
     },
     {
-        q: '<div class="q-img-wrap"><img src="assets/imgur/DuAmERU.png"><div class="q-img-overlay"></div></div><div class="q-text-inner"><div style="font-size:15px;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-family:monospace;font-weight:700;">[ Finalização Segura ]</div><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.4;">O equipamento foi estacionado corretamente ao final da operação.</p></div>',
-        correct: 0, feedback: 'A operação foi encerrada corretamente.'
+        q: '<img src="assets/imgur/DuAmERU.png" alt="Finalização Segura"><span class="q6-topic">Finalização Segura</span><p class="q6-desc">O equipamento foi estacionado corretamente ao final da operação.</p><strong class="q6-ask">Qual deve ser a decisão correta?</strong>',
+        correct: 0,
+        topic: 'Finalização Segura',
+        feedback: 'A operação foi encerrada corretamente.'
     }
 ];
 
@@ -2346,10 +2377,59 @@ function playQuiz6Audio(type) {
 
 function createQuiz6Engine(questions) {
     let idx = 0, answered = false, score = 0, selectedOptIdx = -1;
+    let wrongTopics = [];
+    const MIN_CORRECT = 3;
 
     function setQuiz6MusicVisible(visible) {
         const musicBtn = document.getElementById('q6-btn-music-toggle');
         if (musicBtn) musicBtn.hidden = !visible;
+    }
+
+    function renderDots() {
+        const dotsContainer = document.querySelector('#q6-question-panel .q-dots');
+        if (!dotsContainer) return;
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < questions.length; i++) {
+            const d = document.createElement('div');
+            d.className = 'qdot2' + (i === idx ? ' cur' : '') + (i < idx ? ' done' : '');
+            dotsContainer.appendChild(d);
+        }
+    }
+
+    function uniqueTopics(list) {
+        const seen = {};
+        const out = [];
+        list.forEach(function (t) {
+            if (!t || seen[t]) return;
+            seen[t] = true;
+            out.push(t);
+        });
+        return out;
+    }
+
+    function attachExpand(txt) {
+        if (!txt) return;
+        const img = txt.querySelector('img');
+        if (!img || txt.querySelector('.q6-img-expand')) return;
+        let wrap = img.closest('.q6-img-wrap');
+        if (!wrap) {
+            wrap = document.createElement('div');
+            wrap.className = 'q6-img-wrap';
+            img.parentNode.insertBefore(wrap, img);
+            wrap.appendChild(img);
+        }
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'q6-img-expand';
+        btn.setAttribute('aria-label', 'Ampliar imagem');
+        btn.title = 'Ampliar imagem';
+        btn.textContent = '🔍';
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof openImageModal === 'function') openImageModal(img.getAttribute('src') || img.src);
+        });
+        wrap.appendChild(btn);
     }
 
     function start() {
@@ -2359,15 +2439,16 @@ function createQuiz6Engine(questions) {
         if (qPanel) {
             qPanel.style.display = 'block';
             qPanel.style.opacity = '0';
-            setTimeout(() => qPanel.style.opacity = '1', 50);
+            setTimeout(function () { qPanel.style.opacity = '1'; }, 50);
         }
         setQuiz6MusicVisible(true);
         playQuiz6Audio('start');
         const m = document.getElementById('q6-bg-music');
         if (m) {
             m.volume = 0.15;
-            m.play().catch(e => console.log('Audio autoplay blocked'));
+            m.play().catch(function () { });
         }
+        render();
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
 
@@ -2375,32 +2456,31 @@ function createQuiz6Engine(questions) {
         const qPanel = document.getElementById('q6-question-panel');
         if (qPanel) qPanel.classList.remove('q-result-anim');
 
-        const _q6hud = document.getElementById('q6-hud-status'); if (_q6hud) _q6hud.textContent = '🟢 ANÁLISE EM EXECUÇÃO';
-
         const q = questions[idx];
 
         const counter = document.getElementById('q6-counter');
-        if (counter) counter.textContent = `ANÁLISE ${idx + 1}/${questions.length}`;
+        if (counter) counter.textContent = 'Pergunta ' + (idx + 1) + ' de ' + questions.length;
 
         const txt = document.getElementById('q6-text');
-        if (txt) txt.innerHTML = q.q;
+        if (txt) {
+            txt.innerHTML = q.q;
+            attachExpand(txt);
+        }
 
         const opts = document.getElementById('q6-options');
         if (opts) {
             opts.innerHTML = '';
 
-            // Botão ✅ LIBERAR (índice 0)
             const btnA = document.createElement('div');
             btnA.className = 'q-opt opt-approve';
-            btnA.innerHTML = '✅ LIBERAR';
-            btnA.onclick = () => selectAnswer(0, btnA);
+            btnA.innerHTML = '<div class="opt-l">✓</div><span>Liberar</span>';
+            btnA.onclick = function () { selectAnswer(0, btnA); };
             opts.appendChild(btnA);
 
-            // Botão ❌ NÃO LIBERAR (índice 1)
             const btnR = document.createElement('div');
             btnR.className = 'q-opt opt-reject';
-            btnR.innerHTML = '❌ NÃO LIBERAR';
-            btnR.onclick = () => selectAnswer(1, btnR);
+            btnR.innerHTML = '<div class="opt-l">✕</div><span>Não Liberar</span>';
+            btnR.onclick = function () { selectAnswer(1, btnR); };
             opts.appendChild(btnR);
         }
 
@@ -2414,6 +2494,7 @@ function createQuiz6Engine(questions) {
         if (btn) btn.className = 'btn-next-q';
         answered = false;
         selectedOptIdx = -1;
+        renderDots();
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
 
@@ -2428,7 +2509,7 @@ function createQuiz6Engine(questions) {
         const vCont = document.getElementById('q6-verify-container');
         if (vCont) {
             vCont.style.display = 'block';
-            setTimeout(() => {
+            setTimeout(function () {
                 vCont.style.opacity = '1';
                 vCont.style.visibility = 'visible';
             }, 50);
@@ -2447,19 +2528,38 @@ function createQuiz6Engine(questions) {
         allOpts.forEach(function (o) {
             clearAnswerState(o);
             o.style.pointerEvents = 'none';
+            o.classList.add('answered');
+            o.classList.add('muted');
         });
-        if (allOpts[selectedOptIdx]) allOpts[selectedOptIdx].classList.add('selected');
-        const fb = document.getElementById('q6-feedback');
 
-        if (selectedOptIdx === q.correct) {
-            if (fb) { fb.innerHTML = `<span style="font-family:monospace; color:#5ddb8c;">[ DECISÃO CORRETA ]</span> ${q.feedback}`; fb.className = 'q-feedback ok'; }
-            document.getElementById('q6-hud-status').textContent = '✅ ANÁLISE CONCLUÍDA: PROCEDIMENTO VALIDADO';
-            score++; playQuiz6Audio('correct');
+        const fb = document.getElementById('q6-feedback');
+        const isCorrect = selectedOptIdx === q.correct;
+
+        if (allOpts[q.correct]) {
+            allOpts[q.correct].classList.remove('muted');
+            allOpts[q.correct].classList.add('correct');
+        }
+        if (!isCorrect && allOpts[selectedOptIdx]) {
+            allOpts[selectedOptIdx].classList.remove('muted');
+            allOpts[selectedOptIdx].classList.add('wrong');
+        }
+
+        if (isCorrect) {
+            if (fb) {
+                fb.innerHTML = '✅ Correto! ' + q.feedback;
+                fb.className = 'q-feedback ok';
+            }
+            score++;
+            playQuiz6Audio('correct');
         } else {
-            if (fb) { fb.innerHTML = `<span style="font-family:monospace; color:#e74c3c;">[ FALHA DE SEGURANÇA ]</span> ${q.feedback}`; fb.className = 'q-feedback nok'; }
-            document.getElementById('q6-hud-status').innerHTML = '<span style="color:#e74c3c;">⚠️ ALERTA: DECISÃO INCORRETA</span>';
+            if (fb) {
+                fb.innerHTML = '❌ Incorreto. ' + q.feedback;
+                fb.className = 'q-feedback nok';
+            }
+            if (q.topic) wrongTopics.push(q.topic);
             playQuiz6Audio('incorrect');
         }
+
         const btn = document.getElementById('btn-next-q6');
         if (btn) btn.className = 'btn-next-q show';
 
@@ -2477,8 +2577,9 @@ function createQuiz6Engine(questions) {
         if (idx < questions.length) {
             playQuiz6Audio('transition');
             render();
+        } else {
+            showResult();
         }
-        else { showResult(); }
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
 
@@ -2490,56 +2591,56 @@ function createQuiz6Engine(questions) {
         setQuiz6MusicVisible(false);
         const qPanel = document.getElementById('q6-question-panel');
         if (qPanel) qPanel.style.display = 'none';
+
         const rPanel = document.getElementById('q6-result-panel');
+        const approved = score >= MIN_CORRECT;
+
         if (rPanel) {
             rPanel.style.display = 'block';
+            rPanel.classList.add('is-visible');
+            rPanel.classList.toggle('is-approved', approved);
+            rPanel.classList.toggle('is-failed', !approved);
             rPanel.classList.remove('q-result-anim');
             void rPanel.offsetWidth;
             rPanel.classList.add('q-result-anim');
         }
-        const pct = score / questions.length;
-        const approved = pct >= 0.60;
-
-        const pctEl = document.getElementById('q6-pct');
-        if (pctEl) {
-            pctEl.textContent = Math.round(pct * 100) + '%';
-            pctEl.className = 'result-pct ' + (approved ? 'green' : 'red-c');
-            if (!approved) {
-                pctEl.style.textShadow = '0 0 50px rgba(231,76,60,0.5)';
-            } else {
-                pctEl.style.textShadow = '0 0 50px rgba(46,204,113,0.5)';
-            }
-        }
-
-        const starsEl = document.getElementById('q6-stars');
-        if (starsEl) {
-            starsEl.textContent = pct === 1 ? '⭐⭐⭐' : pct >= 0.60 ? '⭐⭐' : '⭐';
-            starsEl.classList.remove('stars-anim');
-            void starsEl.offsetWidth;
-            starsEl.classList.add('stars-anim');
-        }
 
         const status = document.getElementById('q6-status');
         if (status) {
-            status.textContent = approved ? '✅ Aprovado!' : '❌ Tente Novamente';
-            status.className = 'r-status ' + (approved ? 'ap' : 'ref');
+            status.textContent = approved ? 'Desafio Concluído!' : 'Desafio não concluído';
+            status.className = 'quiz-result-title r-status ' + (approved ? 'ap' : 'ref');
         }
 
         const sub = document.getElementById('q6-sub');
         if (sub) {
             sub.textContent = approved
-                ? `Você validou ${score} de ${questions.length} operações corretamente. Os procedimentos operacionais foram validados com sucesso.`
-                : `Você validou ${score} de ${questions.length} operações corretamente. Revise os procedimentos operacionais e tente novamente.`;
+                ? 'Você acertou ' + score + ' de ' + questions.length + ' questões. Parabéns! Pode avançar para a próxima etapa.'
+                : 'Você acertou ' + score + ' de ' + questions.length + ' questões. É necessário acertar pelo menos ' + MIN_CORRECT + ' questões. Estude e tente novamente.';
         }
 
-        const subAdd = document.getElementById('q6-sub-additional');
-        if (subAdd) subAdd.textContent = '';
+        const iconEl = document.getElementById('q6-result-icon');
+        if (iconEl) iconEl.textContent = approved ? '🏅' : '📚';
 
-        const btnF = document.getElementById('q6-btn-final');
-        if (btnF) {
-            btnF.textContent = 'Refazer';
-            btnF.onclick = resetQuiz6;
+        const retryBtn = document.getElementById('q6-retry-btn');
+        if (retryBtn) {
+            retryBtn.textContent = approved ? 'REVISAR DESAFIO' : 'JOGAR NOVAMENTE';
+            retryBtn.style.display = approved ? 'none' : 'inline-flex';
         }
+
+        const reviewEl = document.getElementById('q6-review');
+        if (reviewEl) {
+            const topics = uniqueTopics(wrongTopics);
+            if (!approved && topics.length) {
+                reviewEl.hidden = false;
+                reviewEl.innerHTML = '<strong>Revise estes temas:</strong><ul>' +
+                    topics.map(function (t) { return '<li>' + t + '</li>'; }).join('') +
+                    '</ul>';
+            } else {
+                reviewEl.hidden = true;
+                reviewEl.innerHTML = '';
+            }
+        }
+
         updateNextButton();
         try { window.updateQuizAudioHelper(); } catch (e) { }
         scheduleScrollBtnRefresh();
@@ -2547,19 +2648,29 @@ function createQuiz6Engine(questions) {
 
     function reset() {
         idx = 0; score = 0; answered = false; selectedOptIdx = -1;
+        wrongTopics = [];
         const introPanel = document.getElementById('q6-intro-panel');
         const qPanel = document.getElementById('q6-question-panel');
         const rPanel = document.getElementById('q6-result-panel');
 
-        if (introPanel) introPanel.style.display = 'block';
-        if (qPanel) qPanel.style.display = 'none';
-        if (rPanel) rPanel.style.display = 'none';
+        if (introPanel) introPanel.style.display = 'flex';
+        if (qPanel) {
+            qPanel.style.display = 'none';
+            qPanel.style.opacity = '';
+        }
+        if (rPanel) {
+            rPanel.style.display = 'none';
+            rPanel.classList.remove('is-approved', 'is-failed', 'q-result-anim', 'is-visible');
+        }
         const m = document.getElementById('q6-bg-music');
         if (m) { m.pause(); m.currentTime = 0; }
         setQuiz6MusicVisible(false);
 
-        // Re-render immediately to clear visual selections
+        const reviewEl = document.getElementById('q6-review');
+        if (reviewEl) { reviewEl.hidden = true; reviewEl.innerHTML = ''; }
+
         render();
+        updateNextButton();
         try { window.updateQuizAudioHelper(); } catch (e) { }
     }
 

@@ -133,16 +133,16 @@
         's-quiz6': {
             panels: { intro: '#q6-intro-panel', question: '#q6-question-panel', result: '#q6-result-panel' },
             counterSelector: '#q6-counter',
-            counterPattern: /AN[AÁ]LISE\s+(\d+)\s*\//i,
-            intro: 'Quiz Final. Validação Operacional. Analise cada cenário e decida se a operação deve ser liberada ou não liberada. Esta avaliação contém cinco análises com mínimo de sessenta por cento de acertos. Toque em Iniciar para começar.',
+            counterPattern: /Pergunta\s+(\d+)\s+de/i,
+            intro: 'Quiz Final. Hora do Desafio do Módulo 6. Analise cada cenário e decida se a operação deve ser liberada ou não liberada. Esta avaliação contém cinco perguntas com mínimo de três acertos. Toque em Iniciar Desafio para começar.',
             questions: [
-                'Análise 1 de 5. Verificação do Trajeto. O operador irá iniciar a movimentação sem verificar o corredor operacional. Você deve liberar ou não liberar?',
-                'Análise 2 de 5. Altura da Carga. A carga está posicionada corretamente para movimentação segura. Você deve liberar ou não liberar?',
-                'Análise 3 de 5. Distração Operacional. O operador utiliza celular durante a movimentação da carga. Você deve liberar ou não liberar?',
-                'Análise 4 de 5. Proteção Operacional. O operador iniciou a operação utilizando os EPIs obrigatórios. Você deve liberar ou não liberar?',
-                'Análise 5 de 5. Finalização Segura. O equipamento foi estacionado corretamente ao final da operação. Você deve liberar ou não liberar?'
+                'Pergunta 1 de 5. Verificação do Trajeto. O operador irá iniciar a movimentação sem verificar o corredor operacional. Você deve liberar ou não liberar?',
+                'Pergunta 2 de 5. Altura da Carga. A carga está posicionada corretamente para movimentação segura. Você deve liberar ou não liberar?',
+                'Pergunta 3 de 5. Distração Operacional. O operador utiliza celular durante a movimentação da carga. Você deve liberar ou não liberar?',
+                'Pergunta 4 de 5. Proteção Operacional. O operador iniciou a operação utilizando os EPIs obrigatórios. Você deve liberar ou não liberar?',
+                'Pergunta 5 de 5. Finalização Segura. O equipamento foi estacionado corretamente ao final da operação. Você deve liberar ou não liberar?'
             ],
-            result: 'Resultado da Validação Operacional. Veja sua pontuação na tela. Caso aprovado, toque em Finalizar Treinamento. Caso contrário, refaça a validação.'
+            result: 'Resultado do Desafio. Veja sua pontuação na tela. Caso aprovado, toque em Próximo. Caso contrário, jogue novamente.'
         }
     };
 
